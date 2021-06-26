@@ -1,8 +1,13 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import classes from './Main.module.scss';
 import { faChartLine, faGraduationCap, faHome, faUserCircle, faWallet } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { c } from '../../utils';
+import { Home } from '../../tabs/Home';
+import { Wallet } from '../../tabs/Wallet';
+import { Stats } from '../../tabs/Stats';
+import { Learning } from '../../tabs/Learning';
+import { Profile } from '../../tabs/Profile';
 
 enum TabIndex {
   Home,
@@ -31,8 +36,21 @@ const tabs = [{
 
 export function Main() {
   const [tabIndex, setTabIndex] = useState(TabIndex.Home);
-
   const tab = tabs[tabIndex];
+  const content = useMemo(() => {
+    switch (tabIndex) {
+      case TabIndex.Home:
+        return <Home />;
+      case TabIndex.Wallet:
+        return <Wallet />;
+      case TabIndex.Stats:
+        return <Stats />;
+      case TabIndex.Learning:
+        return <Learning />;
+      case TabIndex.Profile:
+        return <Profile />;
+    }
+  }, [tabIndex]);
 
   return (
     <div className={classes.Main}>
@@ -40,7 +58,7 @@ export function Main() {
         {tab.name}
       </header>
       <main className={classes.main}>
-        a
+        {content}
       </main>
       <nav className={classes.nav}>
         {
