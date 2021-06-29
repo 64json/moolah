@@ -21,3 +21,14 @@ a {
   color: inherit;
   text-decoration: none;
 }
+
+input {
+  font-family: inherit;
+  color: inherit;
+  border: none;
+  outline: none;
+
+  &::placeholder {
+    color: $color-text-light;
+  }
+}

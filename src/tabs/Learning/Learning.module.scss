@@ -1,4 +1,62 @@
 @import '../../constants';
 
 .Learning {
+  display: flex;
+  flex-direction: column;
+
+  .search {
+    display: flex;
+    align-items: center;
+    margin-bottom: 16px;
+
+    .filter {
+      padding: 8px;
+      margin-right: 4px;
+    }
+
+    .input {
+      flex: 1;
+      height: 32px;
+      border: 1px solid $color-text-light;
+      border-radius: 32px;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+      padding: 0 8px;
+
+      .icon {
+        margin-right: 4px;
+      }
+
+      input {
+        align-self: stretch;
+        flex: 1;
+      }
+    }
+  }
+
+  .section {
+    margin-bottom: 16px;
+
+    .category {
+      font-weight: 700;
+      margin-bottom: 8px;
+      font-size: 12px;
+    }
+
+    .row {
+      display: flex;
+      align-items: stretch;
+
+      & + .row {
+        margin-top: 8px;
+      }
+
+      .lessonCard {
+        & + .lessonCard {
+          margin-left: 8px;
+        }
+      }
+    }
+  }
 }
