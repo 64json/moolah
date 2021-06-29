@@ -17,8 +17,8 @@
     .input {
       flex: 1;
       height: 32px;
-      border: 1px solid $color-text-light;
-      border-radius: 32px;
+      border-radius: 4px;
+      background-color: $color-primary-light;
       display: flex;
       align-items: center;
       overflow: hidden;
@@ -26,6 +26,8 @@
 
       .icon {
         margin-right: 4px;
+        font-size: 12px;
+        color: $color-text-light;
       }
 
       input {

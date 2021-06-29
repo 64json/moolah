@@ -27,6 +27,8 @@ input {
   color: inherit;
   border: none;
   outline: none;
+  background: none;
+  font-size: 14px;
 
   &::placeholder {
     color: $color-text-light;

@@ -1,6 +1,6 @@
 import React, { useMemo, useState } from 'react';
 import classes from './Main.module.scss';
-import { faChartLine, faGraduationCap, faUserCircle, faWallet } from '@fortawesome/free-solid-svg-icons';
+import { faChartLine, faCog, faGraduationCap, faUserCircle, faWallet } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { c } from '../../utils';
 import { Wallet } from '../../tabs/Wallet';
@@ -48,8 +48,14 @@ export function Main() {
   return (
     <div className={classes.Main}>
       <div className={classes.scroll}>
-        <div className={classes.tabName}>
-          {tab.name}
+        <div className={classes.header}>
+          <div className={classes.tabName}>
+            {tab.name}
+          </div>
+          {
+            tabIndex === TabIndex.Profile &&
+            <FontAwesomeIcon className={classes.settings} icon={faCog} />
+          }
         </div>
         <main className={classes.main}>
           {content}
