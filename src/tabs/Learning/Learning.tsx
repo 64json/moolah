@@ -15,7 +15,7 @@ export function Learning() {
         </label>
       </div>
       <section className={classes.section}>
-        <div className={classes.category}>
+        <div className={classes.header}>
           Your Saved Lessons
         </div>
         <div className={classes.row}>
@@ -27,7 +27,7 @@ export function Learning() {
         </div>
       </section>
       <section className={classes.section}>
-        <div className={classes.category}>
+        <div className={classes.header}>
           Earn badges by completing these lessons
         </div>
         <div className={classes.row}>

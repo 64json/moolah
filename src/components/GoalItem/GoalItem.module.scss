@@ -1,16 +1,16 @@
 @import '../../constants';
 
-.TransactionItem {
+.GoalItem {
   display: flex;
   align-items: center;
 
-  & + .TransactionItem {
+  & + .GoalItem {
     margin-top: 8px;
   }
 
   .icon {
-    width: 40px;
-    height: 40px;
+    width: 48px;
+    height: 48px;
     font-size: 24px;
     display: flex;
     align-items: center;
@@ -22,19 +22,34 @@
   .text {
     flex: 1;
     margin-right: 8px;
+    display: flex;
+    flex-direction: column;
 
     .primary {
       font-size: 14px;
       font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .progress {
+      height: 4px;
+      background-color: #D1D5DA;
+      display: flex;
+      align-items: stretch;
+      margin-bottom: 4px;
+
+      .bar {
+        background-color: $color-red;
+      }
     }
 
     .secondary {
+      align-self: flex-end;
       font-size: 12px;
-    }
-  }
 
-  .amount {
-    font-weight: 700;
-    color: $color-negative;
+      .amount {
+        font-weight: 700;
+      }
+    }
   }
 }
