@@ -1,6 +1,9 @@
 @import '../../constants';
 
 .Wallet {
+  display: flex;
+  flex-direction: column;
+
   .label {
     margin-bottom: 8px;
   }
@@ -12,61 +15,8 @@
   }
 
   .card {
-    position: relative;
-    height: calc((100vw - 48px) / 1.586);
-    border-radius: 8px;
-    background: linear-gradient(
-        244.48deg,
-        #3ED1FF 1.48%,
-        #AB83ED 52.61%,
-        #FF7474 97.98%);
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.16);
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: flex-end;
-    padding: 16px 24px;
-    box-sizing: border-box;
-    color: white;
-    text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.4);
+    align-self: center;
     margin-bottom: 16px;
-
-    .chip {
-      height: 24px;
-      margin-bottom: 8px;
-    }
-
-    .number {
-      font-size: 24px;
-      margin-bottom: 16px;
-    }
-
-    .expire {
-      display: flex;
-      align-items: center;
-      margin-left: 100px;
-      margin-bottom: 8px;
-
-      .goodThru {
-        font-size: 8px;
-        text-transform: uppercase;
-        margin-right: 4px;
-      }
-
-      .date {
-
-      }
-    }
-
-    .name {
-      text-transform: uppercase;
-    }
-
-    .logo {
-      position: absolute;
-      right: 16px;
-      height: 32px;
-    }
   }
 
   .buttons {

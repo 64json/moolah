@@ -1,0 +1,163 @@
+@import '../../constants';
+
+.Card {
+  perspective: 1000px;
+  position: relative;
+  width: 328px;
+  height: 206.81px;
+
+  .flipper {
+    transition: 0.6s;
+    transform-style: preserve-3d;
+    position: relative;
+    width: 100%;
+    height: 100%;
+
+    &.flipped {
+      transform: rotateY(180deg);
+    }
+
+    .front,
+    .back {
+      backface-visibility: hidden;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border-radius: 8px;
+      background: linear-gradient(
+          244.48deg,
+          #3ED1FF 1.48%,
+          #AB83ED 52.61%,
+          #FF7474 97.98%);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.16);
+    }
+
+    .front {
+      z-index: 2;
+      transform: rotateY(0deg);
+    }
+
+    .back {
+      transform: rotateY(180deg);
+    }
+
+    .front {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: flex-end;
+      padding: 16px 24px;
+      box-sizing: border-box;
+      color: white;
+      text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.4);
+
+      .chip {
+        height: 24px;
+        margin-bottom: 8px;
+      }
+
+      .number {
+        font-size: 24px;
+        margin-bottom: 16px;
+      }
+
+      .expire {
+        display: flex;
+        align-items: center;
+        margin-left: 100px;
+        margin-bottom: 8px;
+
+        .goodThru {
+          font-size: 8px;
+          text-transform: uppercase;
+          margin-right: 4px;
+        }
+
+        .date {
+
+        }
+      }
+
+      .name {
+        text-transform: uppercase;
+      }
+
+      .logo {
+        position: absolute;
+        right: 16px;
+        height: 32px;
+      }
+    }
+
+    .back {
+      .stripe {
+        background-color: $color-text;
+        height: 40px;
+        margin-top: 16px;
+        margin-bottom: 16px;
+      }
+
+      .signature {
+        $color-0: $color-primary-light;
+        $color-1: #DDE1E9;
+
+        background: linear-gradient(-60deg,
+          $color-1 25%,
+          $color-0 0,
+          $color-0 50%,
+          $color-1 0,
+          $color-1 75%,
+          $color-0 0);
+        background-size: 14px 24px;
+        margin-left: 16px;
+        margin-right: 48px;
+        margin-bottom: 20px;
+        height: 24px;
+        display: flex;
+        align-items: stretch;
+        justify-content: flex-end;
+        border-radius: 2px;
+        overflow: hidden;
+
+        .cvc {
+          background-color: white;
+          display: flex;
+          align-items: center;
+          padding: 0 6px;
+        }
+      }
+
+      .row {
+        display: flex;
+        margin-left: 16px;
+
+        .hologram {
+          width: 56px;
+          height: 36px;
+          border-radius: 4px;
+          background-color: $color-primary-light;
+          margin-right: 8px;
+        }
+
+        .lines {
+          display: flex;
+          flex-direction: column;
+
+          .line {
+            background-color: rgba(white, .4);
+            width: 132px;
+            height: 4px;
+            border-radius: 4px;
+            margin-bottom: 4px;
+
+            &:last-child {
+              width: 104px;
+            }
+          }
+        }
+      }
+    }
+  }
+}
