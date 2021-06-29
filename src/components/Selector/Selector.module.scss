@@ -1,0 +1,26 @@
+@import '../../constants';
+
+.Selector {
+  height: 32px;
+  border: 1px solid $color-text-light;
+  border-radius: 32px;
+  display: flex;
+
+  .option {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: $color-text-light;
+    font-size: 14px;
+    transition: color 200ms;
+
+    &.active {
+      color: $color-primary;
+      border: 1px solid $color-primary;
+      margin: -1px;
+      border-radius: 32px;
+      font-weight: 700;
+    }
+  }
+}
