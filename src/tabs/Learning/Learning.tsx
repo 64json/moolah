@@ -28,7 +28,7 @@ export function Learning() {
       </section>
       <section className={classes.section}>
         <div className={classes.category}>
-          Earn badges by completing the following lessons:
+          Earn badges by completing these lessons
         </div>
         <div className={classes.row}>
           <LessonCard className={classes.lessonCard} />

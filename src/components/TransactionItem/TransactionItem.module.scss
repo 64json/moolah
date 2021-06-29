@@ -1,0 +1,39 @@
+@import '../../constants';
+
+.TransactionItem {
+  display: flex;
+  align-items: center;
+
+  & + .TransactionItem {
+    margin-top: 8px;
+  }
+
+  .icon {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: $color-primary-light;
+    margin-right: 8px;
+  }
+
+  .text {
+    flex: 1;
+    margin-right: 8px;
+
+    .primary {
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .secondary {
+      font-size: 12px;
+    }
+  }
+
+  .amount {
+    font-weight: 700;
+    color: $color-negative;
+  }
+}

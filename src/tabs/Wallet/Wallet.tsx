@@ -3,6 +3,7 @@ import classes from './Wallet.module.scss';
 import card_chip from '../../assets/card_chip.png';
 import mastercard from '../../assets/mastercard.png';
 import { Button } from '../../components/Button';
+import { TransactionItem } from '../../components/TransactionItem';
 
 export function Wallet() {
   return (
@@ -38,6 +39,16 @@ export function Wallet() {
         <Button className={classes.button} primary>
           Pay or Request
         </Button>
+      </div>
+      <div className={classes.list}>
+        <TransactionItem />
+        <TransactionItem />
+        <TransactionItem />
+        <TransactionItem />
+        <TransactionItem />
+        <TransactionItem />
+        <TransactionItem />
+        <TransactionItem />
       </div>
     </div>
   );
