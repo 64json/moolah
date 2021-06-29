@@ -2,6 +2,7 @@ import React from 'react';
 import classes from './Wallet.module.scss';
 import card_chip from '../../assets/card_chip.png';
 import mastercard from '../../assets/mastercard.png';
+import { Button } from '../../components/Button';
 
 export function Wallet() {
   return (
@@ -29,6 +30,14 @@ export function Wallet() {
           Jasmine Park
         </div>
         <img className={classes.logo} src={mastercard} />
+      </div>
+      <div className={classes.buttons}>
+        <Button className={classes.button}>
+          Manual Entry
+        </Button>
+        <Button className={classes.button} primary>
+          Pay or Request
+        </Button>
       </div>
     </div>
   );

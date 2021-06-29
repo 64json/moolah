@@ -1,0 +1,30 @@
+@import '../../constants';
+
+.Button {
+  position: relative;
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid $color-primary;
+  color: $color-primary;
+
+  &.primary {
+    background-color: $color-primary;
+    color: white;
+  }
+
+  &:active {
+    &:after {
+      content: '';
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background-color: rgba(black, .1);
+    }
+  }
+}

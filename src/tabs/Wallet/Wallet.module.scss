@@ -29,6 +29,7 @@
     box-sizing: border-box;
     color: white;
     text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.4);
+    margin-bottom: 16px;
 
     .chip {
       height: 24px;
@@ -65,6 +66,18 @@
       position: absolute;
       right: 16px;
       height: 32px;
+    }
+  }
+
+  .buttons {
+    display: flex;
+
+    .button {
+      flex: 1;
+
+      & + .button {
+        margin-left: 16px;
+      }
     }
   }
 }

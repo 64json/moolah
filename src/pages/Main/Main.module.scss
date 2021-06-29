@@ -6,17 +6,23 @@
   display: flex;
   flex-direction: column;
 
-  .tabName {
-    padding: 24px 24px 0;
-    color: $color-text-light;
-    font-weight: 700;
-    font-size: 18px;
-  }
-
-  .main {
-    padding: 16px 24px;
+  .scroll {
     flex: 1;
+    display: flex;
+    flex-direction: column;
     overflow-y: auto;
+
+    .tabName {
+      padding: 24px 24px 0;
+      color: $color-text-light;
+      font-weight: 700;
+      font-size: 18px;
+    }
+
+    .main {
+      padding: 16px 24px;
+      flex: 1;
+    }
   }
 
   .nav {

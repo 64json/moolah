@@ -47,12 +47,14 @@ export function Main() {
 
   return (
     <div className={classes.Main}>
-      <div className={classes.tabName}>
-        {tab.name}
+      <div className={classes.scroll}>
+        <div className={classes.tabName}>
+          {tab.name}
+        </div>
+        <main className={classes.main}>
+          {content}
+        </main>
       </div>
-      <main className={classes.main}>
-        {content}
-      </main>
       <nav className={classes.nav}>
         {
           tabs.map((tab, i) => (
