@@ -3,6 +3,9 @@ import classes from './CreditCard.module.scss';
 import card_chip from '../../assets/card_chip.png';
 import mastercard from '../../assets/mastercard.png';
 import { c } from '../../utils';
+import { Button } from '../Button';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUnlock } from '@fortawesome/free-solid-svg-icons';
 
 interface Props extends HTMLAttributes<HTMLDivElement> {
   className?: string;
@@ -11,14 +14,16 @@ interface Props extends HTMLAttributes<HTMLDivElement> {
 export function CreditCard({ className }: Props) {
   const [flipped, setFlipped] = useState(false);
   const [hidden, setHidden] = useState(true);
+  const [deactivated, setDeactivated] = useState(true);
 
   return (
-    <div className={c(classes.CreditCard, className)} onContextMenu={e => {
-      e.preventDefault();
-      setHidden(!hidden);
-    }}
-         onClick={() => setFlipped(!flipped)}>
-      <div className={c(classes.flipper, flipped && classes.flipped)}>
+    <div className={c(classes.CreditCard, className)}>
+      <div className={c(classes.flipper, flipped && classes.flipped, deactivated && classes.deactivated)}
+           onContextMenu={e => {
+             e.preventDefault();
+             setHidden(!hidden);
+           }}
+           onClick={() => setFlipped(!flipped)}>
         <div className={classes.front}>
           <img className={classes.chip} src={card_chip} />
           <div className={c(classes.number, hidden && classes.hidden)}>
@@ -57,6 +62,12 @@ export function CreditCard({ className }: Props) {
           </div>
         </div>
       </div>
+      {
+        deactivated &&
+        <Button className={classes.activate} onClick={() => setDeactivated(false)}>
+          <FontAwesomeIcon icon={faUnlock} />&nbsp;&nbsp;Click to Activate Card
+        </Button>
+      }
     </div>
   );
 }

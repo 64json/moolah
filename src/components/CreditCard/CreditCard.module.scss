@@ -6,12 +6,15 @@
   width: 328px;
   height: 206.81px;
   user-select: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   .flipper {
     transition: 500ms;
     transition-timing-function: ease-in-out;
     transform-style: preserve-3d;
-    position: relative;
+    position: absolute;
     width: 100%;
     height: 100%;
 
@@ -19,8 +22,14 @@
       transform: rotateY(180deg);
     }
 
+    &.deactivated {
+      opacity: .16;
+      pointer-events: none;
+    }
+
     .front,
     .back {
+      @include shadow;
       backface-visibility: hidden;
       position: absolute;
       top: 0;
@@ -33,7 +42,6 @@
           #3ED1FF 1.48%,
           #AB83ED 52.61%,
           #FF7474 97.98%);
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.16);
     }
 
     .front {
@@ -182,5 +190,9 @@
         }
       }
     }
+  }
+
+  .activate {
+    @include shadow;
   }
 }
