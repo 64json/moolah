@@ -1,7 +1,5 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 import classes from './Profile.module.scss';
-import { faQrcode } from '@fortawesome/free-solid-svg-icons';
 import { GoalItem } from '../../components/GoalItem';
 import { c } from '../../utils';
 import badge_0 from '../../assets/badge_0.png';
@@ -25,10 +23,9 @@ export function Profile() {
             Jasmine Park
           </div>
           <div className={classes.secondary}>
-            @jp_monies
+            jp_monies@gmail.com
           </div>
         </div>
-        <FontAwesomeIcon className={classes.qr} icon={faQrcode} />
       </div>
       <div className={c(classes.section, classes.goalSection)}>
         <div className={classes.header}>
