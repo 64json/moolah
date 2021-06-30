@@ -1,5 +1,5 @@
 import React, { HTMLAttributes, useState } from 'react';
-import classes from './Card.module.scss';
+import classes from './CreditCard.module.scss';
 import card_chip from '../../assets/card_chip.png';
 import mastercard from '../../assets/mastercard.png';
 import { c } from '../../utils';
@@ -8,11 +8,11 @@ interface Props extends HTMLAttributes<HTMLDivElement> {
   className?: string;
 }
 
-export function Card({ className }: Props) {
+export function CreditCard({ className }: Props) {
   const [flipped, setFlipped] = useState(false);
 
   return (
-    <div className={c(classes.Card, className)} onClick={() => setFlipped(!flipped)}>
+    <div className={c(classes.CreditCard, className)} onClick={() => setFlipped(!flipped)}>
       <div className={c(classes.flipper, flipped && classes.flipped)}>
         <div className={classes.front}>
           <img className={classes.chip} src={card_chip} />

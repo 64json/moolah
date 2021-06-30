@@ -2,7 +2,7 @@ import React from 'react';
 import classes from './Wallet.module.scss';
 import { Button } from '../../components/Button';
 import { TransactionItem } from '../../components/TransactionItem';
-import { Card } from '../../components/Card';
+import { CreditCard } from '../../components/CreditCard';
 
 export function Wallet() {
   return (
@@ -13,7 +13,7 @@ export function Wallet() {
       <div className={classes.balance}>
         $139.14
       </div>
-      <Card className={classes.card} />
+      <CreditCard className={classes.card} />
       <div className={classes.buttons}>
         <Button className={classes.button}>
           Manual Entry

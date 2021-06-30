@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import classes from './Stats.module.scss';
-import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
+import { faChevronLeft, faChevronRight, faFlagCheckered, faHandHoldingUsd } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Selector } from '../../components/Selector';
+import { StatsCard } from '../../components/StatsCard';
 
 export function Stats() {
   const [unit, setUnit] = useState(0);
@@ -22,6 +23,12 @@ export function Stats() {
         'Year': 2,
         'All': 3,
       }} onChange={setUnit} value={unit} />
+      <StatsCard className={classes.statsCard} icon={faHandHoldingUsd} title="Total Weekly Spending: $85">
+        Hi
+      </StatsCard>
+      <StatsCard className={classes.statsCard} icon={faFlagCheckered} title="Wallet Balance vs Goals">
+        Bye
+      </StatsCard>
     </div>
   );
 }

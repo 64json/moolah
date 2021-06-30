@@ -1,0 +1,27 @@
+@import '../../constants';
+
+.StatsCard {
+  display: flex;
+  flex-direction: column;
+  background-color: $color-primary-light;
+  border-radius: 8px;
+  padding: 16px;
+
+  & + .StatsCard {
+    margin-top: 16px;
+  }
+
+  .header {
+    display: flex;
+    margin-bottom: 16px;
+
+    .icon {
+      margin-right: 8px;
+    }
+
+    .title {
+      font-weight: 700;
+    }
+  }
+
+}
