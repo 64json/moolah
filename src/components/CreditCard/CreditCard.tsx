@@ -10,14 +10,22 @@ interface Props extends HTMLAttributes<HTMLDivElement> {
 
 export function CreditCard({ className }: Props) {
   const [flipped, setFlipped] = useState(false);
+  const [hidden, setHidden] = useState(true);
 
   return (
-    <div className={c(classes.CreditCard, className)} onClick={() => setFlipped(!flipped)}>
+    <div className={c(classes.CreditCard, className)} onContextMenu={e => {
+      e.preventDefault();
+      setHidden(!hidden);
+    }}
+         onClick={() => setFlipped(!flipped)}>
       <div className={c(classes.flipper, flipped && classes.flipped)}>
         <div className={classes.front}>
           <img className={classes.chip} src={card_chip} />
-          <div className={classes.number}>
-            **** **** **** 2984
+          <div className={c(classes.number, hidden && classes.hidden)}>
+            <span className={classes.digits}>1234</span>
+            <span className={classes.digits}>5678</span>
+            <span className={classes.digits}>1234</span>
+            <span className={classes.digits}>2984</span>
           </div>
           <div className={classes.expire}>
             <div className={classes.goodThru}>

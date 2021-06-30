@@ -5,9 +5,11 @@
   position: relative;
   width: 328px;
   height: 206.81px;
+  user-select: none;
 
   .flipper {
     transition: 500ms;
+    transition-timing-function: ease-in-out;
     transform-style: preserve-3d;
     position: relative;
     width: 100%;
@@ -61,6 +63,27 @@
       .number {
         font-size: 24px;
         margin-bottom: 16px;
+
+        .digits {
+          margin-right: 8px;
+        }
+
+        &.hidden {
+          .digits {
+            &:not(:last-child) {
+              position: relative;
+              visibility: hidden;
+
+              &:after {
+                visibility: visible;
+                position: absolute;
+                left: 0;
+                content: '••••';
+                opacity: .64;
+              }
+            }
+          }
+        }
       }
 
       .expire {

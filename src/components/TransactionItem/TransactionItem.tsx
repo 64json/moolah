@@ -17,7 +17,7 @@ export function TransactionItem({ className }: Props) {
           Piano Lessons
         </div>
         <div className={classes.secondary}>
-          Education · Jul 21
+          $139.14 · Jul 21
         </div>
       </div>
       <div className={classes.amount}>
