@@ -5,6 +5,7 @@ import { Welcome } from '../../pages/Welcome';
 import { AppContext, PageIndex } from '../../contexts/AppContext';
 import { SignIn } from '../../pages/SignIn';
 import { SignUp } from '../../pages/SignUp';
+import { CSSTransition, SwitchTransition } from 'react-transition-group';
 
 export function App() {
   const { pageIndex } = useContext(AppContext);
@@ -42,7 +43,18 @@ export function App() {
       }}>
         <div className={classes.wave} />
       </div>
-      {page}
+      <SwitchTransition>
+        <CSSTransition
+          key={backgroundHeight}
+          timeout={200}
+          unmountOnExit
+          classNames={classes}
+        >
+          <div className={classes.page}>
+            {page}
+          </div>
+        </CSSTransition>
+      </SwitchTransition>
     </div>
   );
 }

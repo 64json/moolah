@@ -14,3 +14,9 @@ $color-positive: #37AE6E;
 @mixin shadow {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.16);
 }
+
+$onEnter: '&.enter:not(.enterActive)';
+$onEnterDone: '&.enterDone';
+$onExit: '&.exit';
+$onTransition: '#{$onEnter}, #{$onExit}';
+$transition: '&.enterActive, &.exit';
