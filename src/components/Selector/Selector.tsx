@@ -16,7 +16,7 @@ export function Selector({ className, options, value, onChange }: Props) {
         Object.keys(options).map(label => {
           const v = options[label];
           return (
-            <div className={c(classes.option, v === value && classes.active)} onClick={() => onChange(v)}>
+            <div key={v} className={c(classes.option, v === value && classes.active)} onClick={() => onChange(v)}>
               {label}
             </div>
           );
