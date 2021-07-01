@@ -30,7 +30,7 @@ export function Welcome() {
         <Button primary className={classes.signUp} onClick={() => setPageIndex(PageIndex.Main)}>
           Sign Up
         </Button>
-        <Button className={classes.signIn} onClick={() => setPageIndex(PageIndex.Main)}>
+        <Button className={classes.signIn} onClick={() => setPageIndex(PageIndex.SignIn)}>
           Sign In
         </Button>
       </div>

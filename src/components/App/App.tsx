@@ -3,6 +3,7 @@ import classes from './App.module.scss';
 import { Main } from '../../pages/Main';
 import { Welcome } from '../../pages/Welcome';
 import { AppContext, PageIndex } from '../../contexts/AppContext';
+import { SignIn } from '../../pages/SignIn';
 
 export function App() {
   const { pageIndex } = useContext(AppContext);
@@ -11,6 +12,8 @@ export function App() {
     switch (pageIndex) {
       case PageIndex.Welcome:
         return <Welcome />;
+      case PageIndex.SignIn:
+        return <SignIn />;
       case PageIndex.Main:
         return <Main />;
     }
@@ -20,6 +23,8 @@ export function App() {
     switch (pageIndex) {
       case PageIndex.Welcome:
         return 408;
+      case PageIndex.SignIn:
+        return 268;
       case PageIndex.Main:
         return 0;
     }

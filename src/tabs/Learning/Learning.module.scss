@@ -16,21 +16,20 @@
 
     .input {
       flex: 1;
-      height: 32px;
       border-radius: 4px;
       background-color: $color-primary-light;
       display: flex;
       align-items: center;
       overflow: hidden;
-      padding: 0 8px;
 
       .icon {
-        margin-right: 4px;
-        font-size: 12px;
+        font-size: 14px;
+        margin-left: 12px;
         color: $color-text-light;
       }
 
       input {
+        padding-left: 8px;
         align-self: stretch;
         flex: 1;
       }

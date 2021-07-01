@@ -22,13 +22,16 @@ a {
   text-decoration: none;
 }
 
-input {
+input[type=text], input[type=password] {
   font-family: inherit;
   color: inherit;
   border: none;
   outline: none;
-  background: none;
   font-size: 14px;
+  height: 40px;
+  background: $color-primary-light none;
+  border-radius: 4px;
+  padding: 0 16px;
 
   &::placeholder {
     color: $color-text-light;
