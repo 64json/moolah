@@ -34,3 +34,7 @@ input {
     color: $color-text-light;
   }
 }
+
+* {
+  flex-shrink: 0;
+}

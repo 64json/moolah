@@ -1,6 +1,7 @@
 import React, { useMemo, useState } from 'react';
 import classes from './App.module.scss';
 import { Main } from '../../pages/Main';
+import { Welcome } from '../../pages/Welcome';
 
 enum PageIndex {
   Welcome,
@@ -12,6 +13,8 @@ export function App() {
 
   const page = useMemo(() => {
     switch (pageIndex) {
+      case PageIndex.Welcome:
+        return <Welcome />;
       case PageIndex.Main:
         return <Main />;
     }
