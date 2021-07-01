@@ -22,7 +22,7 @@ export function SignUp() {
           <input type="text" placeholder="Last Name" className={classes.input} />
         </div>
         <input type="text" placeholder="Email" className={classes.input} />
-        <input type="text" placeholder="Password" className={classes.input} />
+        <input type="password" placeholder="Password" className={classes.input} />
         <input type="text" className={classes.input} defaultValue="🇸🇬 Singapore (SGD)" />
         <Button primary className={classes.button} onClick={() => setPageIndex(PageIndex.Main)}>
           Let's Go!

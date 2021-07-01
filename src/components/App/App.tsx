@@ -36,7 +36,10 @@ export function App() {
 
   return (
     <div className={classes.App}>
-      <div className={classes.background} style={{ height: backgroundHeight }}>
+      <div className={classes.background} style={{
+        height: backgroundHeight,
+        opacity: backgroundHeight > 0 ? 1 : 0,
+      }}>
         <div className={classes.wave} />
       </div>
       {page}

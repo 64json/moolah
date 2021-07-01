@@ -18,7 +18,7 @@ export function SignIn() {
           Get back to managing your moolah!
         </div>
         <input type="text" placeholder="Email" className={classes.input} />
-        <input type="text" placeholder="Password" className={classes.input} />
+        <input type="password" placeholder="Password" className={classes.input} />
         <Button primary className={classes.button} onClick={() => setPageIndex(PageIndex.Main)}>
           Let's Go!
         </Button>
