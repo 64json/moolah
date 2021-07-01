@@ -10,12 +10,12 @@
     top: 0;
     left: 0;
     right: 0;
-    height: 408px;
     background-image: url(../../assets/gradient.svg);
     background-size: 400%;
     background-repeat: repeat-x;
     animation: slide-bg 40s linear infinite;
     overflow: hidden;
+    transition: height 200ms;
 
     @keyframes slide-bg {
       0% {
@@ -37,10 +37,10 @@
 
       @keyframes slide-wave {
         0% {
-          transform: translateX(0);
+          background-position-x: 0;
         }
         100% {
-          transform: translateX(-50%);
+          background-position-x: -376px;
         }
       }
     }

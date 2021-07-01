@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import classes from './Welcome.module.scss';
 import moo_default from '../../assets/moo_default.png';
 import welcome_float_0 from '../../assets/welcome_float_0.png';
@@ -6,8 +6,11 @@ import welcome_float_1 from '../../assets/welcome_float_1.png';
 import welcome_float_2 from '../../assets/welcome_float_2.png';
 import welcome_float_3 from '../../assets/welcome_float_3.png';
 import { Button } from '../../components/Button';
+import { AppContext, PageIndex } from '../../contexts/AppContext';
 
 export function Welcome() {
+  const { setPageIndex } = useContext(AppContext);
+
   return (
     <div className={classes.Welcome}>
       <div className={classes.floats}>
@@ -24,10 +27,10 @@ export function Welcome() {
         <div className={classes.secondary}>
           Start managing your money.
         </div>
-        <Button primary className={classes.signUp}>
+        <Button primary className={classes.signUp} onClick={() => setPageIndex(PageIndex.Main)}>
           Sign Up
         </Button>
-        <Button className={classes.signIn}>
+        <Button className={classes.signIn} onClick={() => setPageIndex(PageIndex.Main)}>
           Sign In
         </Button>
       </div>

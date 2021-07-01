@@ -38,7 +38,9 @@
   }
 
   .section {
-    margin-bottom: 16px;
+    & + .section {
+      margin-top: 24px;
+    }
 
     .header {
       font-weight: 700;

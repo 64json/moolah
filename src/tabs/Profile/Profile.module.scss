@@ -33,7 +33,9 @@
 
 
   .section {
-    margin-bottom: 16px;
+    & + .section {
+      margin-top: 24px;
+    }
 
     .header {
       font-weight: 700;
@@ -48,7 +50,7 @@
       justify-content: space-around;
 
       .badge {
-        width: 76px;
+        width: 88px;
         padding: 4px;
       }
     }
