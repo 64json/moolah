@@ -2,8 +2,8 @@ import React, { createContext, Dispatch, ReactNode, useMemo, useState } from 're
 
 export enum PageIndex {
   Welcome,
-  SignIn,
   SignUp,
+  SignIn,
   Main
 }
 

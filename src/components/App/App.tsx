@@ -4,6 +4,7 @@ import { Main } from '../../pages/Main';
 import { Welcome } from '../../pages/Welcome';
 import { AppContext, PageIndex } from '../../contexts/AppContext';
 import { SignIn } from '../../pages/SignIn';
+import { SignUp } from '../../pages/SignUp';
 
 export function App() {
   const { pageIndex } = useContext(AppContext);
@@ -12,6 +13,8 @@ export function App() {
     switch (pageIndex) {
       case PageIndex.Welcome:
         return <Welcome />;
+      case PageIndex.SignUp:
+        return <SignUp />;
       case PageIndex.SignIn:
         return <SignIn />;
       case PageIndex.Main:
@@ -23,6 +26,7 @@ export function App() {
     switch (pageIndex) {
       case PageIndex.Welcome:
         return 408;
+      case PageIndex.SignUp:
       case PageIndex.SignIn:
         return 268;
       case PageIndex.Main:

@@ -1,6 +1,6 @@
 @import '../../constants';
 
-.SignIn {
+.SignUp {
   width: 100%;
   height: 100%;
   display: flex;
@@ -30,11 +30,25 @@
       margin-bottom: 32px;
     }
 
-    .input {
+    > .row,
+    > .input {
       align-self: stretch;
 
+      & + .row,
       & + .input {
         margin-top: 16px;
+      }
+    }
+
+    .row {
+      display: flex;
+
+      .input {
+        flex: 1;
+
+        & + .input {
+          margin-left: 16px;
+        }
       }
     }
 

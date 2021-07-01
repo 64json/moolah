@@ -32,6 +32,7 @@ input[type=text], input[type=password] {
   background: $color-primary-light none;
   border-radius: 4px;
   padding: 0 16px;
+  min-width: 0;
 
   &::placeholder {
     color: $color-text-light;

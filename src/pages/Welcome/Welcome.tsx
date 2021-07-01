@@ -27,7 +27,7 @@ export function Welcome() {
         <div className={classes.secondary}>
           Start managing your money.
         </div>
-        <Button primary className={classes.signUp} onClick={() => setPageIndex(PageIndex.Main)}>
+        <Button primary className={classes.signUp} onClick={() => setPageIndex(PageIndex.SignUp)}>
           Sign Up
         </Button>
         <Button className={classes.signIn} onClick={() => setPageIndex(PageIndex.SignIn)}>
