@@ -6,6 +6,9 @@
     "backend",
     "frontend"
   ],
+  "scripts": {
+    "start": "yarn workspace backend start & yarn workspace frontend start"
+  },
   "dependencies": {
   }
 }
