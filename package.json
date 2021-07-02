@@ -7,7 +7,9 @@
     "frontend"
   ],
   "scripts": {
-    "start": "yarn workspace backend start & yarn workspace frontend start"
+    "build": "yarn workspace backend build",
+    "start": "yarn workspace backend start:prod",
+    "dev": "yarn workspace backend start & yarn workspace frontend start"
   },
   "dependencies": {
   }
