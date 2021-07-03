@@ -19,6 +19,12 @@ export class User {
 
   @Prop()
   country: string;
+
+  @Prop()
+  walletId: string;
+
+  @Prop()
+  walletContactId: string;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);
