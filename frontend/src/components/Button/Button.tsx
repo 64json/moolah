@@ -1,15 +1,13 @@
-import React, { HTMLAttributes, ReactNode } from 'react';
+import React, { HTMLAttributes } from 'react';
 import classes from './Button.module.scss';
 import { c } from '../../utils';
 
-interface Props extends HTMLAttributes<HTMLDivElement> {
-  className?: string;
+interface Props extends HTMLAttributes<HTMLButtonElement> {
   primary?: boolean;
-  children: ReactNode;
 }
 
 export function Button({ className, primary, ...restProps }: Props) {
   return (
-    <div className={c(classes.Button, primary && classes.primary, className)} {...restProps} />
+    <button className={c(classes.Button, primary && classes.primary, className)} {...restProps} />
   );
 }
