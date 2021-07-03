@@ -1,5 +1,5 @@
 import { UserDocument } from './user/user.schema';
-import { makeRequest } from './utils';
+import { getCurrency, makeRequest } from './utils';
 
 export async function createWallet(user: UserDocument) {
   const { body: { data } } = await makeRequest('POST', '/v1/user', {
@@ -61,4 +61,15 @@ export async function getCard(user: UserDocument) {
     expirationMonth,
     expirationYear,
   };
+}
+
+
+export async function createCheckoutPage(user: UserDocument, amount: number) {
+  const { body: { data } } = await makeRequest('POST', '/v1/checkout', {
+    amount,
+    country: user.country,
+    currency: getCurrency(user.country),
+    ewallet: user.walletId,
+  });
+  return data.redirect_url;
 }
