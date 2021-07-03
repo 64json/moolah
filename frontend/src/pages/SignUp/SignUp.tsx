@@ -23,7 +23,14 @@ export function SignUp() {
         </div>
         <input type="text" placeholder="Email" className={classes.input} />
         <input type="password" placeholder="Password" className={classes.input} />
-        <input type="text" className={classes.input} defaultValue="🇸🇬 Singapore (SGD)" />
+        <select className={classes.input} defaultValue="SG">
+          <option value="IL">🇮🇱 Israel</option>
+          <option value="MX">🇲🇽 Mexico</option>
+          <option value="NL">🇳🇱 Netherlands</option>
+          <option value="SG">🇸🇬 Singapore</option>
+          <option value="UK">🇬🇧 United Kingdom</option>
+          <option value="US">🇺🇸 United States</option>
+        </select>
         <Button primary className={classes.button} onClick={() => setPageIndex(PageIndex.Main)}>
           Let's Go!
         </Button>

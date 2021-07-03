@@ -22,7 +22,9 @@ a {
   text-decoration: none;
 }
 
-input[type=text], input[type=password] {
+input[type=text],
+input[type=password],
+select {
   font-family: inherit;
   color: inherit;
   border: none;
