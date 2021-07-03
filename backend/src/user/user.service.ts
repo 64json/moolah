@@ -5,13 +5,12 @@ import { InjectModel } from '@nestjs/mongoose';
 import { CreateUserDto } from './dto/create-user.dto';
 import * as bcrypt from 'bcrypt';
 import { saltOrRounds } from '../auth/constants';
-import { WalletService } from '../wallet/wallet.service';
+import * as Rapyd from '../rapyd';
 
 @Injectable()
 export class UserService {
   constructor(
     @InjectModel(User.name) private userModel: Model<UserDocument>,
-    private walletService: WalletService,
   ) {
   }
 
@@ -22,12 +21,16 @@ export class UserService {
       ...createUserDto,
       password: hashedPassword,
     });
-    createdUser.save();
+    await createdUser.save();
 
-    const { walletId, walletContactId } = await this.walletService.createWallet(createdUser);
+    const { walletId, walletContactId } = await Rapyd.createWallet(createdUser);
     createdUser.walletId = walletId;
     createdUser.walletContactId = walletContactId;
-    createdUser.save();
+    await createdUser.save();
+
+    const { cardId } = await Rapyd.issueCard(createdUser);
+    createdUser.cardId = cardId;
+    await createdUser.save();
 
     return createdUser;
   }

@@ -25,6 +25,9 @@ export class User {
 
   @Prop()
   walletContactId: string;
+
+  @Prop()
+  cardId: string;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

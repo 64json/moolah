@@ -15,13 +15,10 @@ export class UserController {
     return this.userService.create(createUserDto);
   }
 
-  @Get()
-  async findAll() {
-    return this.userService.findAll();
-  }
-
   @Get('/me')
   async getMe(@Request() req) {
-    return this.userService.getMe(req);
+    const user = await this.userService.getMe(req);
+    const { password, ...userJSON } = user.toJSON();
+    return userJSON;
   }
 }
