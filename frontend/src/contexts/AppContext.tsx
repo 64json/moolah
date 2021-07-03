@@ -1,5 +1,12 @@
-import React, { createContext, Dispatch, ReactNode, useCallback, useMemo, useState } from 'react';
-import { BASE_URL, clearAccessToken, saveAccessToken, setAccessToken, unsetAccessToken } from '../utils';
+import React, { createContext, Dispatch, ReactNode, useCallback, useEffect, useMemo, useState } from 'react';
+import {
+  BASE_URL,
+  clearAccessToken,
+  loadAccessToken,
+  saveAccessToken,
+  setAccessToken,
+  unsetAccessToken,
+} from '../utils';
 import axios from 'axios';
 
 export enum PageIndex {
@@ -91,6 +98,21 @@ export function AppProvider({ children }: Props) {
     setMe(null);
     setCard(null);
   }, []);
+
+  useEffect(() => {
+    const token = loadAccessToken();
+    if (token) {
+      setAccessToken(token);
+      fetchAll()
+        .then(() => {
+          setPageIndex(PageIndex.Main);
+        })
+        .catch(e => {
+          console.error(e);
+          signOut();
+        });
+    }
+  }, [fetchAll, signOut]);
 
   const value = useMemo<Value>(
     () => ({
