@@ -1,24 +1,43 @@
-import React, { HTMLAttributes, useState } from 'react';
+import React, { HTMLAttributes, useCallback, useContext, useState } from 'react';
 import classes from './CreditCard.module.scss';
 import card_chip from '../../assets/card_chip.png';
 import mastercard from '../../assets/mastercard.png';
-import { c } from '../../utils';
+import { BASE_URL, c } from '../../utils';
 import { Button } from '../Button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUnlock } from '@fortawesome/free-solid-svg-icons';
+import { AppContext } from '../../contexts/AppContext';
+import axios from 'axios';
 
 interface Props extends HTMLAttributes<HTMLDivElement> {
   className?: string;
 }
 
 export function CreditCard({ className }: Props) {
+  const { me, card, fetchCard } = useContext(AppContext);
+
   const [flipped, setFlipped] = useState(false);
   const [hidden, setHidden] = useState(true);
-  const [deactivated, setDeactivated] = useState(true);
+
+  const activateCard = useCallback(async () => {
+    await axios.post(`${BASE_URL}/wallet/card/activate`);
+    await fetchCard();
+  }, [fetchCard]);
+
+  if (!card) return null;
+
+  const {
+    status,
+    cardNumber,
+    cvc,
+    expirationMonth,
+    expirationYear,
+  } = card;
+  const inactive = status === 'INA';
 
   return (
     <div className={c(classes.CreditCard, className)}>
-      <div className={c(classes.flipper, flipped && classes.flipped, deactivated && classes.deactivated)}
+      <div className={c(classes.flipper, flipped && classes.flipped, inactive && classes.inactive)}
            onContextMenu={e => {
              e.preventDefault();
              setHidden(!hidden);
@@ -27,21 +46,21 @@ export function CreditCard({ className }: Props) {
         <div className={classes.front}>
           <img className={classes.chip} src={card_chip} />
           <div className={c(classes.number, hidden && classes.hidden)}>
-            <span className={classes.digits}>1234</span>
-            <span className={classes.digits}>5678</span>
-            <span className={classes.digits}>1234</span>
-            <span className={classes.digits}>2984</span>
+            <span className={classes.digits}>{cardNumber.slice(0, 4)}</span>
+            <span className={classes.digits}>{cardNumber.slice(4, 8)}</span>
+            <span className={classes.digits}>{cardNumber.slice(8, 12)}</span>
+            <span className={classes.digits}>{cardNumber.slice(12, 16)}</span>
           </div>
           <div className={classes.expire}>
             <div className={classes.goodThru}>
               Good<br />Thru
             </div>
             <div className={classes.date}>
-              12/24
+              {expirationMonth}/{expirationYear}
             </div>
           </div>
           <div className={classes.name}>
-            Jasmine Park
+            {me?.firstName} {me?.lastName}
           </div>
           <img className={classes.logo} src={mastercard} />
         </div>
@@ -49,7 +68,7 @@ export function CreditCard({ className }: Props) {
           <div className={classes.stripe} />
           <div className={classes.signature}>
             <div className={classes.cvc}>
-              409
+              {cvc}
             </div>
           </div>
           <div className={classes.row}>
@@ -63,8 +82,8 @@ export function CreditCard({ className }: Props) {
         </div>
       </div>
       {
-        deactivated &&
-        <Button className={classes.activate} onClick={() => setDeactivated(false)}>
+        inactive &&
+        <Button className={classes.activate} onClick={() => activateCard()}>
           <FontAwesomeIcon icon={faUnlock} />&nbsp;&nbsp;Click to Activate Card
         </Button>
       }

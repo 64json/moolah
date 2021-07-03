@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import classes from './Profile.module.scss';
 import { GoalItem } from '../../components/GoalItem';
 import { c } from '../../utils';
@@ -11,8 +11,11 @@ import badge_5 from '../../assets/badge_5.png';
 import badge_6 from '../../assets/badge_6.png';
 import badge_7 from '../../assets/badge_7.png';
 import badge_8 from '../../assets/badge_8.png';
+import { AppContext } from '../../contexts/AppContext';
 
 export function Profile() {
+  const { me } = useContext(AppContext);
+
   return (
     <div className={classes.Profile}>
       <div className={classes.profileRow}>
@@ -20,10 +23,10 @@ export function Profile() {
              style={{ backgroundImage: 'url(https://images.pexels.com/photos/1096147/pexels-photo-1096147.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260)' }} />
         <div className={classes.text}>
           <div className={classes.primary}>
-            Jasmine Park
+            {me?.firstName} {me?.lastName}
           </div>
           <div className={classes.secondary}>
-            jp_monies@gmail.com
+            {me?.email}
           </div>
         </div>
       </div>

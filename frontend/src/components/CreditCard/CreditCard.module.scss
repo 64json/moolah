@@ -22,7 +22,7 @@
       transform: rotateY(180deg);
     }
 
-    &.deactivated {
+    &.inactive {
       opacity: .16;
       pointer-events: none;
     }

@@ -11,12 +11,14 @@ export class WalletController {
   async activateCard(@Request() req) {
     const user = await this.userService.getMe(req);
     await Rapyd.activateCard(user);
-    return Rapyd.getCard(user);
+    const card = await Rapyd.getCard(user);
+    return { card };
   }
 
   @Get('/card')
   async getCard(@Request() req) {
     const user = await this.userService.getMe(req);
-    return Rapyd.getCard(user);
+    const card = await Rapyd.getCard(user);
+    return { card };
   }
 }
