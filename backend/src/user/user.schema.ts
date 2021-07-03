@@ -18,7 +18,7 @@ export class User {
   password: string;
 
   @Prop()
-  currency: string;
+  country: string;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

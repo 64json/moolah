@@ -14,5 +14,5 @@ export class CreateUserDto {
   password: string;
 
   @IsNotEmpty()
-  currency: string;
+  country: string;
 }
