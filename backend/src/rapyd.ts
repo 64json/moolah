@@ -2,6 +2,8 @@ import { UserDocument } from './user/user.schema';
 import { getCurrency, makeRequest } from './utils';
 
 export async function createWallet(user: UserDocument) {
+  const [yyyy, mm, dd] = user.dob.split('-');
+
   const { body: { data } } = await makeRequest('POST', '/v1/user', {
     first_name: user.firstName,
     last_name: user.lastName,
@@ -12,16 +14,16 @@ export async function createWallet(user: UserDocument) {
       last_name: user.lastName,
       country: user.country,
       contact_type: 'personal',
-      date_of_birth: '08/14/1998', // TODO: replace with real data
+      date_of_birth: `${mm}/${dd}/${yyyy}`,
       'address': {
         'name': `${user.firstName} ${user.lastName}`,
-        'line_1': '123 Main Street',
-        'line_2': '',
-        'city': 'Anytown',
-        'state': 'NY',
-        'country': 'US',
-        'zip': '12345',
-        'created_at': 1608023967,
+        'line_1': user.line1,
+        'line_2': user.line2,
+        'city': user.city,
+        'state': user.state,
+        'country': user.country,
+        'zip': user.zip,
+        'created_at': Date.now() / 1e3 | 0,
       },
     },
   });

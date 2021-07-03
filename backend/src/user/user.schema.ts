@@ -18,7 +18,25 @@ export class User {
   password: string;
 
   @Prop()
+  dob: string;
+
+  @Prop()
   country: string;
+
+  @Prop()
+  line1: string;
+
+  @Prop()
+  line2: string;
+
+  @Prop()
+  city: string;
+
+  @Prop()
+  state: string;
+
+  @Prop()
+  zip: string;
 
   @Prop()
   walletId: string;
