@@ -7,6 +7,8 @@ import { Wallet } from '../../tabs/Wallet';
 import { Stats } from '../../tabs/Stats';
 import { Learning } from '../../tabs/Learning';
 import { Profile } from '../../tabs/Profile';
+import { ProfileSettings } from '../../modals/ProfileSettings';
+import { TransitionGroup } from 'react-transition-group';
 
 enum TabIndex {
   Wallet,
@@ -31,6 +33,8 @@ const tabs = [{
 
 export function Main() {
   const [tabIndex, setTabIndex] = useState(TabIndex.Wallet);
+  const [settingsOpened, setSettingsOpened] = useState(false);
+
   const tab = tabs[tabIndex];
   const content = useMemo(() => {
     switch (tabIndex) {
@@ -54,7 +58,7 @@ export function Main() {
           </div>
           {
             tabIndex === TabIndex.Profile &&
-            <FontAwesomeIcon className={classes.settings} icon={faCog} />
+            <FontAwesomeIcon className={classes.settings} icon={faCog} onClick={() => setSettingsOpened(true)} />
           }
         </div>
         <main className={classes.main}>
@@ -71,6 +75,9 @@ export function Main() {
           ))
         }
       </nav>
+      <TransitionGroup>
+        {settingsOpened && <ProfileSettings onClose={() => setSettingsOpened(false)} />}
+      </TransitionGroup>
     </div>
   );
 }

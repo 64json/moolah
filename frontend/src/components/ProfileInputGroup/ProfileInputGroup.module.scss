@@ -1,0 +1,36 @@
+@import '../../constants';
+
+.ProfileInputGroup {
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+
+  &.error {
+    input,
+    select {
+      border: 1px solid $color-negative;
+    }
+  }
+
+  > .row,
+  > .input {
+    align-self: stretch;
+
+    & + .row,
+    & + .input {
+      margin-top: 16px;
+    }
+  }
+
+  .row {
+    display: flex;
+
+    .input {
+      flex: 1;
+
+      & + .input {
+        margin-left: 16px;
+      }
+    }
+  }
+}

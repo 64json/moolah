@@ -1,5 +1,5 @@
 import React, { createContext, Dispatch, ReactNode, useCallback, useMemo, useState } from 'react';
-import { BASE_URL, saveAccessToken, setAccessToken } from '../utils';
+import { BASE_URL, clearAccessToken, saveAccessToken, setAccessToken, unsetAccessToken } from '../utils';
 import axios from 'axios';
 
 export enum PageIndex {
@@ -13,7 +13,13 @@ export interface User {
   firstName: string;
   lastName: string;
   email: string;
+  dob: string;
   country: string;
+  line1: string;
+  line2: string;
+  city: string;
+  state: string;
+  zip: string;
 }
 
 export interface Card {
@@ -37,6 +43,8 @@ interface Value {
   fetchAll(): Promise<void[]>;
 
   signIn(email: string, password: string): Promise<void>;
+
+  signOut(): void;
 }
 
 export const AppContext = createContext<Value>(null as any);
@@ -77,6 +85,13 @@ export function AppProvider({ children }: Props) {
     await fetchAll();
   }, [fetchAll]);
 
+  const signOut = useCallback(() => {
+    clearAccessToken();
+    unsetAccessToken();
+    setMe(null);
+    setCard(null);
+  }, []);
+
   const value = useMemo<Value>(
     () => ({
       pageIndex,
@@ -87,6 +102,7 @@ export function AppProvider({ children }: Props) {
       fetchCard,
       fetchAll,
       signIn,
+      signOut,
     }),
     [
       pageIndex,
@@ -97,6 +113,7 @@ export function AppProvider({ children }: Props) {
       fetchCard,
       fetchAll,
       signIn,
+      signOut,
     ],
   );
 

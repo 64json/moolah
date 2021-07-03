@@ -1,0 +1,58 @@
+@import '../../constants';
+
+.Modal {
+  position: fixed;
+  z-index: 2;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  background-color: white;
+
+  #{$onTransition} {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+
+  #{$transition} {
+    transition: all 200ms;
+    transition-property: opacity, transform;
+  }
+
+  .header {
+    padding: 0 16px 0;
+    display: flex;
+    align-items: stretch;
+    box-shadow: 0 0 16px rgba(68, 77, 86, 0.08);
+
+    .spacing {
+      flex: 1;
+      display: flex;
+      align-items: stretch;
+    }
+
+    .button {
+      font-size: 18px;
+      color: $color-text-light;
+      display: flex;
+      align-items: center;
+      padding: 8px;
+      cursor: pointer;
+    }
+
+    .title {
+      font-size: 18px;
+      font-weight: 700;
+      padding: 12px;
+    }
+  }
+
+  .content {
+    flex: 1;
+    padding: 24px;
+    overflow-y: auto;
+  }
+}

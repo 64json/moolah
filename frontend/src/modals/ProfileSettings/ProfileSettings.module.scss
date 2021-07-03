@@ -1,0 +1,18 @@
+@import '../../constants';
+
+.ProfileSettings {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .button {
+    margin-top: 32px;
+    margin-bottom: 16px;
+  }
+
+  .signOut {
+    cursor: pointer;
+    font-size: 14px;
+    text-decoration: underline;
+  }
+}
