@@ -2,8 +2,9 @@ import React, { useCallback, useContext, useState } from 'react';
 import classes from './SignIn.module.scss';
 import sign_up_banner from '../../assets/sign_up_banner.png';
 import { Button } from '../../components/Button';
-import { AppContext, PageIndex } from '../../contexts/AppContext';
+import { AppContext } from '../../contexts/AppContext';
 import { c } from '../../utils';
+import { PageIndex } from '../../enums/PageIndex';
 
 export function SignIn() {
   const { setPageIndex, signIn } = useContext(AppContext);

@@ -23,9 +23,18 @@ export function Wallet() {
         </Button>
       </div>
       <div className={classes.list}>
+        <div className={classes.header}>
+          July 21, 2021
+        </div>
         <TransactionItem />
         <TransactionItem />
+        <div className={classes.header}>
+          July 18, 2021
+        </div>
         <TransactionItem />
+        <div className={classes.header}>
+          July 15, 2021
+        </div>
         <TransactionItem />
         <TransactionItem />
         <TransactionItem />

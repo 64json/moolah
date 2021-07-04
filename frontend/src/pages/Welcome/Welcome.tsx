@@ -6,7 +6,8 @@ import welcome_float_1 from '../../assets/welcome_float_1.png';
 import welcome_float_2 from '../../assets/welcome_float_2.png';
 import welcome_float_3 from '../../assets/welcome_float_3.png';
 import { Button } from '../../components/Button';
-import { AppContext, PageIndex } from '../../contexts/AppContext';
+import { AppContext } from '../../contexts/AppContext';
+import { PageIndex } from '../../enums/PageIndex';
 
 export function Welcome() {
   const { setPageIndex } = useContext(AppContext);

@@ -1,4 +1,13 @@
 import axios from 'axios';
+import {
+  faDrumstickBite,
+  faGift,
+  faGraduationCap,
+  faHandHoldingHeart,
+  faMoneyBillAlt,
+  faSmile,
+} from '@fortawesome/free-solid-svg-icons';
+import { Category } from './interfaces/Category';
 
 export type Falsy = false | 0 | '' | null | undefined;
 
@@ -19,3 +28,29 @@ export const unsetAccessToken = () => delete axios.defaults.headers.common['Auth
 export const BASE_URL = window.location.hostname === 'localhost' ?
   'http://localhost:8000' :
   'https://m00lah-api.herokuapp.com';
+
+export const CATEGORIES: Category[] = [{
+  name: 'Leisure',
+  icon: faSmile,
+  color: '#FAD297',
+}, {
+  name: 'Education',
+  icon: faGraduationCap,
+  color: '#91DEA2',
+}, {
+  name: 'Gifts',
+  icon: faGift,
+  color: '#85CAFF',
+}, {
+  name: 'Food',
+  icon: faDrumstickBite,
+  color: '#F58C96',
+}, {
+  name: 'Charity',
+  icon: faHandHoldingHeart,
+  color: '#FBA0E6',
+}, {
+  name: 'Other',
+  icon: faMoneyBillAlt,
+  color: '#A8A1FB',
+}];

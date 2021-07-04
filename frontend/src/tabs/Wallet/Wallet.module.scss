@@ -33,6 +33,14 @@
   }
 
   .list {
+    .header {
+      font-size: 12px;
+      margin-bottom: 8px;
+      margin-top: 12px;
 
+      &:first-child {
+        margin-top: 0;
+      }
+    }
   }
 }

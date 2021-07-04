@@ -8,34 +8,9 @@ import {
   unsetAccessToken,
 } from '../utils';
 import axios from 'axios';
-
-export enum PageIndex {
-  Welcome,
-  SignUp,
-  SignIn,
-  Main
-}
-
-export interface User {
-  firstName: string;
-  lastName: string;
-  email: string;
-  dob: string;
-  country: string;
-  line1: string;
-  line2: string;
-  city: string;
-  state: string;
-  zip: string;
-}
-
-export interface Card {
-  status: 'INA' | 'ACT';
-  cardNumber: string;
-  cvc: string;
-  expirationMonth: string;
-  expirationYear: string;
-}
+import { User } from '../interfaces/User';
+import { Card } from '../interfaces/Card';
+import { PageIndex } from '../enums/PageIndex';
 
 interface Value {
   pageIndex: PageIndex;

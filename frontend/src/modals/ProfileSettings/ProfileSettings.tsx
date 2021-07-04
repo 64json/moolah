@@ -1,9 +1,10 @@
 import React, { useContext, useState } from 'react';
-import { AppContext, PageIndex } from '../../contexts/AppContext';
+import { AppContext } from '../../contexts/AppContext';
 import { Modal } from '../../components/Modal';
 import { ProfileInputGroup, UserDto } from '../../components/ProfileInputGroup';
 import { Button } from '../../components/Button';
 import classes from './ProfileSettings.module.scss';
+import { PageIndex } from '../../enums/PageIndex';
 
 interface Props {
   onClose: () => void;
