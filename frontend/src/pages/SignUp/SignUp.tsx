@@ -2,14 +2,16 @@ import React, { useCallback, useContext, useState } from 'react';
 import classes from './SignUp.module.scss';
 import sign_up_banner from '../../assets/sign_up_banner.png';
 import { Button } from '../../components/Button';
-import { AppContext } from '../../contexts/AppContext';
+import { DataContext } from '../../contexts/DataContext';
 import { BASE_URL, getCurrency } from '../../utils';
 import axios from 'axios';
 import { ProfileInputGroup, UserDto } from '../../components/ProfileInputGroup';
 import { PageIndex } from '../../enums/PageIndex';
+import { UIContext } from '../../contexts/UIContext';
 
 export function SignUp() {
-  const { setPageIndex, signIn } = useContext(AppContext);
+  const { signIn } = useContext(DataContext);
+  const { setPageIndex } = useContext(UIContext);
 
   const [dto, setDto] = useState<UserDto>({
     firstName: '',

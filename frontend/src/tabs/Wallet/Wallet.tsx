@@ -4,7 +4,7 @@ import { Button } from '../../components/Button';
 import { CreditCard } from '../../components/CreditCard';
 import { TransitionGroup } from 'react-transition-group';
 import { ManualEntry } from '../../modals/ManualEntry';
-import { AppContext } from '../../contexts/AppContext';
+import { DataContext } from '../../contexts/DataContext';
 import { TransactionItem } from '../../components/TransactionItem';
 import { ITransactionItem } from '../../interfaces/ITransactionItem';
 import { DateTime } from 'luxon';
@@ -13,7 +13,7 @@ import { RequestItem } from '../../components/RequestItem';
 import { CATEGORY_OTHER, formatCurrency } from '../../utils';
 
 export function Wallet() {
-  const { me, manualEntries, transactions, balance, requests } = useContext(AppContext);
+  const { me, manualEntries, transactions, balance, requests } = useContext(DataContext);
 
   const [manualEntryOpened, setManualEntryOpened] = useState(false);
   const [payOrRequestOpened, setPayOrRequestOpened] = useState(false);

@@ -6,7 +6,7 @@ import { BASE_URL, c } from '../../utils';
 import { Button } from '../Button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUnlock } from '@fortawesome/free-solid-svg-icons';
-import { AppContext } from '../../contexts/AppContext';
+import { DataContext } from '../../contexts/DataContext';
 import axios from 'axios';
 
 interface Props extends HTMLAttributes<HTMLDivElement> {
@@ -14,7 +14,7 @@ interface Props extends HTMLAttributes<HTMLDivElement> {
 }
 
 export function CreditCard({ className }: Props) {
-  const { me, card, fetchCard } = useContext(AppContext);
+  const { me, card, fetchCard } = useContext(DataContext);
 
   const [flipped, setFlipped] = useState(false);
   const [hidden, setHidden] = useState(true);

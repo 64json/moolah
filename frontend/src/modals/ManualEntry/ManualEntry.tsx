@@ -7,7 +7,7 @@ import { CurrencyInput } from '../../components/CurrencyInput';
 import { CategorySelector } from '../../components/CategorySelector';
 import { BASE_URL, c, CATEGORIES } from '../../utils';
 import axios from 'axios';
-import { AppContext } from '../../contexts/AppContext';
+import { DataContext } from '../../contexts/DataContext';
 
 interface Props {
   onClose: () => void;
@@ -19,7 +19,7 @@ enum Mode {
 }
 
 export function ManualEntry({ onClose, ...restProps }: Props) {
-  const { me, fetchManualEntries } = useContext(AppContext);
+  const { me, fetchManualEntries } = useContext(DataContext);
 
   const [mode, setMode] = useState(Mode.Earned);
   const [amount, setAmount] = useState('0.00');

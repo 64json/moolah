@@ -7,7 +7,7 @@ import { CurrencyInput } from '../../components/CurrencyInput';
 import { CategorySelector } from '../../components/CategorySelector';
 import { BASE_URL, c, CATEGORIES } from '../../utils';
 import axios from 'axios';
-import { AppContext } from '../../contexts/AppContext';
+import { DataContext } from '../../contexts/DataContext';
 
 interface Props {
   onClose: () => void;
@@ -19,7 +19,7 @@ enum Mode {
 }
 
 export function PayOrRequest({ onClose, ...restProps }: Props) {
-  const { me, fetchRequests, fetchTransactions } = useContext(AppContext);
+  const { me, fetchRequests, fetchTransactions } = useContext(DataContext);
 
   const [mode, setMode] = useState(Mode.Pay);
   const [amount, setAmount] = useState('0.00');

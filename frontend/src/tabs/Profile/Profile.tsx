@@ -11,10 +11,10 @@ import badge_5 from '../../assets/badge_5.png';
 import badge_6 from '../../assets/badge_6.png';
 import badge_7 from '../../assets/badge_7.png';
 import badge_8 from '../../assets/badge_8.png';
-import { AppContext } from '../../contexts/AppContext';
+import { DataContext } from '../../contexts/DataContext';
 
 export function Profile() {
-  const { me } = useContext(AppContext);
+  const { me } = useContext(DataContext);
 
   return (
     <div className={classes.Profile}>

@@ -10,7 +10,7 @@ import { Profile } from '../../tabs/Profile';
 import { TransitionGroup } from 'react-transition-group';
 import { Drawer } from '../../components/Drawer';
 import { ProfileSettings } from '../../modals/ProfileSettings';
-import { AppContext } from '../../contexts/AppContext';
+import { UIContext } from '../../contexts/UIContext';
 
 enum TabIndex {
   Wallet,
@@ -34,7 +34,7 @@ const tabs = [{
 }];
 
 export function Main() {
-  const { profileSettingsOpened, setProfileSettingsOpened } = useContext(AppContext);
+  const { profileSettingsOpened, setProfileSettingsOpened } = useContext(UIContext);
 
   const [tabIndex, setTabIndex] = useState(TabIndex.Wallet);
   const [drawerOpened, setDrawerOpened] = useState(false);

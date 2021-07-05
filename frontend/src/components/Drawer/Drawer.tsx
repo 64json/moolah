@@ -4,14 +4,17 @@ import { CSSTransition } from 'react-transition-group';
 import { faCog, faCreditCard } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { NotificationItem } from '../NotificationItem';
-import { AppContext } from '../../contexts/AppContext';
+import { useEsc } from '../../hooks/useEsc';
+import { UIContext } from '../../contexts/UIContext';
 
 interface Props {
   onClose: () => void;
 }
 
 export function Drawer({ onClose, ...restProps }: Props) {
-  const { setProfileSettingsOpened, setCardSettingsOpened } = useContext(AppContext);
+  const { setProfileSettingsOpened, setCardSettingsOpened } = useContext(UIContext);
+
+  useEsc(onClose);
 
   return (
     <CSSTransition

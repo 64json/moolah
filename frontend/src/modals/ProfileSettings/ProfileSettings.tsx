@@ -1,17 +1,19 @@
 import React, { useContext, useState } from 'react';
-import { AppContext } from '../../contexts/AppContext';
+import { DataContext } from '../../contexts/DataContext';
 import { Modal } from '../../components/Modal';
 import { ProfileInputGroup, UserDto } from '../../components/ProfileInputGroup';
 import { Button } from '../../components/Button';
 import classes from './ProfileSettings.module.scss';
 import { PageIndex } from '../../enums/PageIndex';
+import { UIContext } from '../../contexts/UIContext';
 
 interface Props {
   onClose: () => void;
 }
 
 export function ProfileSettings({ onClose, ...restProps }: Props) {
-  const { me, signOut, setPageIndex } = useContext(AppContext);
+  const { setPageIndex } = useContext(UIContext);
+  const { me, signOut } = useContext(DataContext);
 
   const [dto, setDto] = useState<UserDto>({ ...me!, password: '' });
   const [error, setError] = useState(false);

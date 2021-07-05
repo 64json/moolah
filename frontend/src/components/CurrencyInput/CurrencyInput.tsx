@@ -2,7 +2,7 @@ import React, { useContext, useMemo, useRef } from 'react';
 import classes from './CurrencyInput.module.scss';
 import { c, getCurrencySymbol } from '../../utils';
 import ContentEditable from 'react-contenteditable';
-import { AppContext } from '../../contexts/AppContext';
+import { DataContext } from '../../contexts/DataContext';
 
 interface Props {
   className?: string;
@@ -12,7 +12,7 @@ interface Props {
 }
 
 export function CurrencyInput({ className, error, value, onChange }: Props) {
-  const { me } = useContext(AppContext);
+  const { me } = useContext(DataContext);
 
   const inputRef = useRef<HTMLDivElement>(null);
 

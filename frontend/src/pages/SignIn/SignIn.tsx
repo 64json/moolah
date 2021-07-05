@@ -2,12 +2,14 @@ import React, { useCallback, useContext, useState } from 'react';
 import classes from './SignIn.module.scss';
 import sign_up_banner from '../../assets/sign_up_banner.png';
 import { Button } from '../../components/Button';
-import { AppContext } from '../../contexts/AppContext';
+import { DataContext } from '../../contexts/DataContext';
 import { c } from '../../utils';
 import { PageIndex } from '../../enums/PageIndex';
+import { UIContext } from '../../contexts/UIContext';
 
 export function SignIn() {
-  const { setPageIndex, signIn } = useContext(AppContext);
+  const { signIn } = useContext(DataContext);
+  const { setPageIndex } = useContext(UIContext);
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');

@@ -2,14 +2,14 @@ import React, { useContext, useMemo } from 'react';
 import classes from './App.module.scss';
 import { Main } from '../../pages/Main';
 import { Welcome } from '../../pages/Welcome';
-import { AppContext } from '../../contexts/AppContext';
 import { SignIn } from '../../pages/SignIn';
 import { SignUp } from '../../pages/SignUp';
 import { CSSTransition, SwitchTransition } from 'react-transition-group';
 import { PageIndex } from '../../enums/PageIndex';
+import { UIContext } from '../../contexts/UIContext';
 
 export function App() {
-  const { pageIndex } = useContext(AppContext);
+  const { pageIndex } = useContext(UIContext);
 
   const page = useMemo(() => {
     switch (pageIndex) {

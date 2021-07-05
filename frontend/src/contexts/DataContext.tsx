@@ -1,4 +1,4 @@
-import React, { createContext, Dispatch, ReactNode, useCallback, useEffect, useMemo, useState } from 'react';
+import React, { createContext, ReactNode, useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import {
   BASE_URL,
   clearAccessToken,
@@ -14,15 +14,9 @@ import { PageIndex } from '../enums/PageIndex';
 import { ManualEntry } from '../interfaces/ManualEntry';
 import { Request } from '../interfaces/Request';
 import { Transaction } from '../interfaces/Transaction';
+import { UIContext } from './UIContext';
 
 interface Value {
-  pageIndex: PageIndex;
-  profileSettingsOpened: boolean;
-  cardSettingsOpened: boolean;
-  setPageIndex: Dispatch<PageIndex>;
-  setProfileSettingsOpened: Dispatch<boolean>;
-  setCardSettingsOpened: Dispatch<boolean>;
-
   me: User | null;
   card: Card | null;
   manualEntries: ManualEntry[];
@@ -47,16 +41,15 @@ interface Value {
   signOut(): void;
 }
 
-export const AppContext = createContext<Value>(null as any);
+export const DataContext = createContext<Value>(null as any);
 
 interface Props {
   children: ReactNode;
 }
 
-export function AppProvider({ children }: Props) {
-  const [pageIndex, setPageIndex] = useState(PageIndex.Welcome);
-  const [profileSettingsOpened, setProfileSettingsOpened] = useState(false);
-  const [cardSettingsOpened, setCardSettingsOpened] = useState(false);
+export function DataProvider({ children }: Props) {
+  const { setPageIndex } = useContext(UIContext);
+
   const [me, setMe] = useState<User | null>(null);
   const [card, setCard] = useState<Card | null>(null);
   const [manualEntries, setManualEntries] = useState<ManualEntry[]>([]);
@@ -142,12 +135,6 @@ export function AppProvider({ children }: Props) {
 
   const value = useMemo<Value>(
     () => ({
-      pageIndex,
-      profileSettingsOpened,
-      cardSettingsOpened,
-      setPageIndex,
-      setProfileSettingsOpened,
-      setCardSettingsOpened,
       me,
       card,
       manualEntries,
@@ -164,12 +151,6 @@ export function AppProvider({ children }: Props) {
       signOut,
     }),
     [
-      pageIndex,
-      profileSettingsOpened,
-      cardSettingsOpened,
-      setPageIndex,
-      setProfileSettingsOpened,
-      setCardSettingsOpened,
       me,
       card,
       manualEntries,
@@ -187,5 +168,5 @@ export function AppProvider({ children }: Props) {
     ],
   );
 
-  return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
+  return <DataContext.Provider value={value}>{children}</DataContext.Provider>;
 }

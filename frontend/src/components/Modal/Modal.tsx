@@ -1,7 +1,8 @@
-import React, { FormEventHandler, ReactNode, useEffect } from 'react';
+import React, { FormEventHandler, ReactNode } from 'react';
 import classes from './Modal.module.scss';
 import { CSSTransition } from 'react-transition-group';
 import { c } from '../../utils';
+import { useEsc } from '../../hooks/useEsc';
 
 interface Props {
   title: string;
@@ -12,17 +13,7 @@ interface Props {
 }
 
 export function Modal({ title, children, onClose, onSubmit, className, ...restProps }: Props) {
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') {
-        onClose();
-      }
-    };
-    document.addEventListener('keydown', handleKeyDown);
-    return () => {
-      document.removeEventListener('keydown', handleKeyDown);
-    };
-  }, [onClose]);
+  useEsc(onClose);
 
   return (
     <CSSTransition

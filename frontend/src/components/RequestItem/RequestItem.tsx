@@ -5,7 +5,7 @@ import { TransactionItem } from '../TransactionItem';
 import { Request } from '../../interfaces/Request';
 import { DateTime } from 'luxon';
 import { Button } from '../Button';
-import { AppContext } from '../../contexts/AppContext';
+import { DataContext } from '../../contexts/DataContext';
 import axios from 'axios';
 
 interface Props {
@@ -14,7 +14,7 @@ interface Props {
 }
 
 export function RequestItem({ className, item }: Props) {
-  const { me, fetchRequests, fetchTransactions } = useContext(AppContext);
+  const { me, fetchRequests, fetchTransactions } = useContext(DataContext);
 
   const amRecipient = item.recipient._id === me?._id;
 
