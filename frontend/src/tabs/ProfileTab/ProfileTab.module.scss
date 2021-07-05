@@ -1,0 +1,58 @@
+@import '../../constants';
+
+.ProfileTab {
+  .profileRow {
+    display: flex;
+    align-items: center;
+    margin-bottom: 16px;
+
+    .picture {
+      width: 56px;
+      height: 56px;
+      border-radius: 100%;
+      background-size: cover;
+      background-position: center;
+      margin-right: 8px;
+    }
+
+    .text {
+      flex: 1;
+      margin-right: 8px;
+
+      .primary {
+        font-size: 24px;
+        font-weight: 700;
+        margin-bottom: 8px;
+      }
+
+      .secondary {
+
+      }
+    }
+  }
+
+
+  .section {
+    & + .section {
+      margin-top: 24px;
+    }
+
+    .header {
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+  }
+
+  .badgeSection {
+    .grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-around;
+
+      .badge {
+        width: 88px;
+        padding: 4px;
+      }
+    }
+  }
+}

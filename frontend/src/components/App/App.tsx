@@ -1,9 +1,9 @@
 import React, { useContext, useMemo } from 'react';
 import classes from './App.module.scss';
-import { Main } from '../../pages/Main';
-import { Welcome } from '../../pages/Welcome';
-import { SignIn } from '../../pages/SignIn';
-import { SignUp } from '../../pages/SignUp';
+import { MainPage } from '../../pages/MainPage';
+import { WelcomePage } from '../../pages/WelcomePage';
+import { SignInPage } from '../../pages/SignInPage';
+import { SignUpPage } from '../../pages/SignUpPage';
 import { CSSTransition, SwitchTransition } from 'react-transition-group';
 import { PageIndex } from '../../enums/PageIndex';
 import { UIContext } from '../../contexts/UIContext';
@@ -14,13 +14,13 @@ export function App() {
   const page = useMemo(() => {
     switch (pageIndex) {
       case PageIndex.Welcome:
-        return <Welcome />;
+        return <WelcomePage />;
       case PageIndex.SignUp:
-        return <SignUp />;
+        return <SignUpPage />;
       case PageIndex.SignIn:
-        return <SignIn />;
+        return <SignInPage />;
       case PageIndex.Main:
-        return <Main />;
+        return <MainPage />;
     }
   }, [pageIndex]);
 
