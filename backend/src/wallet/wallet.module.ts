@@ -5,12 +5,14 @@ import { UserModule } from '../user/user.module';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ManualEntry, ManualEntrySchema } from './manual-entry.schema';
 import { Request, RequestSchema } from './request.schema';
+import { Transfer, TransferSchema } from './transfer.schema';
 
 @Module({
   imports: [
     UserModule,
     MongooseModule.forFeature([{ name: ManualEntry.name, schema: ManualEntrySchema }]),
     MongooseModule.forFeature([{ name: Request.name, schema: RequestSchema }]),
+    MongooseModule.forFeature([{ name: Transfer.name, schema: TransferSchema }]),
   ],
   controllers: [WalletController],
   providers: [WalletService],

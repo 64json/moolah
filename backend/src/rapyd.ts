@@ -2,7 +2,6 @@ import { User, UserDocument } from './user/user.schema';
 import { RequestDocument } from './wallet/request.schema';
 import { makeRequest } from './utils';
 import { PayOrRequestDto } from './wallet/dto/pay-or-request.dto';
-import * as util from 'util';
 
 export async function createWallet(user: UserDocument) {
   const [yyyy, mm, dd] = user.dob.split('-');
@@ -90,60 +89,48 @@ export async function createCheckoutPage(request: RequestDocument) {
 }
 
 export async function transferFunds(payer: User, recipient: User, dto: PayOrRequestDto) {
-  await makeRequest('POST', '/v1/account/transfer', {
+  const request = {
+    payer,
+    recipient,
+    email: dto.email,
+    amount: dto.amount,
+    currency: dto.currency,
+    title: dto.title,
+    category: dto.category,
+  };
+
+  const { body: { data } } = await makeRequest('POST', '/v1/account/transfer', {
     amount: dto.amount,
     currency: dto.currency,
     source_ewallet: payer.walletId,
     destination_ewallet: recipient.walletId,
     metadata: {
-      request: {
-        payer,
-        recipient,
-        email: dto.email,
-        amount: dto.amount,
-        currency: dto.currency,
-        title: dto.title,
-        category: dto.category,
-      },
+      request,
     },
   });
+
+  const actionDataId = data.id;
+
+  await makeRequest('POST', '/v1/account/transfer/response', {
+    id: actionDataId,
+    status: 'accept',
+    metadata: {
+      request,
+    },
+  });
+
+  return {
+    request,
+    actionDataId,
+  };
 }
 
 export async function listWalletTransactions(user: User) {
-  // TODO: needs pagination / caching but issok for hackathon ¯\_(ツ)_/¯
   const { body: { data } } = await makeRequest('GET', `/v1/user/${user.walletId}/transactions`);
-  const responses: any[] = await Promise.all(data.map(transaction =>
-    makeRequest('GET', `/v1/user/${user.walletId}/transactions/${transaction.id}`)),
-  );
+  return data;
+}
 
-  console.log(util.inspect(responses, true, null, true));
-
-  const transactions = responses
-    .map(response => {
-      const {
-        id,
-        action_data,
-        type,
-        amount,
-        currency,
-        balance,
-        created_at,
-      } = response.body.data;
-      return {
-        id,
-        type,
-        amount,
-        currency,
-        balance,
-        created_at,
-        metadata: action_data?.metadata,
-      };
-    })
-    .sort((a, b) => b.created_at - a.created_at);
-
-  const balance = transactions.length > 0 ? transactions[0].balance : 0;
-  return {
-    balance,
-    transactions,
-  };
+export async function getWalletTransaction(walletId: string, transactionId: string) {
+  const { body: { data } } = await makeRequest('GET', `/v1/user/${walletId}/transactions/${transactionId}`);
+  return data;
 }

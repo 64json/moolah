@@ -14,15 +14,18 @@ interface Props {
 }
 
 export function RequestItem({ className, item }: Props) {
-  const { me, fetchRequests } = useContext(AppContext);
+  const { me, fetchRequests, fetchTransactions } = useContext(AppContext);
 
-  const recipientInfo = useMemo(() => {
-    const { email, payer } = item;
-    if (payer) {
-      return `${payer.firstName} ${payer.lastName}`;
+  const amRecipient = item.recipient._id === me?._id;
+
+  const userInfo = useMemo(() => {
+    const { email, payer, recipient } = item;
+    const user = amRecipient ? payer : recipient;
+    if (user) {
+      return `${user.firstName} ${user.lastName}`;
     }
     return email;
-  }, [item]);
+  }, [amRecipient, item]);
 
   const datetime = useMemo(() => DateTime.fromISO(item.createdAt), [item.createdAt]);
   const formattedDate = useMemo(() => datetime.toLocaleString(DateTime.DATE_MED), [datetime]);
@@ -35,9 +38,8 @@ export function RequestItem({ className, item }: Props) {
   const fulfillRequest = useCallback(async () => {
     await axios.post(`${BASE_URL}/wallet/request/${item._id}`);
     await fetchRequests();
-  }, [fetchRequests, item._id]);
-
-  const amRecipient = item.recipient._id === me?._id;
+    await fetchTransactions();
+  }, [fetchRequests, fetchTransactions, item._id]);
 
   return (
     <div className={c(classes.RequestItem, className)}>
@@ -47,7 +49,7 @@ export function RequestItem({ className, item }: Props) {
           key: item._id,
           category: item.category,
           title: item.title,
-          description: recipientInfo,
+          description: userInfo,
           amount: item.amount * (amRecipient ? +1 : -1),
           currency: item.currency,
           datetime,

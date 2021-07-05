@@ -54,7 +54,7 @@ export function Wallet() {
           };
         }),
     ].sort((a, b) => b.datetime.valueOf() - a.datetime.valueOf()),
-    [manualEntries]);
+    [manualEntries, transactions]);
 
   const formattedBalance = useMemo(() => {
     if (!me?.currency) return '';

@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Post, Request } from '@nestjs/common';
+import { BadRequestException, Body, Controller, Delete, Get, Param, Post, Request } from '@nestjs/common';
 import { UserService } from '../user/user.service';
 import * as Rapyd from '../rapyd';
 import { WalletService } from './wallet.service';
@@ -29,17 +29,21 @@ export class WalletController {
   }
 
   @Get('/transaction')
-  async list(@Request() req) {
+  async listTransactions(@Request() req) {
     const user = await this.userService.getMe(req);
-    return Rapyd.listWalletTransactions(user);
+    return this.walletService.listWalletTransactions(user);
   }
 
   @Post('/request')
   async requestPayment(@Request() req, @Body() dto: PayOrRequestDto) {
     const recipient = await this.userService.getMe(req);
     const payer = await this.userService.findOne(dto.email);
-    const request = await this.walletService.createRequest(payer, recipient, dto);
 
+    if (payer.currency !== recipient.currency) {
+      throw new BadRequestException('You can only transfer funds to the recipient in the same currency.');
+    }
+
+    const request = await this.walletService.createRequest(payer, recipient, dto);
     if (payer) {
       return { type: 'internal' };
     } else {
@@ -54,8 +58,12 @@ export class WalletController {
     const payer = await this.userService.getMe(req);
     const recipient = await this.userService.findOne(dto.email);
 
+    if (payer.currency !== recipient.currency) {
+      throw new BadRequestException('You can only transfer funds to the recipient in the same currency.');
+    }
+
     if (recipient) {
-      await Rapyd.transferFunds(payer, recipient, dto);
+      await this.walletService.transferFunds(payer, recipient, dto);
       return { type: 'internal' };
     } else {
       // TODO: send an email to sign up OR input beneficiary to be payed out
@@ -67,7 +75,7 @@ export class WalletController {
   async fulfillPayment(@Request() req, @Param('requestId') requestId: string) {
     const payer = await this.userService.getMe(req);
     const request = await this.walletService.getRequest(requestId, payer);
-    await Rapyd.transferFunds(payer, request.recipient, request);
+    await this.walletService.transferFunds(payer, request.recipient, request);
     await request.remove();
     return {};
   }
