@@ -49,12 +49,21 @@ export class WalletController {
     const recipient = await this.userService.findOne(dto.email);
 
     if (recipient) {
-      // TODO: transfer money between wallets
+      await Rapyd.transferFunds(payer, recipient, dto);
       return { type: 'internal' };
     } else {
       // TODO: send an email to sign up OR input beneficiary to be payed out
       return { type: 'external' };
     }
+  }
+
+  @Post('/request/:requestId')
+  async fulfillPayment(@Request() req, @Param('requestId') requestId: string) {
+    const payer = await this.userService.getMe(req);
+    const request = await this.walletService.getRequest(requestId, payer);
+    await Rapyd.transferFunds(payer, request.recipient, request);
+    await request.remove();
+    return {};
   }
 
   @Delete('/request/:requestId')
@@ -84,4 +93,6 @@ export class WalletController {
     const requests = await this.walletService.findAllRequests(user);
     return { requests };
   }
+
+  // TODO: webhook to fulfill request to external user
 }

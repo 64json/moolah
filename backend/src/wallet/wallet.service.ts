@@ -43,6 +43,11 @@ export class WalletService {
     });
   }
 
+  async getRequest(requestId: string, payer: User) {
+    return this.requestModel.findOne({ _id: requestId, payer })
+      .populate(['payer', 'recipient']);
+  }
+
   async findAllRequests(user: User): Promise<Request[]> {
     return this.requestModel.find({ $or: [{ payer: user }, { recipient: user }] })
       .sort('-createdAt')

@@ -17,7 +17,7 @@ export function SignUp() {
     email: '',
     password: '',
     dob: '',
-    country: '',
+    country: 'SG',
     line1: '',
     line2: '',
     city: '',

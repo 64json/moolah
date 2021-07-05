@@ -32,6 +32,11 @@ export function RequestItem({ className, item }: Props) {
     await fetchRequests();
   }, [fetchRequests, item._id]);
 
+  const fulfillRequest = useCallback(async () => {
+    await axios.post(`${BASE_URL}/wallet/request/${item._id}`);
+    await fetchRequests();
+  }, [fetchRequests, item._id]);
+
   const amRecipient = item.recipient._id === me?._id;
 
   return (
@@ -61,7 +66,7 @@ export function RequestItem({ className, item }: Props) {
             <Button small onClick={() => removeRequest()}>
               Decline
             </Button>
-            <Button primary small>
+            <Button primary small onClick={() => fulfillRequest()}>
               Pay
             </Button>
           </div>

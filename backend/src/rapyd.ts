@@ -1,6 +1,7 @@
-import { UserDocument } from './user/user.schema';
+import { User, UserDocument } from './user/user.schema';
 import { RequestDocument } from './wallet/request.schema';
 import { getCurrency, makeRequest } from './utils';
+import { PayOrRequestDto } from './wallet/dto/pay-or-request.dto';
 
 export async function createWallet(user: UserDocument) {
   const [yyyy, mm, dd] = user.dob.split('-');
@@ -84,4 +85,23 @@ export async function createCheckoutPage(request: RequestDocument) {
     },
   });
   return data.redirect_url;
+}
+
+export async function transferFunds(payer: User, recipient: User, dto: PayOrRequestDto) {
+  await makeRequest('POST', '/v1/account/transfer', {
+    amount: dto.amount,
+    currency: getCurrency(recipient.country),
+    source_ewallet: payer.walletId,
+    destination_ewallet: recipient.walletId,
+    metadata: {
+      request: {
+        payer,
+        recipient,
+        email: dto.email,
+        amount: dto.amount,
+        title: dto.title,
+        category: dto.category,
+      },
+    },
+  });
 }
