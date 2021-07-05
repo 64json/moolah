@@ -108,20 +108,3 @@ async function httpRequest(options, body): Promise<any> {
     }
   });
 }
-
-export function getCurrency(country: string) {
-  switch (country) {
-    case 'IL':
-      return 'ILS'; // ₪
-    case 'MX':
-      return 'MXN'; // MX$
-    case 'NL':
-      return 'EUR'; // €
-    case 'SG':
-      return 'SGD'; // S$
-    case 'UK':
-      return 'GBP'; // £
-    case 'US':
-      return 'USD'; // $
-  }
-}

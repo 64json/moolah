@@ -5,6 +5,9 @@ export class CreateManualEntryDto {
   amount: number;
 
   @IsNotEmpty()
+  currency: string;
+
+  @IsNotEmpty()
   title: string;
 
   @IsNotEmpty()

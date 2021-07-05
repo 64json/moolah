@@ -20,6 +20,9 @@ export class CreateUserDto {
   country: string;
 
   @IsNotEmpty()
+  currency: string;
+
+  @IsNotEmpty()
   line1: string;
 
   line2: string;

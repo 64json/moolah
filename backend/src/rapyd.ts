@@ -1,6 +1,6 @@
 import { User, UserDocument } from './user/user.schema';
 import { RequestDocument } from './wallet/request.schema';
-import { getCurrency, makeRequest } from './utils';
+import { makeRequest } from './utils';
 import { PayOrRequestDto } from './wallet/dto/pay-or-request.dto';
 
 export async function createWallet(user: UserDocument) {
@@ -73,12 +73,13 @@ export async function createCheckoutPage(request: RequestDocument) {
   const { body: { data } } = await makeRequest('POST', '/v1/checkout', {
     amount: request.amount,
     country: recipient.country,
-    currency: getCurrency(recipient.country),
+    currency: request.currency,
     ewallet: recipient.walletId,
     cart_items: [{
-      'name': `Moolah - Request from ${recipient.firstName} ${recipient.lastName}`,
-      'amount': request.amount,
-      'quantity': 1,
+      name: `Moolah - Request from ${recipient.firstName} ${recipient.lastName}`,
+      amount: request.amount,
+      currency: request.currency,
+      quantity: 1,
     }],
     metadata: {
       request,
@@ -90,7 +91,7 @@ export async function createCheckoutPage(request: RequestDocument) {
 export async function transferFunds(payer: User, recipient: User, dto: PayOrRequestDto) {
   await makeRequest('POST', '/v1/account/transfer', {
     amount: dto.amount,
-    currency: getCurrency(recipient.country),
+    currency: dto.currency,
     source_ewallet: payer.walletId,
     destination_ewallet: recipient.walletId,
     metadata: {
@@ -99,6 +100,7 @@ export async function transferFunds(payer: User, recipient: User, dto: PayOrRequ
         recipient,
         email: dto.email,
         amount: dto.amount,
+        currency: dto.currency,
         title: dto.title,
         category: dto.category,
       },

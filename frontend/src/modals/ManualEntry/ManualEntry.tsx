@@ -19,7 +19,7 @@ enum Mode {
 }
 
 export function ManualEntry({ onClose, ...restProps }: Props) {
-  const { fetchManualEntries } = useContext(AppContext);
+  const { me, fetchManualEntries } = useContext(AppContext);
 
   const [mode, setMode] = useState(Mode.Earned);
   const [amount, setAmount] = useState('0.00');
@@ -30,12 +30,13 @@ export function ManualEntry({ onClose, ...restProps }: Props) {
   const addManualEntry = useCallback(async () => {
     await axios.post(`${BASE_URL}/wallet/manual-entry`, {
       amount: mode * +amount,
+      currency: me?.currency,
       title,
       category,
     });
     await fetchManualEntries();
     onClose();
-  }, [amount, category, fetchManualEntries, mode, onClose, title]);
+  }, [amount, category, fetchManualEntries, me?.currency, mode, onClose, title]);
 
   return (
     <Modal title="New Manual Entry" onClose={onClose} className={c(classes.ManualEntry, error && classes.error)}

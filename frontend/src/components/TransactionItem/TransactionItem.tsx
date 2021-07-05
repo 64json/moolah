@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import classes from './TransactionItem.module.scss';
-import { c, CATEGORIES } from '../../utils';
+import { c, CATEGORIES, formatCurrency } from '../../utils';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ITransactionItem } from '../../interfaces/ITransactionItem';
 
@@ -12,13 +12,10 @@ interface Props {
 export function TransactionItem({ className, item }: Props) {
   const category = CATEGORIES[item.category];
 
-  const amount = useMemo(() => {
-    if (item.amount < 0) {
-      return `-$${(-item.amount).toFixed(2)}`;
-    } else {
-      return `+$${item.amount.toFixed(2)}`;
-    }
-  }, [item.amount]);
+  const formattedAmount = useMemo(
+    () => formatCurrency(item.amount, item.currency),
+    [item.amount, item.currency]
+  );
 
   return (
     <div className={c(classes.TransactionItem, className)}>
@@ -34,7 +31,7 @@ export function TransactionItem({ className, item }: Props) {
         </div>
       </div>
       <div className={c(classes.amount, item.amount < 0 && classes.negative)}>
-        {amount}
+        {formattedAmount}
       </div>
     </div>
   );

@@ -49,6 +49,7 @@ export function RequestItem({ className, item }: Props) {
           title: item.title,
           description: recipientInfo,
           amount: item.amount * (amRecipient ? +1 : -1),
+          currency: item.currency,
           datetime,
           formattedDate,
         }} />

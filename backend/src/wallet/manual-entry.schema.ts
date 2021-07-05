@@ -14,6 +14,9 @@ export class ManualEntry {
   amount: number;
 
   @Prop()
+  currency: string;
+
+  @Prop()
   title: string;
 
   @Prop()

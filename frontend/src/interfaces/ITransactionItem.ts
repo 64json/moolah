@@ -6,6 +6,7 @@ export interface ITransactionItem {
   title: string;
   description: string;
   amount: number;
+  currency: string;
   datetime: DateTime;
   formattedDate: string;
 }

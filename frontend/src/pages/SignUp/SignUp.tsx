@@ -3,7 +3,7 @@ import classes from './SignUp.module.scss';
 import sign_up_banner from '../../assets/sign_up_banner.png';
 import { Button } from '../../components/Button';
 import { AppContext } from '../../contexts/AppContext';
-import { BASE_URL } from '../../utils';
+import { BASE_URL, getCurrency } from '../../utils';
 import axios from 'axios';
 import { ProfileInputGroup, UserDto } from '../../components/ProfileInputGroup';
 import { PageIndex } from '../../enums/PageIndex';
@@ -17,7 +17,8 @@ export function SignUp() {
     email: '',
     password: '',
     dob: '',
-    country: 'SG',
+    country: 'GB',
+    currency: '',
     line1: '',
     line2: '',
     city: '',
@@ -27,7 +28,10 @@ export function SignUp() {
   const [error, setError] = useState(false);
 
   const handleSubmit = useCallback(async () => {
-    await axios.post(`${BASE_URL}/user`, dto);
+    await axios.post(`${BASE_URL}/user`, {
+      ...dto,
+      currency: getCurrency(dto.country),
+    });
     await signIn(dto.email, dto.password ?? '');
     setPageIndex(PageIndex.Main);
   }, [dto, setPageIndex, signIn]);

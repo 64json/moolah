@@ -24,6 +24,9 @@ export class User {
   country: string;
 
   @Prop()
+  currency: string;
+
+  @Prop()
   line1: string;
 
   @Prop()

@@ -28,6 +28,7 @@ export function Wallet() {
             title: manualEntry.title,
             description: 'Manual Entry',
             amount: manualEntry.amount,
+            currency: manualEntry.currency,
             datetime,
             formattedDate: datetime.toLocaleString(DateTime.DATE_MED),
           };
@@ -60,9 +61,6 @@ export function Wallet() {
         }
         {
           transactionItems
-            .map(item => ({
-              ...item,
-            }))
             .map((item, i) => [
               (i === 0 || item.formattedDate !== transactionItems[i - 1].formattedDate) &&
               <div className={classes.header} key={item.formattedDate}>

@@ -20,6 +20,9 @@ export class Request {
   amount: number;
 
   @Prop()
+  currency: string;
+
+  @Prop()
   title: string;
 
   @Prop()

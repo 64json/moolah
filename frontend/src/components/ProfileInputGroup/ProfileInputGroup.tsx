@@ -11,6 +11,7 @@ export interface UserDto {
   newPassword?: string;
   dob: string;
   country: string;
+  currency: string;
   line1: string;
   line2: string;
   city: string;
@@ -75,7 +76,7 @@ export function ProfileInputGroup({ className, value, onChange, error, modify }:
         <option value="MX">🇲🇽 Mexico</option>
         <option value="NL">🇳🇱 Netherlands</option>
         <option value="SG">🇸🇬 Singapore</option>
-        <option value="UK">🇬🇧 United Kingdom</option>
+        <option value="GB">🇬🇧 United Kingdom</option>
         <option value="US">🇺🇸 United States</option>
       </select>
       <input type="text" placeholder="Address Line 1" className={classes.input}

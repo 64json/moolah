@@ -8,6 +8,9 @@ export class PayOrRequestDto {
   amount: number;
 
   @IsNotEmpty()
+  currency: string;
+
+  @IsNotEmpty()
   title: string;
 
   @IsNotEmpty()

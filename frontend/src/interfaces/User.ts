@@ -5,6 +5,7 @@ export interface User {
   email: string;
   dob: string;
   country: string;
+  currency: string;
   line1: string;
   line2: string;
   city: string;

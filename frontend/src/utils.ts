@@ -54,3 +54,44 @@ export const CATEGORIES: Category[] = [{
   icon: faMoneyBillAlt,
   color: '#A8A1FB',
 }];
+
+export function getCurrency(country: string) {
+  switch (country) {
+    case 'IL':
+      return 'ILS'; // ₪
+    case 'MX':
+      return 'MXN'; // MX$
+    case 'NL':
+      return 'EUR'; // €
+    case 'SG':
+      return 'SGD'; // S$
+    case 'GB':
+      return 'GBP'; // £
+    case 'US':
+      return 'USD'; // $
+  }
+}
+
+export function formatCurrency(amount: number, currency: string) {
+  const formatter = new Intl.NumberFormat({
+    ILS: 'he',
+    MXN: 'es-mx',
+    EUR: 'nl',
+    SGD: 'zh-sg',
+    GBP: 'en-gb',
+    USD: 'en-us',
+  }[currency], {
+    style: 'currency',
+    currency,
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  });
+  const negative = -Math.abs(amount);
+  const negativeFormatted = formatter.format(negative);
+  if (amount < 0) return negativeFormatted;
+  return negativeFormatted.replace('-', '+');
+}
+
+export function getCurrencySymbol(currency: string) {
+  return formatCurrency(0, currency).replace(/[\d.,\-+]/g, '');
+}

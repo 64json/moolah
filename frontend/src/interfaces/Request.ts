@@ -6,6 +6,7 @@ export interface Request {
   recipient: User;
   email: string;
   amount: number;
+  currency: string;
   title: string;
   category: number;
   createdAt: string;

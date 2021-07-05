@@ -1,7 +1,8 @@
-import React, { useRef } from 'react';
+import React, { useContext, useMemo, useRef } from 'react';
 import classes from './CurrencyInput.module.scss';
-import { c } from '../../utils';
+import { c, getCurrencySymbol } from '../../utils';
 import ContentEditable from 'react-contenteditable';
+import { AppContext } from '../../contexts/AppContext';
 
 interface Props {
   className?: string;
@@ -11,10 +12,15 @@ interface Props {
 }
 
 export function CurrencyInput({ className, error, value, onChange }: Props) {
+  const { me } = useContext(AppContext);
+
   const inputRef = useRef<HTMLDivElement>(null);
 
+  const currencySymbol = useMemo(() => me ? getCurrencySymbol(me.currency) : '', [me]);
+
   return (
-    <label className={c(classes.CurrencyInput, error && classes.error, className)} onBlur={() => onChange((+value).toFixed(2) || '0.00')}
+    <label className={c(classes.CurrencyInput, error && classes.error, className)}
+           onBlur={() => onChange((+value).toFixed(2) || '0.00')}
            onClick={() => {
              const div = inputRef.current;
              const sel = window.getSelection();
@@ -25,7 +31,7 @@ export function CurrencyInput({ className, error, value, onChange }: Props) {
              sel.addRange(range);
            }}>
       <div className={classes.currency}>
-        $
+        {currencySymbol}
       </div>
       <ContentEditable className={classes.amount}
                        innerRef={inputRef}

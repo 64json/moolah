@@ -19,7 +19,7 @@ enum Mode {
 }
 
 export function PayOrRequest({ onClose, ...restProps }: Props) {
-  const { fetchRequests } = useContext(AppContext);
+  const { me, fetchRequests } = useContext(AppContext);
 
   const [mode, setMode] = useState(Mode.Pay);
   const [amount, setAmount] = useState('0.00');
@@ -32,6 +32,7 @@ export function PayOrRequest({ onClose, ...restProps }: Props) {
     const { data: { type } } = await axios.post(`${BASE_URL}/wallet/pay`, {
       email,
       amount: +amount,
+      currency: me?.currency,
       title,
       category,
     });
@@ -44,12 +45,13 @@ export function PayOrRequest({ onClose, ...restProps }: Props) {
         break;
     }
     // TODO: await fetchManualEntries();
-  }, [amount, category, email, title]);
+  }, [amount, category, email, me?.currency, title]);
 
   const request = useCallback(async () => {
     const { data: { type, url } } = await axios.post(`${BASE_URL}/wallet/request`, {
       email,
       amount: +amount,
+      currency: me?.currency,
       title,
       category,
     });
@@ -62,7 +64,7 @@ export function PayOrRequest({ onClose, ...restProps }: Props) {
         break;
     }
     await fetchRequests();
-  }, [amount, category, email, title]);
+  }, [amount, category, email, fetchRequests, me?.currency, title]);
 
   const handleSubmit = useCallback(async () => {
     switch (mode) {
