@@ -23,10 +23,10 @@
   }
 
   .header {
+    @include shadow;
     padding: 0 16px 0;
     display: flex;
     align-items: stretch;
-    box-shadow: 0 0 16px rgba(68, 77, 86, 0.08);
 
     .spacing {
       flex: 1;

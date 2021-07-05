@@ -39,8 +39,8 @@
   }
 
   .nav {
+    @include shadow;
     display: flex;
-    box-shadow: 0 0 16px rgba(68, 77, 86, 0.08);
 
     .tab {
       position: relative;

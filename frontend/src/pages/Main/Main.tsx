@@ -1,14 +1,16 @@
-import React, { useMemo, useState } from 'react';
+import React, { useContext, useMemo, useState } from 'react';
 import classes from './Main.module.scss';
-import { faBell, faChartLine, faCog, faGraduationCap, faUserCircle, faWallet } from '@fortawesome/free-solid-svg-icons';
+import { faBars, faChartLine, faGraduationCap, faUserCircle, faWallet } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { c } from '../../utils';
 import { Wallet } from '../../tabs/Wallet';
 import { Stats } from '../../tabs/Stats';
 import { Learning } from '../../tabs/Learning';
 import { Profile } from '../../tabs/Profile';
-import { ProfileSettings } from '../../modals/ProfileSettings';
 import { TransitionGroup } from 'react-transition-group';
+import { Drawer } from '../../components/Drawer';
+import { ProfileSettings } from '../../modals/ProfileSettings';
+import { AppContext } from '../../contexts/AppContext';
 
 enum TabIndex {
   Wallet,
@@ -32,9 +34,10 @@ const tabs = [{
 }];
 
 export function Main() {
+  const { profileSettingsOpened, setProfileSettingsOpened } = useContext(AppContext);
+
   const [tabIndex, setTabIndex] = useState(TabIndex.Wallet);
-  const [settingsOpened, setSettingsOpened] = useState(false);
-  const [notificationOpened, setNotificationOpened] = useState(false);
+  const [drawerOpened, setDrawerOpened] = useState(false);
 
   const tab = tabs[tabIndex];
   const content = useMemo(() => {
@@ -57,14 +60,7 @@ export function Main() {
           <div className={classes.tabName}>
             {tab.name}
           </div>
-          {
-            tabIndex === TabIndex.Wallet &&
-            <FontAwesomeIcon className={classes.button} icon={faBell} onClick={() => setNotificationOpened(true)} />
-          }
-          {
-            tabIndex === TabIndex.Profile &&
-            <FontAwesomeIcon className={classes.button} icon={faCog} onClick={() => setSettingsOpened(true)} />
-          }
+          <FontAwesomeIcon className={classes.button} icon={faBars} onClick={() => setDrawerOpened(true)} />
         </div>
         <main className={classes.main}>
           {content}
@@ -81,7 +77,8 @@ export function Main() {
         }
       </nav>
       <TransitionGroup>
-        {settingsOpened && <ProfileSettings onClose={() => setSettingsOpened(false)} />}
+        {drawerOpened && <Drawer onClose={() => setDrawerOpened(false)} />}
+        {profileSettingsOpened && <ProfileSettings onClose={() => setProfileSettingsOpened(false)} />}
       </TransitionGroup>
     </div>
   );

@@ -44,6 +44,7 @@ export class WalletService {
       _id: requestId,
       $or: [{ payer: user }, { recipient: user }],
     });
+    // TODO: remove checkout page if payer is external user
   }
 
   async getRequest(requestId: string, payer: User) {

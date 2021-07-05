@@ -1,0 +1,46 @@
+@import '../../constants';
+
+.NotificationItem {
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid $color-border;
+  padding: 16px;
+
+  &:last-child {
+    border-bottom: 1px solid $color-border;
+  }
+
+  .row {
+    display: flex;
+    align-items: center;
+
+    .icon {
+      width: 48px;
+      height: 48px;
+      font-size: 24px;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: $color-primary-light;
+      margin-right: 8px;
+    }
+
+    .text {
+      flex: 1;
+      font-size: 14px;
+      font-weight: 700;
+    }
+  }
+
+  .actions {
+    display: flex;
+    margin-top: 8px;
+    margin-left: 48px;
+
+    > * {
+      flex: 1;
+      margin-left: 8px;
+    }
+  }
+}

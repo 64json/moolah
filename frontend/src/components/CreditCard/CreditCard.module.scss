@@ -29,7 +29,7 @@
 
     .front,
     .back {
-      @include shadow;
+      @include dropShadow;
       backface-visibility: hidden;
       position: absolute;
       top: 0;
@@ -192,6 +192,6 @@
   }
 
   .activate {
-    @include shadow;
+    @include dropShadow;
   }
 }

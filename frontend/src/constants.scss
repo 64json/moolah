@@ -13,8 +13,12 @@ $color-green: #91DEA2;
 $color-negative: #D62727;
 $color-positive: #37AE6E;
 
-@mixin shadow {
+@mixin dropShadow {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.16);
+}
+
+@mixin shadow {
+  box-shadow: 0 0 16px rgba(68, 77, 86, 0.08);
 }
 
 $onEnter: '&.enter:not(.enterActive)';

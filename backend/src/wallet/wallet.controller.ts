@@ -59,7 +59,7 @@ export class WalletController {
     const payer = await this.userService.getMe(req);
     const recipient = await this.userService.findOne(dto.email);
 
-    if (payer.currency !== recipient.currency) {
+    if (recipient && payer.currency !== recipient.currency) {
       throw new BadRequestException('You can only transfer funds to the recipient in the same currency.');
     }
 

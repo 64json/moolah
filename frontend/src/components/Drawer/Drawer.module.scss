@@ -1,0 +1,69 @@
+@import '../../constants';
+
+.Drawer {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  display: flex;
+  align-items: stretch;
+  background-color: rgba($color-text-light, .4);
+
+  #{$onTransition} {
+    background-color: rgba($color-text-light, 0);
+
+    .content {
+      transform: translateX(100%);
+    }
+  }
+
+  #{$transition} {
+    transition: background-color 200ms;
+
+    .content {
+      transition: transform 200ms;
+    }
+  }
+
+  .placeholder {
+    width: 56px;
+    cursor: pointer;
+  }
+
+  .content {
+    @include shadow;
+    flex: 1;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    border-radius: 8px;
+
+    .links {
+      display: flex;
+      flex-direction: column;
+      padding: 16px 0;
+
+      .link {
+        padding: 16px 24px;
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+
+        .icon {
+          font-size: 18px;
+          margin-right: 8px;
+        }
+
+        .text {
+          font-weight: 700;
+        }
+      }
+    }
+
+    .notifications {
+      display: flex;
+      flex-direction: column;
+    }
+  }
+}

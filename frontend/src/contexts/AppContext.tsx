@@ -17,7 +17,12 @@ import { Transaction } from '../interfaces/Transaction';
 
 interface Value {
   pageIndex: PageIndex;
+  profileSettingsOpened: boolean;
+  cardSettingsOpened: boolean;
   setPageIndex: Dispatch<PageIndex>;
+  setProfileSettingsOpened: Dispatch<boolean>;
+  setCardSettingsOpened: Dispatch<boolean>;
+
   me: User | null;
   card: Card | null;
   manualEntries: ManualEntry[];
@@ -50,6 +55,8 @@ interface Props {
 
 export function AppProvider({ children }: Props) {
   const [pageIndex, setPageIndex] = useState(PageIndex.Welcome);
+  const [profileSettingsOpened, setProfileSettingsOpened] = useState(false);
+  const [cardSettingsOpened, setCardSettingsOpened] = useState(false);
   const [me, setMe] = useState<User | null>(null);
   const [card, setCard] = useState<Card | null>(null);
   const [manualEntries, setManualEntries] = useState<ManualEntry[]>([]);
@@ -136,7 +143,11 @@ export function AppProvider({ children }: Props) {
   const value = useMemo<Value>(
     () => ({
       pageIndex,
+      profileSettingsOpened,
+      cardSettingsOpened,
       setPageIndex,
+      setProfileSettingsOpened,
+      setCardSettingsOpened,
       me,
       card,
       manualEntries,
@@ -154,7 +165,11 @@ export function AppProvider({ children }: Props) {
     }),
     [
       pageIndex,
+      profileSettingsOpened,
+      cardSettingsOpened,
       setPageIndex,
+      setProfileSettingsOpened,
+      setCardSettingsOpened,
       me,
       card,
       manualEntries,
