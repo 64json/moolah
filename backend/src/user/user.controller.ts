@@ -18,7 +18,7 @@ export class UserController {
   @Get('/me')
   async getMe(@Request() req) {
     const user = await this.userService.getMe(req);
-    const { password, ...userJSON } = user.toJSON();
+    const { password, ...userJSON } = user.toObject();
     return { user: userJSON };
   }
 }

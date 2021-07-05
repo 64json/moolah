@@ -2,7 +2,7 @@ import React, { useMemo } from 'react';
 import classes from './TransactionItem.module.scss';
 import { c, CATEGORIES } from '../../utils';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { ITransactionItem } from '../../interfaces/TransactionItem';
+import { ITransactionItem } from '../../interfaces/ITransactionItem';
 
 interface Props {
   className?: string;

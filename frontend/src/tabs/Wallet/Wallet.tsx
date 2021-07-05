@@ -6,12 +6,13 @@ import { TransitionGroup } from 'react-transition-group';
 import { ManualEntry } from '../../modals/ManualEntry';
 import { AppContext } from '../../contexts/AppContext';
 import { TransactionItem } from '../../components/TransactionItem';
-import { ITransactionItem } from '../../interfaces/TransactionItem';
+import { ITransactionItem } from '../../interfaces/ITransactionItem';
 import { DateTime } from 'luxon';
 import { PayOrRequest } from '../../modals/PayOrRequest';
+import { RequestItem } from '../../components/RequestItem';
 
 export function Wallet() {
-  const { manualEntries } = useContext(AppContext);
+  const { manualEntries, requests } = useContext(AppContext);
 
   const [manualEntryOpened, setManualEntryOpened] = useState(false);
   const [payOrRequestOpened, setPayOrRequestOpened] = useState(false);
@@ -52,6 +53,11 @@ export function Wallet() {
         </Button>
       </div>
       <div className={classes.list}>
+        {
+          requests.map(request => (
+            <RequestItem key={request._id} item={request} />
+          ))
+        }
         {
           transactionItems
             .map(item => ({

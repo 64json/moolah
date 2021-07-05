@@ -32,12 +32,12 @@ export class WalletController {
   async requestPayment(@Request() req, @Body() dto: PayOrRequestDto) {
     const recipient = await this.userService.getMe(req);
     const payer = await this.userService.findOne(dto.email);
+    const request = await this.walletService.createRequest(payer, recipient, dto);
 
     if (payer) {
-      // TODO: add request to schema
       return { type: 'internal' };
     } else {
-      const url = await Rapyd.createCheckoutPage(recipient, dto);
+      const url = await Rapyd.createCheckoutPage(request);
       // TODO: send an email including the url
       return { type: 'external', url };
     }
@@ -67,6 +67,14 @@ export class WalletController {
   @Post('/manual-entry')
   async addManualEntry(@Request() req, @Body() dto: CreateManualEntryDto) {
     const user = await this.userService.getMe(req);
-    return this.walletService.createManualEntry(user, dto);
+    await this.walletService.createManualEntry(user, dto);
+    return {};
+  }
+
+  @Get('/request')
+  async getRequests(@Request() req) {
+    const user = await this.userService.getMe(req);
+    const requests = await this.walletService.findAllRequests(user);
+    return { requests };
   }
 }

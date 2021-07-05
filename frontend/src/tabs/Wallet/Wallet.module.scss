@@ -33,6 +33,9 @@
   }
 
   .list {
+    display: flex;
+    flex-direction: column;
+
     .header {
       font-size: 12px;
       margin-bottom: 8px;

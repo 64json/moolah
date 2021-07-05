@@ -1,0 +1,27 @@
+@import '../../constants';
+
+.RequestItem {
+  display: flex;
+  flex-direction: column;
+  background-color: $color-primary-light;
+  padding: 8px;
+  border-radius: 8px;
+
+  & + .RequestItem {
+    margin-top: 8px;
+  }
+
+  .actions {
+    display: flex;
+    margin: 8px;
+
+    > * {
+      flex: 1;
+      margin-right: 8px;
+
+      &:last-child {
+        margin-right: 0;
+      }
+    }
+  }
+}

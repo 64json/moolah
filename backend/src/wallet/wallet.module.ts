@@ -4,11 +4,13 @@ import { WalletService } from './wallet.service';
 import { UserModule } from '../user/user.module';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ManualEntry, ManualEntrySchema } from './manual-entry.schema';
+import { Request, RequestSchema } from './request.schema';
 
 @Module({
   imports: [
     UserModule,
     MongooseModule.forFeature([{ name: ManualEntry.name, schema: ManualEntrySchema }]),
+    MongooseModule.forFeature([{ name: Request.name, schema: RequestSchema }]),
   ],
   controllers: [WalletController],
   providers: [WalletService],

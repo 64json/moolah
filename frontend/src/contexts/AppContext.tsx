@@ -12,6 +12,7 @@ import { User } from '../interfaces/User';
 import { Card } from '../interfaces/Card';
 import { PageIndex } from '../enums/PageIndex';
 import { ManualEntry } from '../interfaces/ManualEntry';
+import { Request } from '../interfaces/Request';
 
 interface Value {
   pageIndex: PageIndex;
@@ -19,12 +20,15 @@ interface Value {
   me: User | null;
   card: Card | null;
   manualEntries: ManualEntry[];
+  requests: Request[];
 
   fetchMe(): Promise<void>;
 
   fetchCard(): Promise<void>;
 
   fetchManualEntries(): Promise<void>;
+
+  fetchRequests(): Promise<void>;
 
   fetchAll(): Promise<void[]>;
 
@@ -44,8 +48,9 @@ export function AppProvider({ children }: Props) {
   const [me, setMe] = useState<User | null>(null);
   const [card, setCard] = useState<Card | null>(null);
   const [manualEntries, setManualEntries] = useState<ManualEntry[]>([]);
+  const [requests, setRequests] = useState<Request[]>([]);
 
-  console.log({ me, card, manualEntries });
+  console.log({ requests });
 
   const fetchMe = useCallback(async () => {
     const { data } = await axios.get(`${BASE_URL}/user/me`);
@@ -62,16 +67,23 @@ export function AppProvider({ children }: Props) {
     setManualEntries(data.manualEntries);
   }, []);
 
+  const fetchRequests = useCallback(async () => {
+    const { data } = await axios.get(`${BASE_URL}/wallet/request`);
+    setRequests(data.requests);
+  }, []);
+
   const fetchAll = useCallback(() => Promise.all([
     fetchMe(),
     fetchCard(),
     fetchManualEntries(),
-  ]), [fetchCard, fetchManualEntries, fetchMe]);
+    fetchRequests(),
+  ]), [fetchCard, fetchManualEntries, fetchMe, fetchRequests]);
 
   const resetAll = useCallback(() => {
     setMe(null);
     setCard(null);
     setManualEntries([]);
+    setRequests([]);
   }, []);
 
   const signIn = useCallback(async (email: string, password: string) => {
@@ -112,9 +124,11 @@ export function AppProvider({ children }: Props) {
       me,
       card,
       manualEntries,
+      requests,
       fetchMe,
       fetchCard,
       fetchManualEntries,
+      fetchRequests,
       fetchAll,
       signIn,
       signOut,
@@ -125,9 +139,11 @@ export function AppProvider({ children }: Props) {
       me,
       card,
       manualEntries,
+      requests,
       fetchMe,
       fetchCard,
       fetchManualEntries,
+      fetchRequests,
       fetchAll,
       signIn,
       signOut,

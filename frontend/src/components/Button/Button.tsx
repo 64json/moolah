@@ -4,10 +4,13 @@ import { c } from '../../utils';
 
 interface Props extends HTMLAttributes<HTMLButtonElement> {
   primary?: boolean;
+  negative?: boolean;
+  small?: boolean;
 }
 
-export function Button({ className, primary, ...restProps }: Props) {
+export function Button({ className, primary, negative, small, ...restProps }: Props) {
   return (
-    <button className={c(classes.Button, primary && classes.primary, className)} {...restProps} />
+    <button
+      className={c(classes.Button, primary && classes.primary, negative && classes.negative, small && classes.small, className)} {...restProps} />
   );
 }

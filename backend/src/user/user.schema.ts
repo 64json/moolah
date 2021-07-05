@@ -49,3 +49,13 @@ export class User {
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);
+
+UserSchema.methods.toJSON = function (this: UserDocument) {
+  return {
+    _id: this._id,
+    firstName: this.firstName,
+    lastName: this.lastName,
+    email: this.email,
+    country: this.country,
+  };
+};

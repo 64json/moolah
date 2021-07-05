@@ -19,7 +19,7 @@ enum Mode {
 }
 
 export function PayOrRequest({ onClose, ...restProps }: Props) {
-  const { fetchManualEntries } = useContext(AppContext);
+  const { fetchRequests } = useContext(AppContext);
 
   const [mode, setMode] = useState(Mode.Pay);
   const [amount, setAmount] = useState('0.00');
@@ -31,35 +31,37 @@ export function PayOrRequest({ onClose, ...restProps }: Props) {
   const pay = useCallback(async () => {
     const { data: { type } } = await axios.post(`${BASE_URL}/wallet/pay`, {
       email,
-      amount,
+      amount: +amount,
       title,
       category,
     });
     switch (type) {
       case 'external':
-        alert(`external user`);
+        alert(`external user`); // TODO: confirmation
         break;
       case 'internal':
-        alert('internal user');
+        alert('internal user'); // TODO: confirmation
         break;
     }
+    // TODO: await fetchManualEntries();
   }, [amount, category, email, title]);
 
   const request = useCallback(async () => {
     const { data: { type, url } } = await axios.post(`${BASE_URL}/wallet/request`, {
       email,
-      amount,
+      amount: +amount,
       title,
       category,
     });
     switch (type) {
       case 'external':
-        alert(`external user / checkout page URL: ${url}`);
+        alert(`external user / checkout page URL: ${url}`); // TODO: confirmation
         break;
       case 'internal':
-        alert('internal user');
+        alert('internal user'); // TODO: confirmation
         break;
     }
+    await fetchRequests();
   }, [amount, category, email, title]);
 
   const handleSubmit = useCallback(async () => {
@@ -71,7 +73,6 @@ export function PayOrRequest({ onClose, ...restProps }: Props) {
         await request();
         break;
     }
-    // TODO: await fetchManualEntries();
     onClose();
   }, [mode, onClose, pay, request]);
 

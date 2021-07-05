@@ -14,7 +14,8 @@ export function CategorySelector({ className, value, onChange }: Props) {
     <div className={c(classes.CategorySelector, className)}>
       {
         CATEGORIES.map((category, index) => (
-          <div className={c(classes.category, value === index && classes.active)} onClick={() => onChange(index)}>
+          <div className={c(classes.category, value === index && classes.active)} key={index}
+               onClick={() => onChange(index)}>
             <div className={classes.icon}>
               <FontAwesomeIcon icon={category.icon} style={{ color: category.color }} />
             </div>
