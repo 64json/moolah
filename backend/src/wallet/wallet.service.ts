@@ -109,10 +109,11 @@ export class WalletService {
           created_at,
           metadata: action_data?.metadata,
         };
-      })
-      .sort((a, b) => b.created_at - a.created_at);
+      });
 
-    const balance = transactions.length > 0 ? transactions[0].balance : 0;
+    const accounts = await Rapyd.getWalletAccounts(user.walletId);
+    const balance = accounts.length > 0 ? accounts[0].balance : 0;
+
     return {
       balance,
       transactions,

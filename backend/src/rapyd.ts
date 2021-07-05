@@ -134,3 +134,8 @@ export async function getWalletTransaction(walletId: string, transactionId: stri
   const { body: { data } } = await makeRequest('GET', `/v1/user/${walletId}/transactions/${transactionId}`);
   return data;
 }
+
+export async function getWalletAccounts(walletId: string) {
+  const { body: { data } } = await makeRequest('GET', `/v1/user/${walletId}/accounts`);
+  return data;
+}
