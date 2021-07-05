@@ -19,7 +19,7 @@ enum Mode {
 }
 
 export function PayOrRequest({ onClose, ...restProps }: Props) {
-  const { me, fetchRequests } = useContext(AppContext);
+  const { me, fetchRequests, fetchTransactions } = useContext(AppContext);
 
   const [mode, setMode] = useState(Mode.Pay);
   const [amount, setAmount] = useState('0.00');
@@ -44,8 +44,8 @@ export function PayOrRequest({ onClose, ...restProps }: Props) {
         alert('internal user'); // TODO: confirmation
         break;
     }
-    // TODO: await fetchManualEntries();
-  }, [amount, category, email, me?.currency, title]);
+    await fetchTransactions();
+  }, [amount, category, email, fetchTransactions, me?.currency, title]);
 
   const request = useCallback(async () => {
     const { data: { type, url } } = await axios.post(`${BASE_URL}/wallet/request`, {

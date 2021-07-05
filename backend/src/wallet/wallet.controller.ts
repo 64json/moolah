@@ -28,6 +28,12 @@ export class WalletController {
     return { card };
   }
 
+  @Get('/transaction')
+  async list(@Request() req) {
+    const user = await this.userService.getMe(req);
+    return Rapyd.listWalletTransactions(user);
+  }
+
   @Post('/request')
   async requestPayment(@Request() req, @Body() dto: PayOrRequestDto) {
     const recipient = await this.userService.getMe(req);
@@ -73,11 +79,11 @@ export class WalletController {
     return {};
   }
 
-  @Get('/manual-entry')
-  async getManualEntries(@Request() req) {
+  @Get('/request')
+  async listRequests(@Request() req) {
     const user = await this.userService.getMe(req);
-    const manualEntries = await this.walletService.findAllManualEntries(user);
-    return { manualEntries };
+    const requests = await this.walletService.findAllRequests(user);
+    return { requests };
   }
 
   @Post('/manual-entry')
@@ -87,11 +93,11 @@ export class WalletController {
     return {};
   }
 
-  @Get('/request')
-  async getRequests(@Request() req) {
+  @Get('/manual-entry')
+  async listManualEntries(@Request() req) {
     const user = await this.userService.getMe(req);
-    const requests = await this.walletService.findAllRequests(user);
-    return { requests };
+    const manualEntries = await this.walletService.findAllManualEntries(user);
+    return { manualEntries };
   }
 
   // TODO: webhook to fulfill request to external user

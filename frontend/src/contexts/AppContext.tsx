@@ -13,6 +13,7 @@ import { Card } from '../interfaces/Card';
 import { PageIndex } from '../enums/PageIndex';
 import { ManualEntry } from '../interfaces/ManualEntry';
 import { Request } from '../interfaces/Request';
+import { Transaction } from '../interfaces/Transaction';
 
 interface Value {
   pageIndex: PageIndex;
@@ -21,6 +22,8 @@ interface Value {
   card: Card | null;
   manualEntries: ManualEntry[];
   requests: Request[];
+  transactions: Transaction[];
+  balance: number;
 
   fetchMe(): Promise<void>;
 
@@ -29,6 +32,8 @@ interface Value {
   fetchManualEntries(): Promise<void>;
 
   fetchRequests(): Promise<void>;
+
+  fetchTransactions(): Promise<void>;
 
   fetchAll(): Promise<void[]>;
 
@@ -49,8 +54,10 @@ export function AppProvider({ children }: Props) {
   const [card, setCard] = useState<Card | null>(null);
   const [manualEntries, setManualEntries] = useState<ManualEntry[]>([]);
   const [requests, setRequests] = useState<Request[]>([]);
+  const [transactions, setTransactions] = useState<Transaction[]>([]);
+  const [balance, setBalance] = useState<number>(NaN);
 
-  console.log({ requests });
+  console.log({ transactions, balance });
 
   const fetchMe = useCallback(async () => {
     const { data } = await axios.get(`${BASE_URL}/user/me`);
@@ -72,18 +79,27 @@ export function AppProvider({ children }: Props) {
     setRequests(data.requests);
   }, []);
 
+  const fetchTransactions = useCallback(async () => {
+    const { data } = await axios.get(`${BASE_URL}/wallet/transaction`);
+    setTransactions(data.transactions);
+    setBalance(data.balance);
+  }, []);
+
   const fetchAll = useCallback(() => Promise.all([
     fetchMe(),
     fetchCard(),
     fetchManualEntries(),
     fetchRequests(),
-  ]), [fetchCard, fetchManualEntries, fetchMe, fetchRequests]);
+    fetchTransactions(),
+  ]), [fetchCard, fetchManualEntries, fetchMe, fetchRequests, fetchTransactions]);
 
   const resetAll = useCallback(() => {
     setMe(null);
     setCard(null);
     setManualEntries([]);
     setRequests([]);
+    setTransactions([]);
+    setBalance(NaN);
   }, []);
 
   const signIn = useCallback(async (email: string, password: string) => {
@@ -125,10 +141,13 @@ export function AppProvider({ children }: Props) {
       card,
       manualEntries,
       requests,
+      transactions,
+      balance,
       fetchMe,
       fetchCard,
       fetchManualEntries,
       fetchRequests,
+      fetchTransactions,
       fetchAll,
       signIn,
       signOut,
@@ -140,10 +159,13 @@ export function AppProvider({ children }: Props) {
       card,
       manualEntries,
       requests,
+      transactions,
+      balance,
       fetchMe,
       fetchCard,
       fetchManualEntries,
       fetchRequests,
+      fetchTransactions,
       fetchAll,
       signIn,
       signOut,

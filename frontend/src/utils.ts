@@ -55,6 +55,8 @@ export const CATEGORIES: Category[] = [{
   color: '#A8A1FB',
 }];
 
+export const CATEGORY_OTHER = CATEGORIES.length - 1;
+
 export function getCurrency(country: string) {
   switch (country) {
     case 'IL':
@@ -72,7 +74,7 @@ export function getCurrency(country: string) {
   }
 }
 
-export function formatCurrency(amount: number, currency: string) {
+export function formatCurrency(amount: number, currency: string, sign = true) {
   const formatter = new Intl.NumberFormat({
     ILS: 'he',
     MXN: 'es-mx',
@@ -86,10 +88,13 @@ export function formatCurrency(amount: number, currency: string) {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
   });
-  const negative = -Math.abs(amount);
-  const negativeFormatted = formatter.format(negative);
-  if (amount < 0) return negativeFormatted;
-  return negativeFormatted.replace('-', '+');
+  if (sign) {
+    const negative = -Math.abs(amount);
+    const negativeFormatted = formatter.format(negative);
+    if (amount < 0) return negativeFormatted;
+    return negativeFormatted.replace('-', '+');
+  }
+  return formatter.format(amount);
 }
 
 export function getCurrencySymbol(currency: string) {
