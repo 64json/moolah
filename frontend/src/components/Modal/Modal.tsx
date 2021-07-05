@@ -1,4 +1,4 @@
-import React, { FormEventHandler, ReactNode } from 'react';
+import React, { FormEventHandler, ReactNode, useEffect } from 'react';
 import classes from './Modal.module.scss';
 import { CSSTransition } from 'react-transition-group';
 import { c } from '../../utils';
@@ -12,6 +12,19 @@ interface Props {
 }
 
 export function Modal({ title, children, onClose, onSubmit, className, ...restProps }: Props) {
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      console.log(e.key);
+      if (e.key === 'Escape') {
+        onClose();
+      }
+    };
+    document.addEventListener('keydown', handleKeyDown);
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [onClose]);
+
   return (
     <CSSTransition
       timeout={200}
