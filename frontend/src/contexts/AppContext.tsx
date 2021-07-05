@@ -11,16 +11,20 @@ import axios from 'axios';
 import { User } from '../interfaces/User';
 import { Card } from '../interfaces/Card';
 import { PageIndex } from '../enums/PageIndex';
+import { ManualEntry } from '../interfaces/ManualEntry';
 
 interface Value {
   pageIndex: PageIndex;
   setPageIndex: Dispatch<PageIndex>;
   me: User | null;
   card: Card | null;
+  manualEntries: ManualEntry[];
 
   fetchMe(): Promise<void>;
 
   fetchCard(): Promise<void>;
+
+  fetchManualEntries(): Promise<void>;
 
   fetchAll(): Promise<void[]>;
 
@@ -39,8 +43,9 @@ export function AppProvider({ children }: Props) {
   const [pageIndex, setPageIndex] = useState(PageIndex.Welcome);
   const [me, setMe] = useState<User | null>(null);
   const [card, setCard] = useState<Card | null>(null);
+  const [manualEntries, setManualEntries] = useState<ManualEntry[]>([]);
 
-  console.log({ me, card });
+  console.log({ me, card, manualEntries });
 
   const fetchMe = useCallback(async () => {
     const { data } = await axios.get(`${BASE_URL}/user/me`);
@@ -52,10 +57,22 @@ export function AppProvider({ children }: Props) {
     setCard(data.card);
   }, []);
 
+  const fetchManualEntries = useCallback(async () => {
+    const { data } = await axios.get(`${BASE_URL}/wallet/manual-entry`);
+    setManualEntries(data.manualEntries);
+  }, []);
+
   const fetchAll = useCallback(() => Promise.all([
     fetchMe(),
     fetchCard(),
-  ]), [fetchCard, fetchMe]);
+    fetchManualEntries(),
+  ]), [fetchCard, fetchManualEntries, fetchMe]);
+
+  const resetAll = useCallback(() => {
+    setMe(null);
+    setCard(null);
+    setManualEntries([]);
+  }, []);
 
   const signIn = useCallback(async (email: string, password: string) => {
     const { data } = await axios.post(`${BASE_URL}/auth/login`, {
@@ -70,9 +87,8 @@ export function AppProvider({ children }: Props) {
   const signOut = useCallback(() => {
     clearAccessToken();
     unsetAccessToken();
-    setMe(null);
-    setCard(null);
-  }, []);
+    resetAll();
+  }, [resetAll]);
 
   useEffect(() => {
     const token = loadAccessToken();
@@ -95,8 +111,10 @@ export function AppProvider({ children }: Props) {
       setPageIndex,
       me,
       card,
+      manualEntries,
       fetchMe,
       fetchCard,
+      fetchManualEntries,
       fetchAll,
       signIn,
       signOut,
@@ -106,8 +124,10 @@ export function AppProvider({ children }: Props) {
       setPageIndex,
       me,
       card,
+      manualEntries,
       fetchMe,
       fetchCard,
+      fetchManualEntries,
       fetchAll,
       signIn,
       signOut,

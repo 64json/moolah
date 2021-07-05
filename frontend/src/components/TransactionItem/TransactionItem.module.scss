@@ -37,6 +37,10 @@
 
   .amount {
     font-weight: 700;
-    color: $color-negative;
+    color: $color-positive;
+
+    &.negative {
+      color: $color-negative;
+    }
   }
 }

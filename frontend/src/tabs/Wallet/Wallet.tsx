@@ -1,13 +1,36 @@
-import React, { useState } from 'react';
+import React, { useContext, useMemo, useState } from 'react';
 import classes from './Wallet.module.scss';
 import { Button } from '../../components/Button';
-import { TransactionItem } from '../../components/TransactionItem';
 import { CreditCard } from '../../components/CreditCard';
 import { TransitionGroup } from 'react-transition-group';
 import { ManualEntry } from '../../modals/ManualEntry';
+import { AppContext } from '../../contexts/AppContext';
+import { TransactionItem } from '../../components/TransactionItem';
+import { ITransactionItem } from '../../interfaces/TransactionItem';
+import { DateTime } from 'luxon';
 
 export function Wallet() {
+  const { manualEntries } = useContext(AppContext);
+
   const [manualEntryOpened, setManualEntryOpened] = useState(false);
+
+  const transactionItems: ITransactionItem[] = useMemo(() => [
+      ...manualEntries
+        .filter(manualEntry => manualEntry.category !== undefined)
+        .map(manualEntry => {
+          const datetime = DateTime.fromISO(manualEntry.createdAt);
+          return {
+            key: `m-${manualEntry._id}`,
+            category: manualEntry.category,
+            title: manualEntry.title,
+            description: 'Manual Entry',
+            amount: manualEntry.amount,
+            datetime,
+            formattedDate: datetime.toLocaleString(DateTime.DATE_MED),
+          };
+        }),
+    ].sort((a, b) => b.datetime.valueOf() - a.datetime.valueOf()),
+    [manualEntries]);
 
   return (
     <div className={classes.Wallet}>
@@ -27,23 +50,19 @@ export function Wallet() {
         </Button>
       </div>
       <div className={classes.list}>
-        <div className={classes.header}>
-          July 21, 2021
-        </div>
-        <TransactionItem />
-        <TransactionItem />
-        <div className={classes.header}>
-          July 18, 2021
-        </div>
-        <TransactionItem />
-        <div className={classes.header}>
-          July 15, 2021
-        </div>
-        <TransactionItem />
-        <TransactionItem />
-        <TransactionItem />
-        <TransactionItem />
-        <TransactionItem />
+        {
+          transactionItems
+            .map(item => ({
+              ...item,
+            }))
+            .map((item, i) => [
+              (i === 0 || item.formattedDate !== transactionItems[i - 1].formattedDate) &&
+              <div className={classes.header} key={item.formattedDate}>
+                {item.formattedDate}
+              </div>,
+              <TransactionItem key={item.key} item={item} />,
+            ])
+        }
       </div>
       <TransitionGroup>
         {manualEntryOpened && <ManualEntry onClose={() => setManualEntryOpened(false)} />}

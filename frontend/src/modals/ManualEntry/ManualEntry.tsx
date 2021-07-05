@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useContext, useState } from 'react';
 import { Modal } from '../../components/Modal';
 import { Button } from '../../components/Button';
 import classes from './ManualEntry.module.scss';
@@ -7,6 +7,7 @@ import { CurrencyInput } from '../../components/CurrencyInput';
 import { CategorySelector } from '../../components/CategorySelector';
 import { BASE_URL, c, CATEGORIES } from '../../utils';
 import axios from 'axios';
+import { AppContext } from '../../contexts/AppContext';
 
 interface Props {
   onClose: () => void;
@@ -18,6 +19,8 @@ enum Mode {
 }
 
 export function ManualEntry({ onClose, ...restProps }: Props) {
+  const { fetchManualEntries } = useContext(AppContext);
+
   const [mode, setMode] = useState(Mode.Earned);
   const [amount, setAmount] = useState('0.00');
   const [title, setTitle] = useState('');
@@ -30,8 +33,9 @@ export function ManualEntry({ onClose, ...restProps }: Props) {
       title,
       category,
     });
+    await fetchManualEntries();
     onClose();
-  }, [amount, category, mode, onClose, title]);
+  }, [amount, category, fetchManualEntries, mode, onClose, title]);
 
   return (
     <Modal title="New Manual Entry" onClose={onClose} className={c(classes.ManualEntry, error && classes.error)}

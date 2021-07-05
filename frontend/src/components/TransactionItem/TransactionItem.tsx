@@ -1,14 +1,24 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import classes from './TransactionItem.module.scss';
 import { c, CATEGORIES } from '../../utils';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { ITransactionItem } from '../../interfaces/TransactionItem';
 
 interface Props {
   className?: string;
+  item: ITransactionItem;
 }
 
-export function TransactionItem({ className }: Props) {
-  const category = CATEGORIES[0];
+export function TransactionItem({ className, item }: Props) {
+  const category = CATEGORIES[item.category];
+
+  const amount = useMemo(() => {
+    if (item.amount < 0) {
+      return `-$${(-item.amount).toFixed(2)}`;
+    } else {
+      return `+$${item.amount.toFixed(2)}`;
+    }
+  }, [item.amount]);
 
   return (
     <div className={c(classes.TransactionItem, className)}>
@@ -17,14 +27,14 @@ export function TransactionItem({ className }: Props) {
       </div>
       <div className={classes.text}>
         <div className={classes.primary}>
-          Piano Lessons
+          {item.title}
         </div>
         <div className={classes.secondary}>
-          $139.14 · parkjs814@gmail.com
+          {item.description}
         </div>
       </div>
-      <div className={classes.amount}>
-        -$20.00
+      <div className={c(classes.amount, item.amount < 0 && classes.negative)}>
+        {amount}
       </div>
     </div>
   );
