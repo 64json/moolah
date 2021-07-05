@@ -36,6 +36,13 @@ export class WalletService {
     return createdRequest.save();
   }
 
+  async removeRequest(requestId: string, user: User) {
+    await this.requestModel.deleteOne({
+      _id: requestId,
+      $or: [{ payer: user }, { recipient: user }],
+    });
+  }
+
   async findAllRequests(user: User): Promise<Request[]> {
     return this.requestModel.find({ $or: [{ payer: user }, { recipient: user }] })
       .sort('-createdAt')

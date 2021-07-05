@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, Request } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Request } from '@nestjs/common';
 import { UserService } from '../user/user.service';
 import * as Rapyd from '../rapyd';
 import { WalletService } from './wallet.service';
@@ -55,6 +55,13 @@ export class WalletController {
       // TODO: send an email to sign up OR input beneficiary to be payed out
       return { type: 'external' };
     }
+  }
+
+  @Delete('/request/:requestId')
+  async removeRequest(@Request() req, @Param('requestId') requestId: string) {
+    const user = await this.userService.getMe(req);
+    await this.walletService.removeRequest(requestId, user);
+    return {};
   }
 
   @Get('/manual-entry')

@@ -1,11 +1,12 @@
-import React, { useContext, useMemo } from 'react';
+import React, { useCallback, useContext, useMemo } from 'react';
 import classes from './RequestItem.module.scss';
-import { c } from '../../utils';
+import { BASE_URL, c } from '../../utils';
 import { TransactionItem } from '../TransactionItem';
 import { Request } from '../../interfaces/Request';
 import { DateTime } from 'luxon';
 import { Button } from '../Button';
 import { AppContext } from '../../contexts/AppContext';
+import axios from 'axios';
 
 interface Props {
   className?: string;
@@ -13,7 +14,7 @@ interface Props {
 }
 
 export function RequestItem({ className, item }: Props) {
-  const { me } = useContext(AppContext);
+  const { me, fetchRequests } = useContext(AppContext);
 
   const recipientInfo = useMemo(() => {
     const { email, payer } = item;
@@ -25,6 +26,11 @@ export function RequestItem({ className, item }: Props) {
 
   const datetime = useMemo(() => DateTime.fromISO(item.createdAt), [item.createdAt]);
   const formattedDate = useMemo(() => datetime.toLocaleString(DateTime.DATE_MED), [datetime]);
+
+  const removeRequest = useCallback(async () => {
+    await axios.delete(`${BASE_URL}/wallet/request/${item._id}`);
+    await fetchRequests();
+  }, [fetchRequests, item._id]);
 
   const amRecipient = item.recipient._id === me?._id;
 
@@ -44,7 +50,7 @@ export function RequestItem({ className, item }: Props) {
       {
         amRecipient ? (
           <div className={classes.actions}>
-            <Button small>
+            <Button small onClick={() => removeRequest()}>
               Cancel
             </Button>
             <Button primary small>
@@ -52,7 +58,7 @@ export function RequestItem({ className, item }: Props) {
             </Button>
           </div>) : (
           <div className={classes.actions}>
-            <Button small>
+            <Button small onClick={() => removeRequest()}>
               Decline
             </Button>
             <Button primary small>
