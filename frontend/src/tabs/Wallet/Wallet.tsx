@@ -8,11 +8,13 @@ import { AppContext } from '../../contexts/AppContext';
 import { TransactionItem } from '../../components/TransactionItem';
 import { ITransactionItem } from '../../interfaces/TransactionItem';
 import { DateTime } from 'luxon';
+import { PayOrRequest } from '../../modals/PayOrRequest';
 
 export function Wallet() {
   const { manualEntries } = useContext(AppContext);
 
   const [manualEntryOpened, setManualEntryOpened] = useState(false);
+  const [payOrRequestOpened, setPayOrRequestOpened] = useState(false);
 
   const transactionItems: ITransactionItem[] = useMemo(() => [
       ...manualEntries
@@ -45,7 +47,7 @@ export function Wallet() {
         <Button className={classes.button} onClick={() => setManualEntryOpened(true)}>
           Manual Entry
         </Button>
-        <Button className={classes.button} primary>
+        <Button className={classes.button} primary onClick={() => setPayOrRequestOpened(true)}>
           Pay or Request
         </Button>
       </div>
@@ -66,6 +68,7 @@ export function Wallet() {
       </div>
       <TransitionGroup>
         {manualEntryOpened && <ManualEntry onClose={() => setManualEntryOpened(false)} />}
+        {payOrRequestOpened && <PayOrRequest onClose={() => setPayOrRequestOpened(false)} />}
       </TransitionGroup>
     </div>
   );

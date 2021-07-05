@@ -47,7 +47,7 @@ export function ManualEntry({ onClose, ...restProps }: Props) {
         'Earned': Mode.Earned,
         'Spent': Mode.Spent,
       }} onChange={setMode} value={mode} />
-      <CurrencyInput value={amount} onChange={setAmount} />
+      <CurrencyInput error={error} value={amount} onChange={setAmount} />
       <input type="text" placeholder="Add a transaction title" value={title} onChange={e => setTitle(e.target.value)} />
       <CategorySelector className={classes.categorySelector} value={category} onChange={setCategory} />
       <Button primary className={classes.button}>

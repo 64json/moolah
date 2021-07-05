@@ -3,6 +3,7 @@ import { UserService } from '../user/user.service';
 import * as Rapyd from '../rapyd';
 import { WalletService } from './wallet.service';
 import { CreateManualEntryDto } from './dto/create-manual-entry.dto';
+import { PayOrRequestDto } from './dto/pay-or-request.dto';
 
 @Controller('/wallet')
 export class WalletController {
@@ -27,24 +28,25 @@ export class WalletController {
     return { card };
   }
 
-  @Post('/payment/request')
-  async requestPayment(@Request() req, @Body('amount') amount: number, email: string) {
+  @Post('/request')
+  async requestPayment(@Request() req, @Body() dto: PayOrRequestDto) {
     const recipient = await this.userService.getMe(req);
-    const payer = await this.userService.findOne(email);
+    const payer = await this.userService.findOne(dto.email);
 
     if (payer) {
       // TODO: add request to schema
       return { type: 'internal' };
     } else {
-      const url = await Rapyd.createCheckoutPage(recipient, amount);
+      const url = await Rapyd.createCheckoutPage(recipient, dto);
+      // TODO: send an email including the url
       return { type: 'external', url };
     }
   }
 
-  @Post('/payment/pay')
-  async pay(@Request() req, @Body('amount') amount: number, email: string) {
+  @Post('/pay')
+  async pay(@Request() req, @Body() dto: PayOrRequestDto) {
     const payer = await this.userService.getMe(req);
-    const recipient = await this.userService.findOne(email);
+    const recipient = await this.userService.findOne(dto.email);
 
     if (recipient) {
       // TODO: transfer money between wallets

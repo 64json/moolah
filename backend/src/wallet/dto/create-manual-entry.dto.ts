@@ -1,7 +1,7 @@
-import { IsNotEmpty } from 'class-validator';
+import { IsNotEmpty, NotEquals } from 'class-validator';
 
 export class CreateManualEntryDto {
-  @IsNotEmpty()
+  @NotEquals(0)
   amount: number;
 
   @IsNotEmpty()

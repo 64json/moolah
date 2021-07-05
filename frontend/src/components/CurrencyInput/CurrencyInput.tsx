@@ -7,13 +7,14 @@ interface Props {
   className?: string;
   value: string;
   onChange: (value: string) => void;
+  error?: boolean;
 }
 
-export function CurrencyInput({ className, value, onChange }: Props) {
+export function CurrencyInput({ className, error, value, onChange }: Props) {
   const inputRef = useRef<HTMLDivElement>(null);
 
   return (
-    <label className={c(classes.CurrencyInput, className)} onBlur={() => onChange((+value).toFixed(2) || '0.00')}
+    <label className={c(classes.CurrencyInput, error && classes.error, className)} onBlur={() => onChange((+value).toFixed(2) || '0.00')}
            onClick={() => {
              const div = inputRef.current;
              const sel = window.getSelection();

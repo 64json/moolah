@@ -14,7 +14,6 @@ interface Props {
 export function Modal({ title, children, onClose, onSubmit, className, ...restProps }: Props) {
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      console.log(e.key);
       if (e.key === 'Escape') {
         onClose();
       }

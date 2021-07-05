@@ -1,5 +1,6 @@
 import { UserDocument } from './user/user.schema';
 import { getCurrency, makeRequest } from './utils';
+import { PayOrRequestDto } from './wallet/dto/pay-or-request.dto';
 
 export async function createWallet(user: UserDocument) {
   const [yyyy, mm, dd] = user.dob.split('-');
@@ -66,12 +67,18 @@ export async function getCard(user: UserDocument) {
 }
 
 
-export async function createCheckoutPage(user: UserDocument, amount: number) {
+export async function createCheckoutPage(user: UserDocument, dto: PayOrRequestDto) {
   const { body: { data } } = await makeRequest('POST', '/v1/checkout', {
-    amount,
+    amount: dto.amount,
     country: user.country,
     currency: getCurrency(user.country),
     ewallet: user.walletId,
+    cart_items: [{
+      'name': `Moolah - Request from ${user.firstName} ${user.lastName}`,
+      'amount': dto.amount,
+      'quantity': 1,
+    }],
+    metadata: dto,
   });
   return data.redirect_url;
 }
