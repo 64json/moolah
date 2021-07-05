@@ -1,10 +1,15 @@
 import { Body, Controller, Get, Post, Request } from '@nestjs/common';
 import { UserService } from '../user/user.service';
 import * as Rapyd from '../rapyd';
+import { WalletService } from './wallet.service';
+import { CreateManualEntryDto } from './dto/create-manual-entry.dto';
 
 @Controller('/wallet')
 export class WalletController {
-  constructor(private userService: UserService) {
+  constructor(
+    private userService: UserService,
+    private walletService: WalletService,
+  ) {
   }
 
   @Post('/card/activate')
@@ -48,5 +53,18 @@ export class WalletController {
       // TODO: send an email to sign up OR input beneficiary to be payed out
       return { type: 'external' };
     }
+  }
+
+  @Get('/manual-entry')
+  async getManualEntries(@Request() req) {
+    const user = await this.userService.getMe(req);
+    const manualEntries = await this.walletService.findAllManualEntries(user);
+    return { manualEntries };
+  }
+
+  @Post('/manual-entry')
+  async addManualEntry(@Request() req, @Body() dto: CreateManualEntryDto) {
+    const user = await this.userService.getMe(req);
+    return this.walletService.createManualEntry(user, dto);
   }
 }

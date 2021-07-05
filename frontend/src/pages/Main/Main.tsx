@@ -1,6 +1,6 @@
 import React, { useMemo, useState } from 'react';
 import classes from './Main.module.scss';
-import { faChartLine, faCog, faGraduationCap, faUserCircle, faWallet } from '@fortawesome/free-solid-svg-icons';
+import { faBell, faChartLine, faCog, faGraduationCap, faUserCircle, faWallet } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { c } from '../../utils';
 import { Wallet } from '../../tabs/Wallet';
@@ -34,6 +34,7 @@ const tabs = [{
 export function Main() {
   const [tabIndex, setTabIndex] = useState(TabIndex.Wallet);
   const [settingsOpened, setSettingsOpened] = useState(false);
+  const [notificationOpened, setNotificationOpened] = useState(false);
 
   const tab = tabs[tabIndex];
   const content = useMemo(() => {
@@ -57,8 +58,12 @@ export function Main() {
             {tab.name}
           </div>
           {
+            tabIndex === TabIndex.Wallet &&
+            <FontAwesomeIcon className={classes.button} icon={faBell} onClick={() => setNotificationOpened(true)} />
+          }
+          {
             tabIndex === TabIndex.Profile &&
-            <FontAwesomeIcon className={classes.settings} icon={faCog} onClick={() => setSettingsOpened(true)} />
+            <FontAwesomeIcon className={classes.button} icon={faCog} onClick={() => setSettingsOpened(true)} />
           }
         </div>
         <main className={classes.main}>

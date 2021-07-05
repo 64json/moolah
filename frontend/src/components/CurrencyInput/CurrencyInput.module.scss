@@ -1,0 +1,17 @@
+@import '../../constants';
+
+.CurrencyInput {
+  display: flex;
+  align-items: center;
+  font-size: 48px;
+  font-weight: 700;
+  margin: 24px 0;
+
+  .currency {
+    margin-right: 8px;
+  }
+
+  .amount {
+    outline: none;
+  }
+}

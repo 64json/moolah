@@ -1,10 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 import classes from './Wallet.module.scss';
 import { Button } from '../../components/Button';
 import { TransactionItem } from '../../components/TransactionItem';
 import { CreditCard } from '../../components/CreditCard';
+import { TransitionGroup } from 'react-transition-group';
+import { ManualEntry } from '../../modals/ManualEntry';
 
 export function Wallet() {
+  const [manualEntryOpened, setManualEntryOpened] = useState(false);
+
   return (
     <div className={classes.Wallet}>
       <div className={classes.label}>
@@ -15,7 +19,7 @@ export function Wallet() {
       </div>
       <CreditCard className={classes.card} />
       <div className={classes.buttons}>
-        <Button className={classes.button}>
+        <Button className={classes.button} onClick={() => setManualEntryOpened(true)}>
           Manual Entry
         </Button>
         <Button className={classes.button} primary>
@@ -41,6 +45,9 @@ export function Wallet() {
         <TransactionItem />
         <TransactionItem />
       </div>
+      <TransitionGroup>
+        {manualEntryOpened && <ManualEntry onClose={() => setManualEntryOpened(false)} />}
+      </TransitionGroup>
     </div>
   );
 }

@@ -1,6 +1,7 @@
 @import '../../constants';
 
 .Selector {
+  align-self: stretch;
   height: 32px;
   border: 1px solid $color-text-light;
   border-radius: 32px;

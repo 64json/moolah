@@ -20,3 +20,15 @@ $onEnterDone: '&.enterDone';
 $onExit: '&.exit';
 $onTransition: '#{$onEnter}, #{$onExit}';
 $transition: '&.enterActive, &.exit';
+
+@mixin responsiveWrap($space-between) {
+  display: flex;
+  flex-wrap: wrap;
+  margin-left: -$space-between;
+  margin-top: -$space-between;
+
+  > * {
+    margin-left: $space-between;
+    margin-top: $space-between;
+  }
+}

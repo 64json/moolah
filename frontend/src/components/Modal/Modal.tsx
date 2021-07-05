@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react';
+import React, { FormEventHandler, ReactNode } from 'react';
 import classes from './Modal.module.scss';
 import { CSSTransition } from 'react-transition-group';
 import { c } from '../../utils';
@@ -8,9 +8,10 @@ interface Props {
   className?: string;
   children: ReactNode;
   onClose: () => void;
+  onSubmit?: FormEventHandler<any>;
 }
 
-export function Modal({ title, children, onClose, className, ...restProps }: Props) {
+export function Modal({ title, children, onClose, onSubmit, className, ...restProps }: Props) {
   return (
     <CSSTransition
       timeout={200}
@@ -18,7 +19,7 @@ export function Modal({ title, children, onClose, className, ...restProps }: Pro
       classNames={classes}
       {...restProps}
     >
-      <div className={classes.Modal}>
+      <form className={classes.Modal} onSubmit={onSubmit}>
         <div className={classes.header}>
           <div className={classes.spacing}>
             <div className={classes.button} onClick={onClose}>
@@ -33,7 +34,7 @@ export function Modal({ title, children, onClose, className, ...restProps }: Pro
         <div className={c(classes.content, className)}>
           {children}
         </div>
-      </div>
+      </form>
     </CSSTransition>
   );
 }
