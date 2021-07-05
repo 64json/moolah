@@ -3,17 +3,16 @@
 .RequestItem {
   display: flex;
   flex-direction: column;
-  background-color: $color-primary-light;
-  padding: 8px;
-  border-radius: 8px;
+  border-top: 1px solid $color-border;
+  padding: 16px 0;
 
-  & + .RequestItem {
-    margin-top: 8px;
+  &:last-child {
+    border-bottom: 1px solid $color-border;
   }
 
   .actions {
     display: flex;
-    margin: 8px;
+    margin-top: 8px;
 
     > * {
       flex: 1;

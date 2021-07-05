@@ -80,9 +80,19 @@ export function Wallet() {
       </div>
       <div className={classes.list}>
         {
-          requests.map(request => (
-            <RequestItem key={request._id} item={request} />
-          ))
+          requests.length > 0 &&
+          <>
+            <div className={classes.header}>
+              Pending Requests
+            </div>
+            <div className={classes.requests}>
+              {
+                requests.map(request => (
+                  <RequestItem key={request._id} item={request} />
+                ))
+              }
+            </div>
+          </>
         }
         {
           transactionItems

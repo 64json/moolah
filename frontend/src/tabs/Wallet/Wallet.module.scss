@@ -45,5 +45,10 @@
         margin-top: 0;
       }
     }
+
+    .requests {
+      display: flex;
+      flex-direction: column;
+    }
   }
 }
