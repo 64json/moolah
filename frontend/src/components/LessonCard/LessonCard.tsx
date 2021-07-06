@@ -5,30 +5,40 @@ import { c } from '../../utils';
 interface Props {
   className?: string;
   primary?: boolean;
+  thumbnail: string;
+  percentage?: number;
+  title: string;
+  description: string;
+  tag: string;
 }
 
-export function LessonCard({ className, primary }: Props) {
+export function LessonCard({ className, primary, thumbnail, percentage, title, description, tag }: Props) {
   return (
     <div className={c(classes.LessonCard, primary && classes.primary, className)}>
-      <div className={classes.thumbnail}
-           style={{ backgroundImage: `url(https://merriam-webster.com/assets/mw/images/article/art-wap-landing-mp-lg/noice-definition-nice-5595-d8280313f7ed467e364124d594026d19@1x.jpg)` }}>
-        <div className={classes.overlay}>
-          18% Complete
-        </div>
-        <div className={classes.progress}>
-          <div className={classes.bar} style={{ width: '50%' }} />
-        </div>
+      <div className={classes.thumbnail} style={{ backgroundImage: `url(${thumbnail})` }}>
+        {
+          percentage &&
+          <div className={classes.overlay}>
+            {percentage}% Complete
+          </div>
+        }
+        {
+          percentage &&
+          <div className={classes.progress}>
+            <div className={classes.bar} style={{ width: `${percentage}%` }} />
+          </div>
+        }
       </div>
       <div className={classes.info}>
         <div className={classes.title}>
-          Weekly Budget Management
+          {title}
         </div>
         <div className={classes.description}>
-          Tips for balancing your spending and saving
+          {description}
         </div>
         <div className={classes.tags}>
           <div className={classes.tag}>
-            Budgeting
+            {tag}
           </div>
         </div>
       </div>
