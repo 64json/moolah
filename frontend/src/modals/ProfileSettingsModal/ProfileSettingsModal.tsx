@@ -12,7 +12,7 @@ interface Props {
 }
 
 export function ProfileSettingsModal({ onClose, ...restProps }: Props) {
-  const { setPageIndex } = useContext(UIContext);
+  const { setPageIndex, setProfileSettingsOpened, setCardSettingsOpened } = useContext(UIContext);
   const { me, signOut } = useContext(DataContext);
 
   const [dto, setDto] = useState<UserDto>({ ...me!, password: '' });
@@ -29,6 +29,8 @@ export function ProfileSettingsModal({ onClose, ...restProps }: Props) {
       <div className={classes.signOut} onClick={() => {
         signOut();
         setPageIndex(PageIndex.Welcome);
+        setProfileSettingsOpened(false);
+        setCardSettingsOpened(false);
       }}>
         Sign Out
       </div>

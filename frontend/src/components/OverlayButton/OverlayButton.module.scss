@@ -1,0 +1,15 @@
+@import '../../constants';
+
+.OverlayButton {
+  @include dropShadow;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 4px 8px;
+  background: rgba(white, 0.8);
+  border: 1px solid $color-text-light;
+  color: $color-text-light;
+  font-weight: 700;
+  font-size: 14px;
+  border-radius: 8px;
+}

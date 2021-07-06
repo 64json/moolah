@@ -34,4 +34,7 @@ export class CreateUserDto {
 
   @IsNotEmpty()
   zip: string;
+
+  @IsNotEmpty()
+  cardStyle: number;
 }

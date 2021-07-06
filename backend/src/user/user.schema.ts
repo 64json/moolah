@@ -49,6 +49,9 @@ export class User {
 
   @Prop()
   cardId: string;
+
+  @Prop()
+  cardStyle: number;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

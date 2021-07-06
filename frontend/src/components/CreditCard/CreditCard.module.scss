@@ -37,11 +37,8 @@
       width: 100%;
       height: 100%;
       border-radius: 8px;
-      background: linear-gradient(
-          244.48deg,
-          #3ED1FF 1.48%,
-          #AB83ED 52.61%,
-          #FF7474 97.98%);
+      background-size: cover;
+      background-position: center;
     }
 
     .front {
@@ -59,8 +56,16 @@
       align-items: flex-start;
       justify-content: flex-end;
       padding: 16px 24px;
-      color: white;
-      text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.4);
+
+      &.white {
+        color: white;
+        text-shadow: 1px 1px 4px rgba(black, 0.4);
+      }
+
+      &.black {
+        color: $color-text;
+        text-shadow: 1px 1px 4px rgba(white, 0.4);
+      }
 
       .chip {
         height: 24px;

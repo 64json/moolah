@@ -19,6 +19,7 @@ export interface UserDto {
   city: string;
   state: string;
   zip: string;
+  cardStyle: number;
 }
 
 interface Props {

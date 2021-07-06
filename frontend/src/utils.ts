@@ -8,6 +8,28 @@ import {
   faSmile,
 } from '@fortawesome/free-solid-svg-icons';
 import { Category } from './interfaces/Category';
+import { CardStyle } from './interfaces/CardStyle';
+import card_0 from './assets/card_0.jpg';
+import card_1 from './assets/card_1.jpg';
+import card_2 from './assets/card_2.jpg';
+import card_3 from './assets/card_3.jpg';
+import card_4 from './assets/card_4.jpg';
+import card_5 from './assets/card_5.jpg';
+import card_6 from './assets/card_6.jpg';
+import card_7 from './assets/card_7.jpg';
+import card_8 from './assets/card_8.jpg';
+import card_9 from './assets/card_9.jpg';
+import card_10 from './assets/card_10.jpg';
+import card_11 from './assets/card_11.jpg';
+import card_12 from './assets/card_12.jpg';
+import card_13 from './assets/card_13.jpg';
+import card_14 from './assets/card_14.jpg';
+import card_15 from './assets/card_15.jpg';
+import card_16 from './assets/card_16.jpg';
+import card_17 from './assets/card_17.jpg';
+import card_18 from './assets/card_18.jpg';
+import card_19 from './assets/card_19.jpg';
+import card_20 from './assets/card_20.jpg';
 
 export type Falsy = false | 0 | '' | null | undefined;
 
@@ -100,3 +122,68 @@ export function formatCurrency(amount: number, currency: string, sign = true) {
 export function getCurrencySymbol(currency: string) {
   return formatCurrency(0, currency).replace(/[\d.,\-+]/g, '');
 }
+
+export const CARD_STYLES: CardStyle[] = [{
+  background: card_0,
+  color: 'white',
+}, {
+  background: card_1,
+  color: 'white',
+}, {
+  background: card_2,
+  color: 'white',
+}, {
+  background: card_3,
+  color: 'black',
+}, {
+  background: card_4,
+  color: 'black',
+}, {
+  background: card_5,
+  color: 'black',
+}, {
+  background: card_6,
+  color: 'black',
+}, {
+  background: card_7,
+  color: 'black',
+}, {
+  background: card_8,
+  color: 'black',
+}, {
+  background: card_9,
+  color: 'black',
+}, {
+  background: card_10,
+  color: 'black',
+}, {
+  background: card_11,
+  color: 'white',
+}, {
+  background: card_12,
+  color: 'white',
+}, {
+  background: card_13,
+  color: 'white',
+}, {
+  background: card_14,
+  color: 'white',
+}, {
+  background: card_15,
+  color: 'black',
+}, {
+  background: card_16,
+  color: 'black',
+}, {
+  background: card_17,
+  color: 'black',
+}, {
+  background: card_18,
+  color: 'black',
+}, {
+  background: card_19,
+  color: 'black',
+}, {
+  background: card_20,
+  color: 'white',
+}];

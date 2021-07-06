@@ -11,6 +11,7 @@ import { TransitionGroup } from 'react-transition-group';
 import { Drawer } from '../../components/Drawer';
 import { ProfileSettingsModal } from '../../modals/ProfileSettingsModal';
 import { UIContext } from '../../contexts/UIContext';
+import { CardSettingsModal } from '../../modals/CardSettingsModal';
 
 enum TabIndex {
   Wallet,
@@ -34,7 +35,12 @@ const tabs = [{
 }];
 
 export function MainPage() {
-  const { profileSettingsOpened, setProfileSettingsOpened } = useContext(UIContext);
+  const {
+    profileSettingsOpened,
+    setProfileSettingsOpened,
+    cardSettingsOpened,
+    setCardSettingsOpened,
+  } = useContext(UIContext);
 
   const [tabIndex, setTabIndex] = useState(TabIndex.Wallet);
   const [drawerOpened, setDrawerOpened] = useState(false);
@@ -79,6 +85,7 @@ export function MainPage() {
       <TransitionGroup>
         {drawerOpened && <Drawer onClose={() => setDrawerOpened(false)} />}
         {profileSettingsOpened && <ProfileSettingsModal onClose={() => setProfileSettingsOpened(false)} />}
+        {cardSettingsOpened && <CardSettingsModal onClose={() => setCardSettingsOpened(false)} />}
       </TransitionGroup>
     </div>
   );

@@ -49,6 +49,20 @@ export async function activateCard(user: UserDocument) {
   });
 }
 
+export async function blockCard(user: UserDocument) {
+  await makeRequest('POST', '/v1/issuing/cards/status', {
+    card: user.cardId,
+    status: 'block',
+  });
+}
+
+export async function unblockCard(user: UserDocument) {
+  await makeRequest('POST', '/v1/issuing/cards/status', {
+    card: user.cardId,
+    status: 'unblock',
+  });
+}
+
 export async function getCard(user: UserDocument) {
   const { body: { data } } = await makeRequest('GET', `/v1/issuing/cards/${user.cardId}`);
   const {

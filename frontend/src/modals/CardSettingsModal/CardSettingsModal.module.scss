@@ -1,16 +1,17 @@
 @import '../../constants';
 
-.ProfileSettingsModal {
+.CardSettingsModal {
   display: flex;
   flex-direction: column;
   align-items: center;
 
-  .picture {
-    width: 128px;
-    height: 128px;
-    border-radius: 100%;
-    background-size: cover;
-    background-position: center;
+  &.error {
+    input {
+      border: 1px solid $color-negative;
+    }
+  }
+
+  .label {
     margin-bottom: 16px;
   }
 
@@ -19,7 +20,7 @@
     margin-bottom: 16px;
   }
 
-  .signOut {
+  .deactivate {
     cursor: pointer;
     font-size: 14px;
     text-decoration: underline;

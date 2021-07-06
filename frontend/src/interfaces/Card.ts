@@ -1,5 +1,5 @@
 export interface Card {
-  status: 'INA' | 'ACT';
+  status: 'ACT' | 'BLO' | 'INA';
   cardNumber: string;
   cvc: string;
   expirationMonth: string;

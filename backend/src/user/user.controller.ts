@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, Request } from '@nestjs/common';
+import { Body, Controller, Get, Post, Put, Request } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { Public } from '../utils';
@@ -20,5 +20,13 @@ export class UserController {
     const user = await this.userService.getMe(req);
     const { password, ...userJSON } = user.toObject();
     return { user: userJSON };
+  }
+
+  @Put('/me/card-style')
+  async changeCardStyle(@Request() req, @Body('cardStyle') cardStyle: number) {
+    const user = await this.userService.getMe(req);
+    user.cardStyle = cardStyle;
+    await user.save();
+    return {};
   }
 }

@@ -26,6 +26,7 @@ export function SignUpPage() {
     city: '',
     state: '',
     zip: '',
+    cardStyle: 0,
   });
   const [error, setError] = useState(false);
 

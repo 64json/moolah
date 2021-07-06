@@ -21,6 +21,22 @@ export class WalletController {
     return { card };
   }
 
+  @Post('/card/block')
+  async BlockCard(@Request() req) {
+    const user = await this.userService.getMe(req);
+    await Rapyd.blockCard(user);
+    const card = await Rapyd.getCard(user);
+    return { card };
+  }
+
+  @Post('/card/unblock')
+  async UnblockCard(@Request() req) {
+    const user = await this.userService.getMe(req);
+    await Rapyd.unblockCard(user);
+    const card = await Rapyd.getCard(user);
+    return { card };
+  }
+
   @Get('/card')
   async getCard(@Request() req) {
     const user = await this.userService.getMe(req);

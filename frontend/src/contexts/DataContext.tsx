@@ -62,8 +62,6 @@ export function DataProvider({ children }: Props) {
   const [balance, setBalance] = useState<number>(NaN);
   const [goals, setGoals] = useState<Goal[]>([]);
 
-  console.log({ goals });
-
   const fetchMe = useCallback(async () => {
     const { data } = await axios.get(`${BASE_URL}/user/me`);
     setMe(data.user);
@@ -143,7 +141,7 @@ export function DataProvider({ children }: Props) {
           signOut();
         });
     }
-  }, [fetchAll, signOut]);
+  }, [fetchAll, setPageIndex, signOut]);
 
   const value = useMemo<Value>(
     () => ({
