@@ -22,4 +22,113 @@
   .selector {
     margin-bottom: 16px;
   }
+
+  .statsCard {
+  }
+
+  .summary {
+    .sentence {
+    }
+
+    .list {
+      width: 200px;
+
+      .item {
+        display: flex;
+        align-items: center;
+
+        & + .item {
+          margin-top: 16px;
+        }
+
+        .icon {
+          color: $color-positive;
+          margin-right: 8px;
+        }
+
+        .label {
+          flex: 1;
+          margin-right: 8px;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+          overflow: hidden;
+        }
+
+        .delta {
+          color: $color-positive;
+          font-weight: 700;
+        }
+
+        .amount {
+          font-weight: 700;
+        }
+      }
+    }
+  }
+
+  .spending {
+    .chart {
+      height: 217px;
+      margin-top: -16px;
+      margin-bottom: -8px;
+    }
+
+    .list {
+      width: 200px;
+
+      .item {
+        display: flex;
+        align-items: center;
+
+        & + .item {
+          margin-top: 16px;
+        }
+
+        &:nth-child(1) .icon {
+          color: $color-purple;
+        }
+
+        &:nth-child(2) .icon {
+          color: $color-red;
+        }
+
+        &:nth-child(3) .icon {
+          color: $color-orange;
+        }
+
+        &:nth-child(4) .icon {
+          color: $color-green;
+        }
+
+        .icon {
+          margin-right: 8px;
+        }
+
+        .label {
+          flex: 1;
+          margin-right: 8px;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+          overflow: hidden;
+        }
+
+        .amount {
+          font-weight: 700;
+        }
+      }
+    }
+  }
+
+  .goals {
+    .chart {
+      height: 184px;
+      margin-top: 8px;
+    }
+  }
+
+  .lesson {
+    .chart {
+      height: 204px;
+    }
+  }
 }

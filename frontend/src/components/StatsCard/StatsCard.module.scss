@@ -3,9 +3,10 @@
 .StatsCard {
   display: flex;
   flex-direction: column;
+  align-items: center;
   background-color: $color-primary-light;
   border-radius: 8px;
-  padding: 16px;
+  padding: 24px;
 
   & + .StatsCard {
     margin-top: 16px;
@@ -24,4 +25,17 @@
     }
   }
 
+  .body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    > * {
+      margin-bottom: 16px;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
 }

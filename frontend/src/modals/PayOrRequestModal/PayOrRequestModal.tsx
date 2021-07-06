@@ -41,7 +41,6 @@ export function PayOrRequestModal({ onClose, ...restProps }: Props) {
         alert(`external user`); // TODO: confirmation
         break;
       case 'internal':
-        alert('internal user'); // TODO: confirmation
         break;
     }
     await fetchTransactions();
@@ -60,7 +59,6 @@ export function PayOrRequestModal({ onClose, ...restProps }: Props) {
         alert(`external user / checkout page URL: ${url}`); // TODO: confirmation
         break;
       case 'internal':
-        alert('internal user'); // TODO: confirmation
         break;
     }
     await fetchRequests();
