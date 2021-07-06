@@ -50,5 +50,14 @@
       display: flex;
       flex-direction: column;
     }
+
+    &:empty:after {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      content: 'Your transactions will show up here.';
+      font-size: 14px;
+      color: $color-text-light;
+    }
   }
 }

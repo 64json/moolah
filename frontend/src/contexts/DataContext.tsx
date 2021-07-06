@@ -15,6 +15,7 @@ import { ManualEntry } from '../interfaces/ManualEntry';
 import { Request } from '../interfaces/Request';
 import { Transaction } from '../interfaces/Transaction';
 import { UIContext } from './UIContext';
+import { Goal } from '../interfaces/Goal';
 
 interface Value {
   me: User | null;
@@ -23,6 +24,7 @@ interface Value {
   requests: Request[];
   transactions: Transaction[];
   balance: number;
+  goals: Goal[];
 
   fetchMe(): Promise<void>;
 
@@ -33,6 +35,8 @@ interface Value {
   fetchRequests(): Promise<void>;
 
   fetchTransactions(): Promise<void>;
+
+  fetchGoals(): Promise<void>;
 
   fetchAll(): Promise<void[]>;
 
@@ -56,8 +60,9 @@ export function DataProvider({ children }: Props) {
   const [requests, setRequests] = useState<Request[]>([]);
   const [transactions, setTransactions] = useState<Transaction[]>([]);
   const [balance, setBalance] = useState<number>(NaN);
+  const [goals, setGoals] = useState<Goal[]>([]);
 
-  console.log({ transactions, balance });
+  console.log({ goals });
 
   const fetchMe = useCallback(async () => {
     const { data } = await axios.get(`${BASE_URL}/user/me`);
@@ -85,13 +90,19 @@ export function DataProvider({ children }: Props) {
     setBalance(data.balance);
   }, []);
 
+  const fetchGoals = useCallback(async () => {
+    const { data } = await axios.get(`${BASE_URL}/goal`);
+    setGoals(data.goals);
+  }, []);
+
   const fetchAll = useCallback(() => Promise.all([
     fetchMe(),
     fetchCard(),
     fetchManualEntries(),
     fetchRequests(),
     fetchTransactions(),
-  ]), [fetchCard, fetchManualEntries, fetchMe, fetchRequests, fetchTransactions]);
+    fetchGoals(),
+  ]), [fetchCard, fetchGoals, fetchManualEntries, fetchMe, fetchRequests, fetchTransactions]);
 
   const resetAll = useCallback(() => {
     setMe(null);
@@ -100,6 +111,7 @@ export function DataProvider({ children }: Props) {
     setRequests([]);
     setTransactions([]);
     setBalance(NaN);
+    setGoals([]);
   }, []);
 
   const signIn = useCallback(async (email: string, password: string) => {
@@ -141,11 +153,13 @@ export function DataProvider({ children }: Props) {
       requests,
       transactions,
       balance,
+      goals,
       fetchMe,
       fetchCard,
       fetchManualEntries,
       fetchRequests,
       fetchTransactions,
+      fetchGoals,
       fetchAll,
       signIn,
       signOut,
@@ -157,11 +171,13 @@ export function DataProvider({ children }: Props) {
       requests,
       transactions,
       balance,
+      goals,
       fetchMe,
       fetchCard,
       fetchManualEntries,
       fetchRequests,
       fetchTransactions,
+      fetchGoals,
       fetchAll,
       signIn,
       signOut,

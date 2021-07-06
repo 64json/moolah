@@ -1,24 +1,27 @@
 import { Body, Controller, Get, Post, Request } from '@nestjs/common';
-import { UserService } from './user.service';
-import { CreateUserDto } from './dto/create-user.dto';
-import { Public } from '../utils';
+import { GoalService } from './goal.service';
+import { CreateGoalDto } from './dto/create-goal.dto';
+import { UserService } from '../user/user.service';
 
-@Controller('/user')
-export class UserController {
-  constructor(private userService: UserService) {
+@Controller('/goal')
+export class GoalController {
+  constructor(
+    private userService: UserService,
+    private goalService: GoalService,
+  ) {
   }
 
-  @Public()
   @Post()
-  async create(@Body() createUserDto: CreateUserDto) {
-    await this.userService.create(createUserDto);
+  async create(@Request() req, @Body() dto: CreateGoalDto) {
+    const me = await this.userService.getMe(req);
+    await this.goalService.create(me, dto);
     return {};
   }
 
-  @Get('/me')
-  async getMe(@Request() req) {
-    const user = await this.userService.getMe(req);
-    const { password, ...userJSON } = user.toObject();
-    return { user: userJSON };
+  @Get()
+  async listGoals(@Request() req) {
+    const me = await this.userService.getMe(req);
+    const goals = await this.goalService.listGoals(me);
+    return { goals };
   }
 }

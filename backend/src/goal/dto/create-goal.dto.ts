@@ -1,37 +1,18 @@
-import { IsDateString, IsEmail, IsNotEmpty } from 'class-validator';
+import { IsNotEmpty, NotEquals } from 'class-validator';
 
-export class CreateUserDto {
+export class CreateGoalDto {
   @IsNotEmpty()
-  firstName: string;
-
-  @IsNotEmpty()
-  lastName: string;
-
-  @IsEmail()
-  email: string;
+  emoji: string;
 
   @IsNotEmpty()
-  password: string;
+  title: string;
 
-  @IsDateString()
-  dob: string;
-
-  @IsNotEmpty()
-  country: string;
+  @NotEquals(0)
+  amount: number;
 
   @IsNotEmpty()
   currency: string;
 
   @IsNotEmpty()
-  line1: string;
-
-  line2: string;
-
-  @IsNotEmpty()
-  city: string;
-
-  state: string;
-
-  @IsNotEmpty()
-  zip: string;
+  deadline: string;
 }

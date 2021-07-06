@@ -1,64 +1,29 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import * as mongoose from 'mongoose';
 import { Document } from 'mongoose';
+import { User } from '../user/user.schema';
 
-export type UserDocument = User & Document;
+export type GoalDocument = Goal & Document;
 
-@Schema()
-export class User {
-  @Prop()
-  firstName: string;
-
-  @Prop()
-  lastName: string;
-
-  @Prop({ unique: true })
-  email: string;
+@Schema({ timestamps: true })
+export class Goal {
+  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: User.name })
+  user: User;
 
   @Prop()
-  password: string;
+  emoji: string;
 
   @Prop()
-  dob: string;
+  title: string;
 
   @Prop()
-  country: string;
+  amount: number;
 
   @Prop()
   currency: string;
 
   @Prop()
-  line1: string;
-
-  @Prop()
-  line2: string;
-
-  @Prop()
-  city: string;
-
-  @Prop()
-  state: string;
-
-  @Prop()
-  zip: string;
-
-  @Prop()
-  walletId: string;
-
-  @Prop()
-  walletContactId: string;
-
-  @Prop()
-  cardId: string;
+  deadline: string;
 }
 
-export const UserSchema = SchemaFactory.createForClass(User);
-
-UserSchema.methods.toJSON = function (this: UserDocument) {
-  return {
-    _id: this._id,
-    firstName: this.firstName,
-    lastName: this.lastName,
-    email: this.email,
-    country: this.country,
-  };
-};
+export const GoalSchema = SchemaFactory.createForClass(Goal);

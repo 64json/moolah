@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import classes from './ProfileTab.module.scss';
 import { GoalItem } from '../../components/GoalItem';
 import { c } from '../../utils';
@@ -12,9 +12,15 @@ import badge_6 from '../../assets/badge_6.png';
 import badge_7 from '../../assets/badge_7.png';
 import badge_8 from '../../assets/badge_8.png';
 import { DataContext } from '../../contexts/DataContext';
+import { Button } from '../../components/Button';
+import { TransitionGroup } from 'react-transition-group';
+import { Goal } from '../../interfaces/Goal';
+import { GoalModal } from '../../modals/GoalModal';
 
 export function ProfileTab() {
-  const { me } = useContext(DataContext);
+  const { me, goals } = useContext(DataContext);
+
+  const [goal, setGoal] = useState<Goal | null>(null);
 
   return (
     <div className={classes.ProfileTab}>
@@ -35,11 +41,22 @@ export function ProfileTab() {
           Goals
         </div>
         <div className={classes.list}>
-          <GoalItem />
-          <GoalItem />
-          <GoalItem />
-          <GoalItem />
+          {
+            goals.map(goal => (
+              <GoalItem key={goal._id} goal={goal} />
+            ))
+          }
         </div>
+        <Button primary className={classes.add} onClick={() => setGoal({
+          emoji: '',
+          title: '',
+          amount: 0,
+          currency: '',
+          deadline: '',
+          createdAt: '',
+        })}>
+          New Goal
+        </Button>
       </div>
       <div className={c(classes.section, classes.badgeSection)}>
         <div className={classes.header}>
@@ -57,6 +74,9 @@ export function ProfileTab() {
           <img className={classes.badge} src={badge_8} />
         </div>
       </div>
+      <TransitionGroup>
+        {goal && <GoalModal goal={goal} onClose={() => setGoal(null)} />}
+      </TransitionGroup>
     </div>
   );
 }

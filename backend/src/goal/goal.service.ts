@@ -1,45 +1,28 @@
 import { Injectable } from '@nestjs/common';
 import { Model } from 'mongoose';
-import { User, UserDocument } from './user.schema';
+import { Goal, GoalDocument } from './goal.schema';
 import { InjectModel } from '@nestjs/mongoose';
-import { CreateUserDto } from './dto/create-user.dto';
-import * as bcrypt from 'bcrypt';
-import { saltOrRounds } from '../auth/constants';
-import * as Rapyd from '../rapyd';
+import { CreateGoalDto } from './dto/create-goal.dto';
+import { User } from '../user/user.schema';
 
 @Injectable()
-export class UserService {
+export class GoalService {
   constructor(
-    @InjectModel(User.name) private userModel: Model<UserDocument>,
+    @InjectModel(Goal.name) private goalModel: Model<GoalDocument>,
   ) {
   }
 
-  async create(createUserDto: CreateUserDto): Promise<UserDocument> {
-    const rawPassword = createUserDto.password;
-    const hashedPassword = await bcrypt.hash(rawPassword, saltOrRounds);
-    const createdUser = new this.userModel({
-      ...createUserDto,
-      password: hashedPassword,
+  async create(user: User, dto: CreateGoalDto): Promise<GoalDocument> {
+    const goal = new this.goalModel({
+      ...dto,
+      user,
     });
-    await createdUser.save();
-
-    const { walletId, walletContactId } = await Rapyd.createWallet(createdUser);
-    createdUser.walletId = walletId;
-    createdUser.walletContactId = walletContactId;
-    await createdUser.save();
-
-    const { cardId } = await Rapyd.issueCard(createdUser);
-    createdUser.cardId = cardId;
-    await createdUser.save();
-
-    return createdUser;
+    return goal.save();
   }
 
-  async findOne(email: string): Promise<User | null> {
-    return this.userModel.findOne({ email });
-  }
-
-  async getMe(req) {
-    return this.userModel.findById(req.user.userId);
+  async listGoals(user: User) {
+    return this.goalModel
+      .find({ user })
+      .sort('-deadline');
   }
 }

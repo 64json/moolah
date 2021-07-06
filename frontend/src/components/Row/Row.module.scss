@@ -1,0 +1,19 @@
+@import '../../constants';
+
+.Row {
+  align-self: stretch;
+  display: flex;
+
+  > * {
+    flex: 1;
+    margin-right: 16px;
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+
+  & + .Row {
+    margin-top: 16px;
+  }
+}

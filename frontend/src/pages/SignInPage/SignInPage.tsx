@@ -6,6 +6,7 @@ import { DataContext } from '../../contexts/DataContext';
 import { c } from '../../utils';
 import { PageIndex } from '../../enums/PageIndex';
 import { UIContext } from '../../contexts/UIContext';
+import { Row } from '../../components/Row';
 
 export function SignInPage() {
   const { signIn } = useContext(DataContext);
@@ -33,12 +34,16 @@ export function SignInPage() {
         <div className={classes.secondary}>
           Get back to managing your moolah!
         </div>
-        <input type="email" placeholder="Email" value={email}
-               onChange={e => setEmail(e.target.value)}
-               className={classes.input} />
-        <input type="password" placeholder="Password" value={password}
-               onChange={e => setPassword(e.target.value)}
-               className={classes.input} />
+        <Row>
+          <input type="email" placeholder="Email" value={email}
+                 onChange={e => setEmail(e.target.value)}
+                 className={classes.input} />
+        </Row>
+        <Row>
+          <input type="password" placeholder="Password" value={password}
+                 onChange={e => setPassword(e.target.value)}
+                 className={classes.input} />
+        </Row>
         <Button primary className={classes.button}>
           Let's Go!
         </Button>

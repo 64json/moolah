@@ -33,6 +33,9 @@
 
 
   .section {
+    display: flex;
+    flex-direction: column;
+
     & + .section {
       margin-top: 24px;
     }
@@ -40,6 +43,22 @@
     .header {
       font-weight: 700;
       margin-bottom: 8px;
+    }
+
+    .list {
+      &:empty:after {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        content: 'No goal has been set.';
+        font-size: 14px;
+        color: $color-text-light;
+      }
+    }
+
+    .add {
+      align-self: center;
+      margin-top: 24px;
     }
   }
 
