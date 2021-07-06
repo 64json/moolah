@@ -43,7 +43,7 @@ export function ProfileTab() {
         <div className={classes.list}>
           {
             goals.map(goal => (
-              <GoalItem key={goal._id} goal={goal} />
+              <GoalItem className={classes.goalItem} key={goal._id} goal={goal} onClick={() => setGoal(goal)} />
             ))
           }
         </div>

@@ -20,9 +20,20 @@ export class GoalService {
     return goal.save();
   }
 
+  async update(goalId: string, dto: CreateGoalDto, user: User): Promise<GoalDocument> {
+    const goal = await this.goalModel.findOne({ _id: goalId, user });
+    goal.set(dto);
+    return goal.save();
+  }
+
+  async remove(goalId: string, user: User): Promise<GoalDocument> {
+    const goal = await this.goalModel.findOne({ _id: goalId, user });
+    return goal.remove();
+  }
+
   async listGoals(user: User) {
     return this.goalModel
       .find({ user })
-      .sort('-deadline');
+      .sort('deadline');
   }
 }

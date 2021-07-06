@@ -20,9 +20,8 @@
   }
 
   &.negative {
-    background-color: $color-negative;
     border-color: $color-negative;
-    color: white;
+    color: $color-negative;
   }
 
   &.small {

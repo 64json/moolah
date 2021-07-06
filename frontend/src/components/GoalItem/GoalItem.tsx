@@ -7,9 +7,10 @@ import { DateTime } from 'luxon';
 interface Props {
   className?: string;
   goal: Goal;
+  onClick?: () => void;
 }
 
-export function GoalItem({ className, goal }: Props) {
+export function GoalItem({ className, goal, onClick }: Props) {
   const formattedAmount = useMemo(
     () => formatCurrency(goal.amount, goal.currency, false),
     [goal.amount, goal.currency],
@@ -34,7 +35,7 @@ export function GoalItem({ className, goal }: Props) {
   }, [percentage]);
 
   return (
-    <div className={c(classes.GoalItem, className)}>
+    <div className={c(classes.GoalItem, className)} onClick={onClick}>
       <div className={classes.icon}>
         {goal.emoji}
       </div>

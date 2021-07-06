@@ -25,16 +25,27 @@ export function GoalModal({ onClose, goal, ...restProps }: Props) {
   const [error, setError] = useState(false);
 
   const addGoal = useCallback(async () => {
-    await axios.post(`${BASE_URL}/goal`, {
+    const dto = {
       emoji,
       title,
       amount: +amount,
       currency: me?.currency,
       deadline,
-    });
+    };
+    if (goal._id) {
+      await axios.put(`${BASE_URL}/goal/${goal._id}`, dto);
+    } else {
+      await axios.post(`${BASE_URL}/goal`, dto);
+    }
     await fetchGoals();
     onClose();
-  }, [amount, deadline, emoji, fetchGoals, me?.currency, onClose, title]);
+  }, [amount, deadline, emoji, fetchGoals, goal._id, me?.currency, onClose, title]);
+
+  const deleteGoal = useCallback(async () => {
+    await axios.delete(`${BASE_URL}/goal/${goal._id}`);
+    await fetchGoals();
+    onClose();
+  }, [fetchGoals, goal._id, onClose]);
 
   return (
     <Modal title={goal._id ? 'Edit Goal' : 'New Goal'} onClose={onClose}
@@ -54,9 +65,17 @@ export function GoalModal({ onClose, goal, ...restProps }: Props) {
       <Row>
         <DateInput placeholder="Goal Deadline" value={deadline} onChange={e => setDeadline(e.target.value)} />
       </Row>
-      <Button primary className={classes.button}>
-        Create
-      </Button>
+      <Row className={classes.buttons}>
+        {
+          goal._id &&
+          <Button negative type="button" onClick={() => deleteGoal()}>
+            Delete Goal
+          </Button>
+        }
+        <Button primary>
+          {goal._id ? 'Edit Goal' : 'Create Goal'}
+        </Button>
+      </Row>
     </Modal>
   );
 }
