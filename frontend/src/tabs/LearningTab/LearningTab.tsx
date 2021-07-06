@@ -25,24 +25,32 @@ export function LearningTab() {
         </div>
         <div className={classes.row}>
           <LessonCard primary className={classes.lessonCard}
-                      thumbnail={lesson_0}
-                      title="Weekly Budget Management"
-                      description="Tips for balancing your spending and saving"
-                      tag="BUDGETING"
-                      percentage={18} />
+                      lesson={{
+                        thumbnail: lesson_0,
+                        title: 'Weekly Budget Management',
+                        description: 'Tips for balancing your spending and saving',
+                        tag: 'BUDGETING',
+                        percentage: 18,
+                      }}
+          />
         </div>
         <div className={classes.row}>
           <LessonCard className={classes.lessonCard}
-                      thumbnail={lesson_1}
-                      title="Setting Goals"
-                      description="First steps to setting achieveable goals"
-                      tag="SAVING"
-                      percentage={53} />
+                      lesson={{
+                        thumbnail: lesson_1,
+                        title: 'Setting Goals',
+                        description: 'First steps to setting achieveable goals',
+                        tag: 'SAVING',
+                        percentage: 53,
+                      }}
+          />
           <LessonCard className={classes.lessonCard}
-                      thumbnail={lesson_2}
-                      title="Achieving Goals"
-                      description="Maintaining your personal goals"
-                      tag="SAVING" />
+                      lesson={{
+                        thumbnail: lesson_2,
+                        title: 'Achieving Goals',
+                        description: 'Maintaining your personal goals',
+                        tag: 'SAVING',
+                      }} />
         </div>
       </section>
       <section className={classes.section}>
@@ -51,15 +59,19 @@ export function LearningTab() {
         </div>
         <div className={classes.row}>
           <LessonCard className={classes.lessonCard}
-                      thumbnail={lesson_3}
-                      title="The Truth Behind Sales Prices"
-                      description="Strategies behind sales."
-                      tag="TRENDS" />
+                      lesson={{
+                        thumbnail: lesson_3,
+                        title: 'The Truth Behind Sales Prices',
+                        description: 'Strategies behind sales.',
+                        tag: 'TRENDS',
+                      }} />
           <LessonCard className={classes.lessonCard}
-                      thumbnail={lesson_4}
-                      title="Why is Bitcoin...?"
-                      description="The why, the what, and the how of crypto."
-                      tag="TRENDS" />
+                      lesson={{
+                        thumbnail: lesson_4,
+                        title: 'Why is Bitcoin...?',
+                        description: 'The why, the what, and the how of crypto.',
+                        tag: 'TRENDS',
+                      }} />
         </div>
       </section>
     </div>

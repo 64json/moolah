@@ -12,6 +12,7 @@ import { Drawer } from '../../components/Drawer';
 import { ProfileSettingsModal } from '../../modals/ProfileSettingsModal';
 import { UIContext } from '../../contexts/UIContext';
 import { CardSettingsModal } from '../../modals/CardSettingsModal';
+import { LessonOverviewModal } from '../../modals/LessonOverviewModal';
 
 enum TabIndex {
   Wallet,
@@ -40,6 +41,8 @@ export function MainPage() {
     setProfileSettingsOpened,
     cardSettingsOpened,
     setCardSettingsOpened,
+    openedLesson,
+    setOpenedLesson,
   } = useContext(UIContext);
 
   const [tabIndex, setTabIndex] = useState(TabIndex.Wallet);
@@ -86,6 +89,7 @@ export function MainPage() {
         {drawerOpened && <Drawer onClose={() => setDrawerOpened(false)} />}
         {profileSettingsOpened && <ProfileSettingsModal onClose={() => setProfileSettingsOpened(false)} />}
         {cardSettingsOpened && <CardSettingsModal onClose={() => setCardSettingsOpened(false)} />}
+        {openedLesson && <LessonOverviewModal lesson={openedLesson} onClose={() => setOpenedLesson(null)} />}
       </TransitionGroup>
     </div>
   );

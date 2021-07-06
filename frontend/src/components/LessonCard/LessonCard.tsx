@@ -1,20 +1,23 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import classes from './LessonCard.module.scss';
 import { c } from '../../utils';
+import { Lesson } from '../../interfaces/Lesson';
+import { UIContext } from '../../contexts/UIContext';
 
 interface Props {
   className?: string;
   primary?: boolean;
-  thumbnail: string;
-  percentage?: number;
-  title: string;
-  description: string;
-  tag: string;
+  lesson: Lesson;
 }
 
-export function LessonCard({ className, primary, thumbnail, percentage, title, description, tag }: Props) {
+export function LessonCard({ className, primary, lesson }: Props) {
+  const { setOpenedLesson } = useContext(UIContext);
+
+  const { thumbnail, percentage, title, description, tag } = lesson;
+
   return (
-    <div className={c(classes.LessonCard, primary && classes.primary, className)}>
+    <div className={c(classes.LessonCard, primary && classes.primary, className)}
+         onClick={() => setOpenedLesson(lesson)}>
       <div className={classes.thumbnail} style={{ backgroundImage: `url(${thumbnail})` }}>
         {
           percentage &&

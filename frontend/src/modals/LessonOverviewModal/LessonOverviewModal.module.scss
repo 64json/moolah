@@ -1,0 +1,136 @@
+@import '../../constants';
+
+.LessonOverviewModal {
+  display: flex;
+  flex-direction: column;
+
+  .info {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 16px;
+
+    .title {
+      font-weight: 700;
+      margin-bottom: 8px;
+      font-size: 18px;
+    }
+
+    .description {
+      font-size: 14px;
+      margin-bottom: 8px;
+    }
+
+    .tags {
+      display: flex;
+
+      .tag {
+        font-size: 12px;
+        color: $color-primary;
+        border: 1px solid $color-primary;
+        border-radius: 16px;
+        padding: 4px 8px;
+      }
+    }
+  }
+
+  .thumbnail {
+    position: relative;
+    background-position: center;
+    background-size: cover;
+    height: 208px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    margin-bottom: 16px;
+
+    .overlay {
+      background-color: rgba(white, .64);
+      height: 20px;
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      padding: 0 8px;
+      margin-bottom: 12px;
+    }
+
+    .progress {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background-color: #D1D5DA;
+      display: flex;
+      align-items: stretch;
+
+      .bar {
+        background-color: $color-red;
+      }
+    }
+  }
+
+  > .label {
+    margin-bottom: 16px;
+
+    b {
+      font-weight: 700;
+    }
+  }
+
+  .list {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 16px;
+
+    .item {
+      display: flex;
+      align-items: center;
+
+      & + .item {
+        margin-top: 16px;
+      }
+
+      &:nth-child(1) .icon {
+        color: $color-positive;
+      }
+
+      &:nth-child(2) .icon {
+        color: $color-primary;
+      }
+
+      .icon {
+        margin-right: 8px;
+        color: $color-text-light;
+        font-size: 20px;
+      }
+
+      .label {
+        flex: 1;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+      }
+    }
+  }
+
+  .row {
+    margin-bottom: 16px;
+  }
+
+  .scroll {
+    display: flex;
+    overflow-x: auto;
+    margin-right: -24px;
+
+    .lessonCard {
+      margin-right: 8px;
+      min-width: 160px;
+
+      &:last-child {
+        margin-right: 0;
+      }
+    }
+  }
+}
