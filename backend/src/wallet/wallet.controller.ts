@@ -1,4 +1,4 @@
-import { BadRequestException, Body, Controller, Delete, Get, Param, Post, Request } from '@nestjs/common';
+import { BadRequestException, Body, Controller, Delete, Get, Param, Post, Query, Request } from '@nestjs/common';
 import { UserService } from '../user/user.service';
 import * as Rapyd from '../rapyd';
 import { WalletService } from './wallet.service';
@@ -125,5 +125,32 @@ export class WalletController {
     return { manualEntries };
   }
 
+  @Post('/payout')
+  async payout(@Request() req) {
+    return Rapyd.payout();
+  }
+
+  @Get('/payout/method-type')
+  async listPayoutMethodType(
+    @Request() req,
+    @Query('amount') amount: number,
+    @Query('currency') currency: string,
+    @Query('country') country: string,
+  ) {
+    return Rapyd.listPayoutMethodTypes(amount, currency, country);
+  }
+
+  @Get('/payout/method-type/:methodType')
+  async getPayoutRequiredFields(
+    @Request() req,
+    @Param('methodType') methodType: string,
+    @Query('amount') amount: number,
+    @Query('currency') currency: string,
+    @Query('country') country: string,
+  ) {
+    return Rapyd.getPayoutRequiredFields(methodType, amount, currency, country);
+  }
+
+  // TODO: give out free credits to ease the demo
   // TODO: webhook to fulfill request to external user
 }

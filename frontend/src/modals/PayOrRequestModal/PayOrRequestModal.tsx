@@ -97,3 +97,6 @@ export function PayOrRequestModal({ onClose, ...restProps }: Props) {
     </Modal>
   );
 }
+
+// TODO: no more phone number (should we add username?)
+// TODO: search dropdown?

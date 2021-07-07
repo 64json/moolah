@@ -79,8 +79,8 @@ export class WalletService {
       Rapyd.getWalletTransaction(user.walletId, transaction.id)
         .then(async data => {
           if (data.type === 'p2p_transfer') {
-            // unfortunately rapyd doesn't return metadata when getting wallet transaction of funds transfer,
-            // hence manually populating from db to attach
+            // [BLOCKER] unfortunately rapyd doesn't return metadata when getting wallet transaction of funds transfer,
+            //  hence manually populating from db to attach
             const transfer = await this.getTransfer(data.action_data.id);
             data.action_data.metadata = {
               request: transfer,

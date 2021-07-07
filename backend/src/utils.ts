@@ -108,3 +108,8 @@ async function httpRequest(options, body): Promise<any> {
     }
   });
 }
+
+export function reformatDate(dbDate: string) {
+  const [yyyy, mm, dd] = dbDate.split('-');
+  return `${mm}/${dd}/${yyyy}`;
+}
