@@ -1,0 +1,74 @@
+@import '../../constants';
+
+.CarouselPage {
+  width: 100%;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  .carousel {
+    margin-bottom: 32px;
+
+    .item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      .image {
+        height: 304px;
+        margin-bottom: 32px;
+      }
+
+      .title {
+        font-size: 24px;
+        font-weight: 700;
+        margin-bottom: 8px;
+      }
+
+      .description {
+        font-size: 18px;
+        max-width: 284px;
+        text-align: center;
+      }
+    }
+  }
+
+  .dots {
+    display: flex;
+    justify-content: center;
+
+    .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 100%;
+      background-color: $color-text-light;
+      margin-right: 8px;
+      transition: all 200ms;
+      transition-property: background-color, opacity;
+
+      &:last-child {
+        margin-right: 0;
+      }
+
+      &.active {
+        background-color: $color-text;
+      }
+    }
+
+    .button {
+      position: absolute;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 200ms;
+    }
+
+    &.end {
+      .button {
+        pointer-events: auto;
+        opacity: 1;
+      }
+    }
+  }
+}

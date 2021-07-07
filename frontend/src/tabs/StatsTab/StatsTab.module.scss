@@ -41,17 +41,16 @@
           margin-top: 16px;
         }
 
-        .icon {
-          color: $color-positive;
-          margin-right: 8px;
-        }
-
         .label {
           flex: 1;
           margin-right: 8px;
           white-space: nowrap;
           text-overflow: ellipsis;
           overflow: hidden;
+        }
+
+        .icon {
+          color: $color-positive;
         }
 
         .delta {

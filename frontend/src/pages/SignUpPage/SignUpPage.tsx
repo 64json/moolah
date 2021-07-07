@@ -36,7 +36,7 @@ export function SignUpPage() {
       currency: getCurrency(dto.country),
     });
     await signIn(dto.email, dto.password ?? '');
-    setPageIndex(PageIndex.Main);
+    setPageIndex(PageIndex.Onboard);
   }, [dto, setPageIndex, signIn]);
 
   return (

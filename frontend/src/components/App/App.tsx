@@ -7,6 +7,8 @@ import { SignUpPage } from '../../pages/SignUpPage';
 import { CSSTransition, SwitchTransition } from 'react-transition-group';
 import { PageIndex } from '../../enums/PageIndex';
 import { UIContext } from '../../contexts/UIContext';
+import { OnboardPage } from '../../pages/OnboardPage';
+import { CarouselPage } from '../../pages/CarouselPage';
 
 export function App() {
   const { pageIndex } = useContext(UIContext);
@@ -19,6 +21,10 @@ export function App() {
         return <SignUpPage />;
       case PageIndex.SignIn:
         return <SignInPage />;
+      case PageIndex.Onboard:
+        return <OnboardPage />;
+      case PageIndex.Carousel:
+        return <CarouselPage />;
       case PageIndex.Main:
         return <MainPage />;
     }
@@ -31,6 +37,9 @@ export function App() {
       case PageIndex.SignUp:
       case PageIndex.SignIn:
         return 268;
+      case PageIndex.Onboard:
+        return 372;
+      case PageIndex.Carousel:
       case PageIndex.Main:
         return 0;
     }
@@ -46,7 +55,7 @@ export function App() {
       </div>
       <SwitchTransition>
         <CSSTransition
-          key={backgroundHeight}
+          key={[PageIndex.SignUp, PageIndex.SignIn].includes(pageIndex) ? -1 : pageIndex}
           timeout={200}
           unmountOnExit
           classNames={classes}
