@@ -11,11 +11,35 @@ import badge_5 from '../../assets/badge_5.png';
 import badge_6 from '../../assets/badge_6.png';
 import badge_7 from '../../assets/badge_7.png';
 import badge_8 from '../../assets/badge_8.png';
+import badge_9 from '../../assets/badge_9.png';
+import badge_10 from '../../assets/badge_10.png';
+import badge_11 from '../../assets/badge_11.png';
+import badge_12 from '../../assets/badge_12.png';
+import badge_13 from '../../assets/badge_13.png';
+import badge_14 from '../../assets/badge_14.png';
 import { DataContext } from '../../contexts/DataContext';
 import { Button } from '../../components/Button';
 import { TransitionGroup } from 'react-transition-group';
 import { Goal } from '../../interfaces/Goal';
 import { GoalModal } from '../../modals/GoalModal';
+
+const badges = [
+  badge_0,
+  badge_1,
+  badge_2,
+  badge_3,
+  badge_4,
+  badge_5,
+  badge_6,
+  badge_7,
+  badge_8,
+  badge_9,
+  badge_10,
+  badge_11,
+  badge_12,
+  badge_13,
+  badge_14,
+];
 
 export function ProfileTab() {
   const { me, goals } = useContext(DataContext);
@@ -63,15 +87,11 @@ export function ProfileTab() {
           Badges
         </div>
         <div className={classes.grid}>
-          <img className={classes.badge} src={badge_0} />
-          <img className={classes.badge} src={badge_1} />
-          <img className={classes.badge} src={badge_2} />
-          <img className={classes.badge} src={badge_3} />
-          <img className={classes.badge} src={badge_4} />
-          <img className={classes.badge} src={badge_5} />
-          <img className={classes.badge} src={badge_6} />
-          <img className={classes.badge} src={badge_7} />
-          <img className={classes.badge} src={badge_8} />
+          {
+            badges.map(badge => (
+              <img key={badge} className={classes.badge} src={badge} />
+            ))
+          }
         </div>
       </div>
       <TransitionGroup>

@@ -68,9 +68,8 @@
 
   .badgeSection {
     .grid {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-around;
+      @include responsiveWrap(16px);
+      justify-content: center;
 
       .badge {
         width: 88px;
