@@ -28,7 +28,10 @@ export function ReceivePayoutModal({ ...restProps }: Props) {
   const [zip, setZip] = useState('');
   const [error, setError] = useState(false);
 
-  const onClose = useCallback(() => window.close(), []);
+  const onClose = useCallback(() => {
+    setPayout(null);
+    window.close();
+  }, []);
 
   const [payout, setPayout] = useState<Payout | null>(null);
 

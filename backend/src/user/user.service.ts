@@ -42,4 +42,8 @@ export class UserService {
   async getMe(req) {
     return this.userModel.findById(req.user.userId);
   }
+
+  async findByEmail(email: string) {
+    return this.userModel.findOne({ email });
+  }
 }

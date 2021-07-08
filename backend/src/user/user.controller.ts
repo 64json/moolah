@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, Put, Request } from '@nestjs/common';
+import { Body, Controller, Get, Post, Put, Query, Request } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { Public } from '../utils';
@@ -13,6 +13,12 @@ export class UserController {
   async create(@Body() createUserDto: CreateUserDto) {
     await this.userService.create(createUserDto);
     return {};
+  }
+
+  @Get('/search')
+  async search(@Query('email') email: string) {
+    const user = await this.userService.findByEmail(email);
+    return { user };
   }
 
   @Get('/me')

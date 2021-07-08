@@ -1,6 +1,9 @@
 import { IsEmail, IsNotEmpty, NotEquals } from 'class-validator';
 
 export class PayOrRequestDto {
+  @IsNotEmpty()
+  external: boolean; // false = transfer between ewallets, true = payout to bank account
+
   @IsEmail()
   email: string;
 

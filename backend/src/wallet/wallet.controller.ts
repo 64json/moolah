@@ -55,40 +55,38 @@ export class WalletController {
   @Post('/request')
   async requestPayment(@Request() req, @Body() dto: PayOrRequestDto) {
     const recipient = await this.userService.getMe(req);
-    const payer = await this.userService.findOne(dto.email);
 
-    if (payer && payer.currency !== recipient.currency) {
-      // TODO: allow forex?
-      throw new BadRequestException('You can only transfer funds to the recipient in the same currency.');
-    }
-
-    const request = await this.walletService.createRequest(payer, recipient, dto);
-    if (payer) {
-      return { type: 'internal' };
-    } else {
+    if (dto.external) {
+      const request = await this.walletService.createRequest(null, recipient, dto);
       const url = await Rapyd.createCheckoutPage(request);
       // TODO: send an email including the url
       return { type: 'external', url };
+    } else {
+      const payer = await this.userService.findOne(dto.email);
+      if (payer.currency !== recipient.currency) {
+        throw new BadRequestException('You can only transfer funds to the recipient in the same currency.');
+      }
+      await this.walletService.createRequest(payer, recipient, dto);
+      return { type: 'internal' };
     }
   }
 
   @Post('/pay')
   async pay(@Request() req, @Body() dto: PayOrRequestDto) {
     const payer = await this.userService.getMe(req);
-    const recipient = await this.userService.findOne(dto.email);
 
-    if (recipient && payer.currency !== recipient.currency) {
-      throw new BadRequestException('You can only transfer funds to the recipient in the same currency.');
-    }
-
-    if (recipient) {
-      await this.walletService.transferFunds(payer, recipient, dto);
-      return { type: 'internal' };
-    } else {
+    if (dto.external) {
       const payout = await this.walletService.createPayout(payer, dto);
       const url = `${CLIENT_URL}/#/payout/${payout._id}?token=${payout.token}`;
       // TODO: send an email including the url
       return { type: 'external', url };
+    } else {
+      const recipient = await this.userService.findOne(dto.email);
+      if (payer.currency !== recipient.currency) {
+        throw new BadRequestException('You can only transfer funds to the recipient in the same currency.');
+      }
+      await this.walletService.transferFunds(payer, recipient, dto);
+      return { type: 'internal' };
     }
   }
 
@@ -96,7 +94,10 @@ export class WalletController {
   async fulfillPayment(@Request() req, @Param('requestId') requestId: string) {
     const payer = await this.userService.getMe(req);
     const request = await this.walletService.getRequest(requestId, payer);
-    await this.walletService.transferFunds(payer, request.recipient, request);
+    await this.walletService.transferFunds(payer, request.recipient, {
+      ...request,
+      external: false,
+    });
     await request.remove();
     return {};
   }

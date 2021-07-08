@@ -8,12 +8,15 @@ import { CategorySelector } from '../../components/CategorySelector';
 import { BASE_URL, c, CATEGORIES } from '../../utils';
 import axios from 'axios';
 import { DataContext } from '../../contexts/DataContext';
+import { User } from '../../interfaces/User';
+import { TransitionGroup } from 'react-transition-group';
+import { PayOptionsModal } from '../PayOptionsModal';
 
 interface Props {
   onClose: () => void;
 }
 
-enum Mode {
+export enum PayOrRequestMode {
   Pay,
   Request,
 }
@@ -21,61 +24,63 @@ enum Mode {
 export function PayOrRequestModal({ onClose, ...restProps }: Props) {
   const { me, fetchRequests, fetchTransactions, fetchPayouts } = useContext(DataContext);
 
-  const [mode, setMode] = useState(Mode.Pay);
+  const [mode, setMode] = useState(PayOrRequestMode.Pay);
   const [amount, setAmount] = useState('0.00');
   const [email, setEmail] = useState('');
   const [title, setTitle] = useState('');
   const [category, setCategory] = useState(CATEGORIES.length - 1);
   const [error, setError] = useState(false);
+  const [recipient, setRecipient] = useState<User | null>(null);
 
-  const pay = useCallback(async () => {
+  const pay = useCallback(async (external: boolean) => {
     const { data: { type, url } } = await axios.post(`${BASE_URL}/wallet/pay`, {
+      external,
       email,
       amount: +amount,
       currency: me?.currency,
       title,
       category,
     });
-    switch (type) {
-      case 'external':
-        alert(url); // TODO: confirmation
-        await fetchPayouts();
-        break;
-      case 'internal':
-        await fetchTransactions();
-        break;
-    }
-  }, [amount, category, email, fetchPayouts, fetchTransactions, me?.currency, title]);
-
-  const request = useCallback(async () => {
-    const { data: { type, url } } = await axios.post(`${BASE_URL}/wallet/request`, {
-      email,
-      amount: +amount,
-      currency: me?.currency,
-      title,
-      category,
-    });
-    switch (type) {
-      case 'external':
-        alert(url); // TODO: confirmation
-        break;
-      case 'internal':
-        break;
-    }
-    await fetchRequests();
-  }, [amount, category, email, fetchRequests, me?.currency, title]);
-
-  const handleSubmit = useCallback(async () => {
-    switch (mode) {
-      case Mode.Pay:
-        await pay();
-        break;
-      case Mode.Request:
-        await request();
-        break;
+    if (external) {
+      alert(url); // TODO: confirmation
+      await fetchPayouts();
+    } else {
+      await fetchTransactions();
     }
     onClose();
-  }, [mode, onClose, pay, request]);
+  }, [amount, category, email, fetchPayouts, fetchTransactions, me?.currency, onClose, title]);
+
+  const request = useCallback(async (external: boolean) => {
+    const { data: { type, url } } = await axios.post(`${BASE_URL}/wallet/request`, {
+      external,
+      email,
+      amount: +amount,
+      currency: me?.currency,
+      title,
+      category,
+    });
+    if (external) {
+      alert(url); // TODO: confirmation
+    }
+    await fetchRequests();
+    onClose();
+  }, [amount, category, email, fetchRequests, me?.currency, onClose, title]);
+
+  const handleSubmit = useCallback(async () => {
+    const { data: { user } } = await axios.get(`${BASE_URL}/user/search?email=${email}`);
+    switch (mode) {
+      case PayOrRequestMode.Pay:
+        if (user) {
+          setRecipient(user);
+        } else {
+          await pay(true);
+        }
+        break;
+      case PayOrRequestMode.Request:
+        await request(!user);
+        break;
+    }
+  }, [email, mode, pay, request]);
 
   return (
     <Modal title="Pay or Request" onClose={onClose} className={c(classes.PayOrRequestModal, error && classes.error)}
@@ -84,8 +89,8 @@ export function PayOrRequestModal({ onClose, ...restProps }: Props) {
              handleSubmit().catch(() => setError(true));
            }} {...restProps}>
       <Selector options={{
-        'Pay': Mode.Pay,
-        'Request': Mode.Request,
+        'Pay': PayOrRequestMode.Pay,
+        'Request': PayOrRequestMode.Request,
       }} onChange={setMode} value={mode} />
       <CurrencyInput error={error} value={amount} onChange={setAmount} />
       <input type="email" placeholder={`Enter ${['recipient', 'payer'][mode]}’s email`} value={email}
@@ -95,9 +100,12 @@ export function PayOrRequestModal({ onClose, ...restProps }: Props) {
       <Button primary className={classes.button}>
         {['Pay', 'Request'][mode]}
       </Button>
+      <TransitionGroup>
+        {
+          recipient &&
+          <PayOptionsModal recipient={recipient} amount={+amount} onSubmit={pay} onClose={() => setRecipient(null)} />
+        }
+      </TransitionGroup>
     </Modal>
   );
 }
-
-// TODO: no more phone number (should we add username?)
-// TODO: search dropdown?
