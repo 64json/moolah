@@ -1,4 +1,5 @@
 import { Request } from './Request';
+import { Payout } from './Payout';
 
 export interface Transaction {
   id: string;
@@ -9,5 +10,6 @@ export interface Transaction {
   created_at: number;
   metadata?: {
     request?: Request;
+    payout?: Payout;
   };
 }

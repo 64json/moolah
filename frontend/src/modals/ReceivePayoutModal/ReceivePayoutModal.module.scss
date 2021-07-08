@@ -1,0 +1,36 @@
+@import '../../constants';
+
+.ReceivePayoutModal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  &.error {
+    input {
+      border: 1px solid $color-negative;
+    }
+  }
+
+  .label {
+    margin-bottom: 16px;
+    text-align: center;
+    font-size: 18px;
+
+    .amount {
+      color: $color-positive;
+    }
+  }
+
+  .button {
+    margin-top: 24px;
+    margin-bottom: 16px;
+  }
+
+  .reject {
+    cursor: pointer;
+    font-size: 14px;
+    text-decoration: underline;
+    color: $color-negative;
+    font-weight: 700;
+  }
+}

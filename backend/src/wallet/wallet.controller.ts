@@ -108,6 +108,23 @@ export class WalletController {
     return {};
   }
 
+  @Get('/request')
+  async listRequests(@Request() req) {
+    const user = await this.userService.getMe(req);
+    const requests = await this.walletService.findAllRequests(user);
+    return { requests };
+  }
+
+  @Public()
+  @Get('/payout/:payoutId')
+  async getPayout(
+    @Param('payoutId') payoutId: string,
+    @Query('token') token: string,
+  ) {
+    const payout = await this.walletService.getPayout(payoutId, token);
+    return { payout };
+  }
+
   @Public()
   @Post('/payout/:payoutId')
   async receivePayout(
@@ -119,6 +136,20 @@ export class WalletController {
     await Rapyd.payout(payout, beneficiaryDto);
     await payout.remove();
     return {};
+  }
+
+  @Delete('/payout/:payoutId')
+  async removePayout(@Request() req, @Param('payoutId') payoutId: string) {
+    const user = await this.userService.getMe(req);
+    await this.walletService.removePayout(payoutId, user);
+    return {};
+  }
+
+  @Get('/payout')
+  async listPayouts(@Request() req) {
+    const user = await this.userService.getMe(req);
+    const payouts = await this.walletService.findAllPayouts(user);
+    return { payouts };
   }
 
   @Get('/payout/method-type')
@@ -140,13 +171,6 @@ export class WalletController {
     @Query('country') country: string,
   ) {
     return Rapyd.getPayoutRequiredFields(methodType, amount, currency, country);
-  }
-
-  @Get('/request')
-  async listRequests(@Request() req) {
-    const user = await this.userService.getMe(req);
-    const requests = await this.walletService.findAllRequests(user);
-    return { requests };
   }
 
   @Post('/manual-entry')

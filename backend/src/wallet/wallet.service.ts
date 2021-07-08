@@ -71,8 +71,18 @@ export class WalletService {
     return createdPayout.save();
   }
 
+  async removePayout(payoutId: string, user: User) {
+    await this.payoutModel.deleteOne({ _id: payoutId, payer: user });
+  }
+
   async getPayout(payoutId: string, token: string) {
     return this.payoutModel.findOne({ _id: payoutId, token })
+      .populate(['payer']);
+  }
+
+  async findAllPayouts(user: User): Promise<Payout[]> {
+    return this.payoutModel.find({ payer: user })
+      .sort('-createdAt')
       .populate(['payer']);
   }
 

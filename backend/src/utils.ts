@@ -88,7 +88,8 @@ async function httpRequest(options, body): Promise<any> {
   });
 }
 
-export function reformatDate(dbDate: string) {
+export function reformatDate(dbDate: string, dayFirst = false) {
   const [yyyy, mm, dd] = dbDate.split('-');
+  if (dayFirst) return `${dd}/${mm}/${yyyy}`;
   return `${mm}/${dd}/${yyyy}`;
 }

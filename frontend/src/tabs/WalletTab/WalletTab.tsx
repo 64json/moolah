@@ -11,9 +11,10 @@ import { DateTime } from 'luxon';
 import { PayOrRequestModal } from '../../modals/PayOrRequestModal';
 import { RequestItem } from '../../components/RequestItem';
 import { CATEGORY_OTHER, formatCurrency } from '../../utils';
+import { PayoutItem } from '../../components/PayoutItem';
 
 export function WalletTab() {
-  const { me, manualEntries, transactions, balance, requests } = useContext(DataContext);
+  const { me, manualEntries, transactions, balance, requests, payouts } = useContext(DataContext);
 
   const [manualEntryOpened, setManualEntryOpened] = useState(false);
   const [payOrRequestOpened, setPayOrRequestOpened] = useState(false);
@@ -36,15 +37,26 @@ export function WalletTab() {
         }),
       ...transactions
         .map(transaction => {
+          const { metadata } = transaction;
           const datetime = DateTime.fromSeconds(transaction.created_at);
+
+          let item;
+          let description = 'Unknown';
+          if (metadata?.request) {
+            item = metadata.request;
+            const user = transaction.amount < 0 ? item.recipient : item.payer;
+            description = user ? `${user.firstName} ${user.lastName}` : item.email ?? 'Unknown';
+          } else if (metadata?.payout) {
+            item = metadata.payout;
+            description = item.email;
+          }
+          const title = item ? item.title : 'Unknown';
+
           const request = transaction.metadata?.request;
-          const formattedBalance = formatCurrency(transaction.balance, transaction.currency, false);
-          const user = transaction.amount < 0 ? request?.recipient : request?.payer;
-          const description = user ? `${user.firstName} ${user.lastName}` : request?.email ?? 'Unknown';
           return {
             key: `t-${transaction.id}`,
             category: request?.category ?? CATEGORY_OTHER,
-            title: request?.title ?? 'Unknown',
+            title,
             description,
             amount: transaction.amount,
             currency: transaction.currency,
@@ -59,6 +71,16 @@ export function WalletTab() {
     if (!me?.currency) return '';
     return formatCurrency(balance, me.currency, false);
   }, [balance, me?.currency]);
+
+  const receivedRequests = useMemo(
+    () => requests.filter(request => request.payer?._id === me?._id),
+    [me?._id, requests],
+  );
+
+  const sentRequests = useMemo(
+    () => requests.filter(request => request.recipient._id === me?._id),
+    [me?._id, requests],
+  );
 
   return (
     <div className={classes.WalletTab}>
@@ -79,15 +101,45 @@ export function WalletTab() {
       </div>
       <div className={classes.list}>
         {
-          requests.length > 0 &&
+          receivedRequests.length > 0 &&
           <>
             <div className={classes.header}>
-              Pending Requests
+              Received Requests
             </div>
-            <div className={classes.requests}>
+            <div className={classes.pendingItems}>
               {
-                requests.map(request => (
+                receivedRequests.map(request => (
                   <RequestItem key={request._id} item={request} />
+                ))
+              }
+            </div>
+          </>
+        }
+        {
+          sentRequests.length > 0 &&
+          <>
+            <div className={classes.header}>
+              Sent Requests
+            </div>
+            <div className={classes.pendingItems}>
+              {
+                sentRequests.map(request => (
+                  <RequestItem key={request._id} item={request} />
+                ))
+              }
+            </div>
+          </>
+        }
+        {
+          payouts.length > 0 &&
+          <>
+            <div className={classes.header}>
+              Pending Payments
+            </div>
+            <div className={classes.pendingItems}>
+              {
+                payouts.map(payout => (
+                  <PayoutItem key={payout._id} item={payout} />
                 ))
               }
             </div>

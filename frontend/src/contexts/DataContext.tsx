@@ -16,12 +16,14 @@ import { Request } from '../interfaces/Request';
 import { Transaction } from '../interfaces/Transaction';
 import { UIContext } from './UIContext';
 import { Goal } from '../interfaces/Goal';
+import { Payout } from '../interfaces/Payout';
 
 interface Value {
   me: User | null;
   card: Card | null;
   manualEntries: ManualEntry[];
   requests: Request[];
+  payouts: Payout[];
   transactions: Transaction[];
   balance: number;
   goals: Goal[];
@@ -33,6 +35,8 @@ interface Value {
   fetchManualEntries(): Promise<void>;
 
   fetchRequests(): Promise<void>;
+
+  fetchPayouts(): Promise<void>;
 
   fetchTransactions(): Promise<void>;
 
@@ -58,6 +62,7 @@ export function DataProvider({ children }: Props) {
   const [card, setCard] = useState<Card | null>(null);
   const [manualEntries, setManualEntries] = useState<ManualEntry[]>([]);
   const [requests, setRequests] = useState<Request[]>([]);
+  const [payouts, setPayouts] = useState<Payout[]>([]);
   const [transactions, setTransactions] = useState<Transaction[]>([]);
   const [balance, setBalance] = useState<number>(NaN);
   const [goals, setGoals] = useState<Goal[]>([]);
@@ -82,6 +87,11 @@ export function DataProvider({ children }: Props) {
     setRequests(data.requests);
   }, []);
 
+  const fetchPayouts = useCallback(async () => {
+    const { data } = await axios.get(`${BASE_URL}/wallet/payout`);
+    setPayouts(data.payouts);
+  }, []);
+
   const fetchTransactions = useCallback(async () => {
     const { data } = await axios.get(`${BASE_URL}/wallet/transaction`);
     setTransactions(data.transactions);
@@ -98,15 +108,17 @@ export function DataProvider({ children }: Props) {
     fetchCard(),
     fetchManualEntries(),
     fetchRequests(),
+    fetchPayouts(),
     fetchTransactions(),
     fetchGoals(),
-  ]), [fetchCard, fetchGoals, fetchManualEntries, fetchMe, fetchRequests, fetchTransactions]);
+  ]), [fetchCard, fetchGoals, fetchManualEntries, fetchMe, fetchPayouts, fetchRequests, fetchTransactions]);
 
   const resetAll = useCallback(() => {
     setMe(null);
     setCard(null);
     setManualEntries([]);
     setRequests([]);
+    setPayouts([]);
     setTransactions([]);
     setBalance(NaN);
     setGoals([]);
@@ -149,6 +161,7 @@ export function DataProvider({ children }: Props) {
       card,
       manualEntries,
       requests,
+      payouts,
       transactions,
       balance,
       goals,
@@ -156,6 +169,7 @@ export function DataProvider({ children }: Props) {
       fetchCard,
       fetchManualEntries,
       fetchRequests,
+      fetchPayouts,
       fetchTransactions,
       fetchGoals,
       fetchAll,
@@ -167,6 +181,7 @@ export function DataProvider({ children }: Props) {
       card,
       manualEntries,
       requests,
+      payouts,
       transactions,
       balance,
       goals,
@@ -174,6 +189,7 @@ export function DataProvider({ children }: Props) {
       fetchCard,
       fetchManualEntries,
       fetchRequests,
+      fetchPayouts,
       fetchTransactions,
       fetchGoals,
       fetchAll,

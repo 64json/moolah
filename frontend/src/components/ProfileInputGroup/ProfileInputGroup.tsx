@@ -3,6 +3,7 @@ import classes from './ProfileInputGroup.module.scss';
 import { c } from '../../utils';
 import { Row } from '../Row';
 import { DateInput } from '../DateInput';
+import { CountryInput } from '../CountryInput';
 
 export interface UserDto {
   firstName: string;
@@ -81,15 +82,8 @@ export function ProfileInputGroup({ className, value, onChange, error, modify }:
                    value={dob} onChange={e => onChange({ ...value, dob: e.target.value })} />
       </Row>
       <Row>
-        <select className={classes.input}
-                value={country} onChange={e => onChange({ ...value, country: e.target.value })}>
-          <option value="IL">🇮🇱 Israel</option>
-          <option value="MX">🇲🇽 Mexico</option>
-          <option value="NL">🇳🇱 Netherlands</option>
-          <option value="SG">🇸🇬 Singapore</option>
-          <option value="GB">🇬🇧 United Kingdom</option>
-          <option value="US">🇺🇸 United States</option>
-        </select>
+        <CountryInput className={classes.input} value={country}
+                      onChange={e => onChange({ ...value, country: e.target.value })} />
       </Row>
       <Row>
         <input type="text" placeholder="Address Line 1" className={classes.input}

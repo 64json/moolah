@@ -188,7 +188,7 @@ export async function payout(payout: Payout, beneficiary: BeneficiaryDto) {
   //  'us_general_bank', hence manually mocking some data
   const { body: { data } } = await makeRequest('POST', '/v1/payouts', {
     ewallet: payer.walletId,
-    payout_amount: 1,
+    payout_amount: payout.amount,
     payout_currency: currency,
     payout_method_type,
     beneficiary_country: country,
@@ -225,7 +225,7 @@ export async function payout(payout: Payout, beneficiary: BeneficiaryDto) {
       city: payer.city,
       state: payer.state,
       postcode: payer.zip,
-      date_of_birth: reformatDate(payer.dob),
+      date_of_birth: reformatDate(payer.dob, true),
 
       phonenumber: '621212938122',
       remitter_account_type: 'Individual',
@@ -239,6 +239,9 @@ export async function payout(payout: Payout, beneficiary: BeneficiaryDto) {
     beneficiary_entity_type: 'individual',
     description: `Moolah - Payout from ${payer.firstName} ${payer.lastName}`,
     sender_entity_type: 'individual',
+    metadata: {
+      payout,
+    },
   });
   return data;
 }

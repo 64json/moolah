@@ -30,3 +30,8 @@ export class Payout {
 }
 
 export const PayoutSchema = SchemaFactory.createForClass(Payout);
+
+PayoutSchema.methods.toJSON = function (this: PayoutDocument) {
+  const { token, ...payoutJSON } = this.toObject();
+  return payoutJSON;
+};
