@@ -6,6 +6,7 @@ import { Button } from '../../components/Button';
 import classes from './ProfileSettingsModal.module.scss';
 import { PageIndex } from '../../enums/PageIndex';
 import { UIContext } from '../../contexts/UIContext';
+import profile_picture from '../../assets/profile_picture.png';
 
 interface Props {
   onClose: () => void;
@@ -23,7 +24,7 @@ export function ProfileSettingsModal({ onClose, ...restProps }: Props) {
            onSubmit={e => e.preventDefault()}
            {...restProps}>
       <div className={classes.picture}
-           style={{ backgroundImage: 'url(https://images.pexels.com/photos/1096147/pexels-photo-1096147.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260)' }} />
+           style={{ backgroundImage: `url(${profile_picture})` }} />
       <ProfileInputGroup value={dto} onChange={setDto} error={error} modify />
       <Button primary className={classes.button}>
         Save Changes

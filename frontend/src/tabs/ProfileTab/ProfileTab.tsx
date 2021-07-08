@@ -22,6 +22,7 @@ import { Button } from '../../components/Button';
 import { TransitionGroup } from 'react-transition-group';
 import { Goal } from '../../interfaces/Goal';
 import { GoalModal } from '../../modals/GoalModal';
+import profile_picture from '../../assets/profile_picture.png';
 
 const badges = [
   badge_0,
@@ -50,7 +51,7 @@ export function ProfileTab() {
     <div className={classes.ProfileTab}>
       <div className={classes.profileRow}>
         <div className={classes.picture}
-             style={{ backgroundImage: 'url(https://images.pexels.com/photos/1096147/pexels-photo-1096147.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260)' }} />
+             style={{ backgroundImage: `url(${profile_picture})` }} />
         <div className={classes.text}>
           <div className={classes.primary}>
             {me?.firstName} {me?.lastName}
