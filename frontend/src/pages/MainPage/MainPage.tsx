@@ -1,4 +1,4 @@
-import React, { useContext, useMemo, useState } from 'react';
+import React, { useContext, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import classes from './MainPage.module.scss';
 import { faBars, faChartLine, faGraduationCap, faUserCircle, faWallet } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -62,9 +62,16 @@ export function MainPage() {
     }
   }, [tabIndex]);
 
+  const scrollRef = useRef<HTMLDivElement>(null);
+
+  useLayoutEffect(() => {
+    const div = scrollRef.current;
+    div?.scrollTo(0, 0);
+  }, [tabIndex]);
+
   return (
     <div className={classes.MainPage}>
-      <div className={classes.scroll}>
+      <div className={classes.scroll} ref={scrollRef}>
         <div className={classes.header}>
           <div className={classes.tabName}>
             {tab.name}
