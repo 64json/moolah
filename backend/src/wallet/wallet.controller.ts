@@ -5,7 +5,8 @@ import { WalletService } from './wallet.service';
 import { CreateManualEntryDto } from './dto/create-manual-entry.dto';
 import { PayOrRequestDto } from './dto/pay-or-request.dto';
 import { BeneficiaryDto } from './dto/beneficiary.dto';
-import { CLIENT_URL, Public } from '../utils';
+import { CLIENT_URL, formatCurrency, Public } from '../utils';
+import * as sgMail from '@sendgrid/mail';
 
 @Controller('/wallet')
 export class WalletController {
@@ -59,16 +60,25 @@ export class WalletController {
     if (dto.external) {
       const request = await this.walletService.createRequest(null, recipient, dto);
       const url = await Rapyd.createCheckoutPage(request);
-      // TODO: send an email including the url
-      return { type: 'external', url };
+      await sgMail.send({
+        from: 'moolah@jasonpark.me',
+        to: dto.email,
+        templateId: 'd-4298436ba5b5475795c65d6c5d44376c',
+        dynamicTemplateData: {
+          name: `${recipient.firstName} ${recipient.lastName}`,
+          formatted_amount: formatCurrency(dto.amount, dto.currency, false),
+          title: dto.title,
+          url,
+        },
+      });
     } else {
       const payer = await this.userService.findOne(dto.email);
       if (payer.currency !== recipient.currency) {
         throw new BadRequestException('You can only transfer funds to the recipient in the same currency.');
       }
       await this.walletService.createRequest(payer, recipient, dto);
-      return { type: 'internal' };
     }
+    return {};
   }
 
   @Post('/pay')
@@ -78,16 +88,25 @@ export class WalletController {
     if (dto.external) {
       const payout = await this.walletService.createPayout(payer, dto);
       const url = `${CLIENT_URL}/#/payout/${payout._id}?token=${payout.token}`;
-      // TODO: send an email including the url
-      return { type: 'external', url };
+      await sgMail.send({
+        from: 'moolah@jasonpark.me',
+        to: dto.email,
+        templateId: 'd-022717f1d611497aa7d9238e75d64e9e',
+        dynamicTemplateData: {
+          name: `${payer.firstName} ${payer.lastName}`,
+          formatted_amount: formatCurrency(dto.amount, dto.currency, false),
+          title: dto.title,
+          url,
+        },
+      });
     } else {
       const recipient = await this.userService.findOne(dto.email);
       if (payer.currency !== recipient.currency) {
         throw new BadRequestException('You can only transfer funds to the recipient in the same currency.');
       }
       await this.walletService.transferFunds(payer, recipient, dto);
-      return { type: 'internal' };
     }
+    return {};
   }
 
   @Post('/request/:requestId')

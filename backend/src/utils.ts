@@ -93,3 +93,26 @@ export function reformatDate(dbDate: string, dayFirst = false) {
   if (dayFirst) return `${dd}/${mm}/${yyyy}`;
   return `${mm}/${dd}/${yyyy}`;
 }
+
+export function formatCurrency(amount: number, currency: string, sign = true) {
+  const formatter = new Intl.NumberFormat({
+    ILS: 'he',
+    MXN: 'es-mx',
+    EUR: 'nl',
+    SGD: 'zh-sg',
+    GBP: 'en-gb',
+    USD: 'en-us',
+  }[currency], {
+    style: 'currency',
+    currency,
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  });
+  if (sign) {
+    const negative = -Math.abs(amount);
+    const negativeFormatted = formatter.format(negative);
+    if (amount < 0) return negativeFormatted;
+    return negativeFormatted.replace('-', '+');
+  }
+  return formatter.format(amount);
+}

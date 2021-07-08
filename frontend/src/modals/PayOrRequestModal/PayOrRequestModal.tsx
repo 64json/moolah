@@ -33,7 +33,7 @@ export function PayOrRequestModal({ onClose, ...restProps }: Props) {
   const [recipient, setRecipient] = useState<User | null>(null);
 
   const pay = useCallback(async (external: boolean) => {
-    const { data: { type, url } } = await axios.post(`${BASE_URL}/wallet/pay`, {
+    await axios.post(`${BASE_URL}/wallet/pay`, {
       external,
       email,
       amount: +amount,
@@ -42,7 +42,6 @@ export function PayOrRequestModal({ onClose, ...restProps }: Props) {
       category,
     });
     if (external) {
-      alert(url); // TODO: confirmation
       await fetchPayouts();
     } else {
       await fetchTransactions();
@@ -51,7 +50,7 @@ export function PayOrRequestModal({ onClose, ...restProps }: Props) {
   }, [amount, category, email, fetchPayouts, fetchTransactions, me?.currency, onClose, title]);
 
   const request = useCallback(async (external: boolean) => {
-    const { data: { type, url } } = await axios.post(`${BASE_URL}/wallet/request`, {
+    await axios.post(`${BASE_URL}/wallet/request`, {
       external,
       email,
       amount: +amount,
@@ -59,9 +58,6 @@ export function PayOrRequestModal({ onClose, ...restProps }: Props) {
       title,
       category,
     });
-    if (external) {
-      alert(url); // TODO: confirmation
-    }
     await fetchRequests();
     onClose();
   }, [amount, category, email, fetchRequests, me?.currency, onClose, title]);

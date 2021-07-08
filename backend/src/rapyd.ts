@@ -89,7 +89,7 @@ export async function createCheckoutPage(request: RequestDocument) {
     currency: request.currency,
     ewallet: recipient.walletId,
     cart_items: [{
-      name: `Moolah - Request from ${recipient.firstName} ${recipient.lastName}`,
+      name: `Moolah - Payment Request from ${recipient.firstName} ${recipient.lastName}`,
       amount: request.amount,
       currency: request.currency,
       quantity: 1,
@@ -237,7 +237,7 @@ export async function payout(payout: Payout, beneficiary: BeneficiaryDto) {
       beneficiary_relationship: 'client',
     },
     beneficiary_entity_type: 'individual',
-    description: `Moolah - Payout from ${payer.firstName} ${payer.lastName}`,
+    description: `Moolah - Payment from ${payer.firstName} ${payer.lastName}`,
     sender_entity_type: 'individual',
     metadata: {
       payout,
