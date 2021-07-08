@@ -24,6 +24,9 @@ export class Payout {
 
   @Prop()
   category: number;
+
+  @Prop()
+  token: string; // secret key
 }
 
 export const PayoutSchema = SchemaFactory.createForClass(Payout);

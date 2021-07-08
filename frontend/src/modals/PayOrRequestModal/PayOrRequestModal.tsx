@@ -29,7 +29,7 @@ export function PayOrRequestModal({ onClose, ...restProps }: Props) {
   const [error, setError] = useState(false);
 
   const pay = useCallback(async () => {
-    const { data: { type } } = await axios.post(`${BASE_URL}/wallet/pay`, {
+    const { data: { type, url } } = await axios.post(`${BASE_URL}/wallet/pay`, {
       email,
       amount: +amount,
       currency: me?.currency,
@@ -38,7 +38,7 @@ export function PayOrRequestModal({ onClose, ...restProps }: Props) {
     });
     switch (type) {
       case 'external':
-        alert(`external user`); // TODO: confirmation
+        alert(url); // TODO: confirmation
         break;
       case 'internal':
         break;
@@ -56,7 +56,7 @@ export function PayOrRequestModal({ onClose, ...restProps }: Props) {
     });
     switch (type) {
       case 'external':
-        alert(`external user / checkout page URL: ${url}`); // TODO: confirmation
+        alert(url); // TODO: confirmation
         break;
       case 'internal':
         break;

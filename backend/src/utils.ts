@@ -5,29 +5,8 @@ import * as crypto from 'crypto';
 export const IS_PUBLIC_KEY = 'isPublic';
 export const Public = () => SetMetadata(IS_PUBLIC_KEY, true);
 
-// const getRapydRequestSignature = (httpMethod: string, url: string, data: any) => {
-//   const salt = CryptoJS.lib.WordArray.random(12);
-//   const timestamp = (Math.floor(new Date().getTime() / 1000) - 10).toString();
-//
-//   const access_key = process.env.RAPYD_ACCESS_KEY;
-//   const secret_key = process.env.RAPYD_SECRET_KEY;
-//   let body = '';
-//
-//   if (JSON.stringify(data) !== '{}' && data !== '') {
-//     body = JSON.stringify(JSON.parse(data));
-//   }
-//
-//   const raw = httpMethod + url + salt + timestamp + access_key + secret_key + body;
-//   const hex = CryptoJS.enc.Hex.stringify(CryptoJS.HmacSHA256(raw, secret_key));
-//   return CryptoJS.enc.Base64.stringify(CryptoJS.enc.Utf8.parse(hex));
-// };
-//
-// export function rapydGET(url: string) {
-//   const signature = getRapydRequestSignature('get', url, '');
-//   return axios.get(url, {
-//     headers,
-//   });
-// }
+export const CLIENT_URL = process.env.NODE_ENV === 'production' ? 'https://jasonpark.me/moolah' : 'http://localhost:3000';
+
 const accessKey = process.env.RAPYD_ACCESS_KEY;
 const secretKey = process.env.RAPYD_SECRET_KEY;
 

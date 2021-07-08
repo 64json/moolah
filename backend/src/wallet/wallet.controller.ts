@@ -4,6 +4,8 @@ import * as Rapyd from '../rapyd';
 import { WalletService } from './wallet.service';
 import { CreateManualEntryDto } from './dto/create-manual-entry.dto';
 import { PayOrRequestDto } from './dto/pay-or-request.dto';
+import { BeneficiaryDto } from './dto/beneficiary.dto';
+import { CLIENT_URL, Public } from '../utils';
 
 @Controller('/wallet')
 export class WalletController {
@@ -83,8 +85,10 @@ export class WalletController {
       await this.walletService.transferFunds(payer, recipient, dto);
       return { type: 'internal' };
     } else {
-      // TODO: send an email to sign up OR input beneficiary to be payed out
-      return { type: 'external' };
+      const payout = await this.walletService.createPayout(payer, dto);
+      const url = `${CLIENT_URL}/#/payout/${payout._id}?token=${payout.token}`;
+      // TODO: send an email including the url
+      return { type: 'external', url };
     }
   }
 
@@ -104,30 +108,17 @@ export class WalletController {
     return {};
   }
 
-  @Get('/request')
-  async listRequests(@Request() req) {
-    const user = await this.userService.getMe(req);
-    const requests = await this.walletService.findAllRequests(user);
-    return { requests };
-  }
-
-  @Post('/manual-entry')
-  async addManualEntry(@Request() req, @Body() dto: CreateManualEntryDto) {
-    const user = await this.userService.getMe(req);
-    await this.walletService.createManualEntry(user, dto);
+  @Public()
+  @Post('/payout/:payoutId')
+  async receivePayout(
+    @Param('payoutId') payoutId: string,
+    @Query('token') token: string,
+    @Body() beneficiaryDto: BeneficiaryDto,
+  ) {
+    const payout = await this.walletService.getPayout(payoutId, token);
+    await Rapyd.payout(payout, beneficiaryDto);
+    await payout.remove();
     return {};
-  }
-
-  @Get('/manual-entry')
-  async listManualEntries(@Request() req) {
-    const user = await this.userService.getMe(req);
-    const manualEntries = await this.walletService.findAllManualEntries(user);
-    return { manualEntries };
-  }
-
-  @Post('/payout')
-  async payout(@Request() req) {
-    return Rapyd.payout();
   }
 
   @Get('/payout/method-type')
@@ -149,6 +140,27 @@ export class WalletController {
     @Query('country') country: string,
   ) {
     return Rapyd.getPayoutRequiredFields(methodType, amount, currency, country);
+  }
+
+  @Get('/request')
+  async listRequests(@Request() req) {
+    const user = await this.userService.getMe(req);
+    const requests = await this.walletService.findAllRequests(user);
+    return { requests };
+  }
+
+  @Post('/manual-entry')
+  async addManualEntry(@Request() req, @Body() dto: CreateManualEntryDto) {
+    const user = await this.userService.getMe(req);
+    await this.walletService.createManualEntry(user, dto);
+    return {};
+  }
+
+  @Get('/manual-entry')
+  async listManualEntries(@Request() req) {
+    const user = await this.userService.getMe(req);
+    const manualEntries = await this.walletService.findAllManualEntries(user);
+    return { manualEntries };
   }
 
   // TODO: give out free credits to ease the demo

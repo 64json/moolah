@@ -8,6 +8,8 @@ import { Request, RequestDocument } from './request.schema';
 import { PayOrRequestDto } from './dto/pay-or-request.dto';
 import * as Rapyd from '../rapyd';
 import { Transfer, TransferDocument } from './transfer.schema';
+import { Payout, PayoutDocument } from './payout.schema';
+import { v4 as uuidv4 } from 'uuid';
 
 @Injectable()
 export class WalletService {
@@ -15,6 +17,7 @@ export class WalletService {
     @InjectModel(ManualEntry.name) private manualEntryModel: Model<ManualEntryDocument>,
     @InjectModel(Request.name) private requestModel: Model<RequestDocument>,
     @InjectModel(Transfer.name) private transferModel: Model<TransferDocument>,
+    @InjectModel(Payout.name) private payoutModel: Model<PayoutDocument>,
   ) {
   }
 
@@ -56,6 +59,21 @@ export class WalletService {
     return this.requestModel.find({ $or: [{ payer: user }, { recipient: user }] })
       .sort('-createdAt')
       .populate(['payer', 'recipient']);
+  }
+
+  async createPayout(payer: User, dto: PayOrRequestDto): Promise<PayoutDocument> {
+    const token = uuidv4();
+    const createdPayout = new this.payoutModel({
+      ...dto,
+      payer,
+      token,
+    });
+    return createdPayout.save();
+  }
+
+  async getPayout(payoutId: string, token: string) {
+    return this.payoutModel.findOne({ _id: payoutId, token })
+      .populate(['payer']);
   }
 
   async getTransfer(actionDataId: string) {
