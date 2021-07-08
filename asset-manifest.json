@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "./static/css/main.e034279f.chunk.css",
+    "main.css": "./static/css/main.09c030e7.chunk.css",
     "main.js": "./static/js/main.365dc159.chunk.js",
     "main.js.map": "./static/js/main.365dc159.chunk.js.map",
     "runtime-main.js": "./static/js/runtime-main.3b001913.js",
@@ -10,7 +10,7 @@
     "static/js/2.600db087.chunk.js.map": "./static/js/2.600db087.chunk.js.map",
     "index.html": "./index.html",
     "static/css/2.32531bc9.chunk.css.map": "./static/css/2.32531bc9.chunk.css.map",
-    "static/css/main.e034279f.chunk.css.map": "./static/css/main.e034279f.chunk.css.map",
+    "static/css/main.09c030e7.chunk.css.map": "./static/css/main.09c030e7.chunk.css.map",
     "static/js/2.600db087.chunk.js.LICENSE.txt": "./static/js/2.600db087.chunk.js.LICENSE.txt",
     "static/media/badge_0.fa155d10.png": "./static/media/badge_0.fa155d10.png",
     "static/media/badge_1.ca7e2743.png": "./static/media/badge_1.ca7e2743.png",
@@ -46,6 +46,7 @@
     "static/media/carousel_2.c595e616.png": "./static/media/carousel_2.c595e616.png",
     "static/media/carousel_3.b3ec0c7e.png": "./static/media/carousel_3.b3ec0c7e.png",
     "static/media/App.module.scss": "./static/media/wave.ad858d63.svg",
+    "static/media/index.scss": "./static/media/iphone_frame.288185c0.png",
     "static/media/lesson_0.6b726a6f.jpg": "./static/media/lesson_0.6b726a6f.jpg",
     "static/media/lesson_1.ea67fdba.jpg": "./static/media/lesson_1.ea67fdba.jpg",
     "static/media/lesson_2.ecdce853.jpg": "./static/media/lesson_2.ecdce853.jpg",
@@ -61,7 +62,7 @@
     "static/js/runtime-main.3b001913.js",
     "static/css/2.32531bc9.chunk.css",
     "static/js/2.600db087.chunk.js",
-    "static/css/main.e034279f.chunk.css",
+    "static/css/main.09c030e7.chunk.css",
     "static/js/main.365dc159.chunk.js"
   ]
 }
