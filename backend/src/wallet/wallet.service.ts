@@ -75,6 +75,10 @@ export class WalletService {
     await this.payoutModel.deleteOne({ _id: payoutId, payer: user });
   }
 
+  async removePayoutByToken(payoutId: string, token: string) {
+    await this.payoutModel.deleteOne({ _id: payoutId, token });
+  }
+
   async getPayout(payoutId: string, token: string) {
     return this.payoutModel.findOne({ _id: payoutId, token })
       .populate(['payer']);

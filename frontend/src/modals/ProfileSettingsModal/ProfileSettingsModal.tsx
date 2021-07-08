@@ -19,7 +19,9 @@ export function ProfileSettingsModal({ onClose, ...restProps }: Props) {
   const [error, setError] = useState(false);
 
   return (
-    <Modal title="Profile Settings" onClose={onClose} className={classes.ProfileSettingsModal} {...restProps}>
+    <Modal title="Profile Settings" onClose={onClose} className={classes.ProfileSettingsModal}
+           onSubmit={e => e.preventDefault()}
+           {...restProps}>
       <div className={classes.picture}
            style={{ backgroundImage: 'url(https://images.pexels.com/photos/1096147/pexels-photo-1096147.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260)' }} />
       <ProfileInputGroup value={dto} onChange={setDto} error={error} modify />

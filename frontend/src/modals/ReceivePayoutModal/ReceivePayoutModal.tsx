@@ -55,8 +55,9 @@ export function ReceivePayoutModal({ ...restProps }: Props) {
   }, [accountNumber, bankName, city, firstName, lastName, line1, line2, onClose, payoutId, state, token, zip]);
 
   const reject = useCallback(async () => {
+    await axios.delete(`${BASE_URL}/wallet/payout/${payoutId}/by-token?token=${token}`);
     onClose();
-  }, [onClose]);
+  }, [onClose, payoutId, token]);
 
   if (!payout) return null;
 
@@ -82,6 +83,7 @@ export function ReceivePayoutModal({ ...restProps }: Props) {
         <input type="text" placeholder="Account Number" className={classes.input}
                value={accountNumber} onChange={e => setAccountNumber(e.target.value)} />
       </Row>
+      <div className={classes.divider} />
       <Row>
         <input type="text" placeholder="First Name" className={classes.input}
                value={firstName} onChange={e => setFirstName(e.target.value)} />
@@ -91,6 +93,7 @@ export function ReceivePayoutModal({ ...restProps }: Props) {
       <Row>
         <input type="email" placeholder="Email" className={classes.input} value={payout.email} disabled />
       </Row>
+      <div className={classes.divider} />
       <Row>
         <CountryInput className={classes.input} value={payout.payer.country} disabled />
       </Row>

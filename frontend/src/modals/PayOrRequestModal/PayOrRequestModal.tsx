@@ -88,7 +88,7 @@ export function PayOrRequestModal({ onClose, ...restProps }: Props) {
         'Request': Mode.Request,
       }} onChange={setMode} value={mode} />
       <CurrencyInput error={error} value={amount} onChange={setAmount} />
-      <input type="email" placeholder={`Enter ${['recipient', 'payer'][mode]}’s email or phone number`} value={email}
+      <input type="email" placeholder={`Enter ${['recipient', 'payer'][mode]}’s email`} value={email}
              onChange={e => setEmail(e.target.value)} />
       <input type="text" placeholder="Add a transaction title" value={title} onChange={e => setTitle(e.target.value)} />
       <CategorySelector className={classes.categorySelector} value={category} onChange={setCategory} />

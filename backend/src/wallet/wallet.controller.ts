@@ -138,6 +138,16 @@ export class WalletController {
     return {};
   }
 
+  @Public()
+  @Delete('/payout/:payoutId/by-token')
+  async removePayoutByToken(
+    @Param('payoutId') payoutId: string,
+    @Query('token') token: string,
+  ) {
+    await this.walletService.removePayoutByToken(payoutId, token);
+    return {};
+  }
+
   @Delete('/payout/:payoutId')
   async removePayout(@Request() req, @Param('payoutId') payoutId: string) {
     const user = await this.userService.getMe(req);

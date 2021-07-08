@@ -57,6 +57,11 @@ export function ProfileInputGroup({ className, value, onChange, error, modify }:
                value={lastName} onChange={e => onChange({ ...value, lastName: e.target.value })} />
       </Row>
       <Row>
+        <DateInput placeholder="Date of Birth" className={classes.input}
+                   value={dob} onChange={e => onChange({ ...value, dob: e.target.value })} />
+      </Row>
+      <div className={classes.divider} />
+      <Row>
         <input type="email" placeholder="Email" className={classes.input}
                value={email} onChange={e => onChange({ ...value, email: e.target.value })} />
       </Row>
@@ -77,10 +82,7 @@ export function ProfileInputGroup({ className, value, onChange, error, modify }:
                    value={password} onChange={e => onChange({ ...value, password: e.target.value })} />
           </Row>
       }
-      <Row>
-        <DateInput placeholder="Date of Birth" className={classes.input}
-                   value={dob} onChange={e => onChange({ ...value, dob: e.target.value })} />
-      </Row>
+      <div className={classes.divider} />
       <Row>
         <CountryInput className={classes.input} value={country}
                       onChange={e => onChange({ ...value, country: e.target.value })} />
