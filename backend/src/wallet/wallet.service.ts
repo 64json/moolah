@@ -47,7 +47,7 @@ export class WalletService {
       _id: requestId,
       $or: [{ payer: user }, { recipient: user }],
     });
-    // TODO: remove checkout page if payer is external user
+    // [BLOCKER] need to revoke checkout page but rapyd doesn't seem to have an API for it
   }
 
   async getRequest(requestId: string, payer: User) {
