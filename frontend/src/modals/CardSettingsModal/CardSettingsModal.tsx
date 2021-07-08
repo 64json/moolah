@@ -2,7 +2,7 @@ import React, { useCallback, useContext, useState } from 'react';
 import { Modal } from '../../components/Modal';
 import { Button } from '../../components/Button';
 import classes from './CardSettingsModal.module.scss';
-import { BASE_URL, c } from '../../utils';
+import { BASE_URL } from '../../utils';
 import axios from 'axios';
 import { DataContext } from '../../contexts/DataContext';
 import { CardStyleSelector } from '../../components/CardStyleSelector';
@@ -15,7 +15,6 @@ export function CardSettingsModal({ onClose, ...restProps }: Props) {
   const { me, card, fetchMe, fetchCard } = useContext(DataContext);
 
   const [cardStyle, setCardStyle] = useState(me?.cardStyle ?? 0);
-  const [error, setError] = useState(false);
 
   const inactive = card?.status !== 'ACT';
 
@@ -43,10 +42,10 @@ export function CardSettingsModal({ onClose, ...restProps }: Props) {
 
   return (
     <Modal title="Card Settings" onClose={onClose}
-           className={c(classes.CardSettingsModal, error && classes.error)}
+           className={classes.CardSettingsModal}
            onSubmit={e => {
              e.preventDefault();
-             handleSubmit().catch(() => setError(true));
+             handleSubmit().catch(console.error);
            }} {...restProps}>
       <div className={classes.label}>
         {inactive ? 'Pick a card style and activate your debit card!' : 'Change your card style.'}

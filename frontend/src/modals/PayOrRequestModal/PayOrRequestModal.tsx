@@ -5,7 +5,7 @@ import classes from './PayOrRequestModal.module.scss';
 import { Selector } from '../../components/Selector';
 import { CurrencyInput } from '../../components/CurrencyInput';
 import { CategorySelector } from '../../components/CategorySelector';
-import { BASE_URL, c, CATEGORIES } from '../../utils';
+import { BASE_URL, CATEGORIES } from '../../utils';
 import axios from 'axios';
 import { DataContext } from '../../contexts/DataContext';
 import { User } from '../../interfaces/User';
@@ -29,7 +29,6 @@ export function PayOrRequestModal({ onClose, ...restProps }: Props) {
   const [email, setEmail] = useState('');
   const [title, setTitle] = useState('');
   const [category, setCategory] = useState(CATEGORIES.length - 1);
-  const [error, setError] = useState(false);
   const [recipient, setRecipient] = useState<User | null>(null);
 
   const pay = useCallback(async (external: boolean) => {
@@ -79,19 +78,21 @@ export function PayOrRequestModal({ onClose, ...restProps }: Props) {
   }, [email, mode, pay, request]);
 
   return (
-    <Modal title="Pay or Request" onClose={onClose} className={c(classes.PayOrRequestModal, error && classes.error)}
+    <Modal title="Pay or Request" onClose={onClose} className={classes.PayOrRequestModal}
            onSubmit={e => {
              e.preventDefault();
-             handleSubmit().catch(() => setError(true));
+             handleSubmit().catch(console.error);
            }} {...restProps}>
       <Selector options={{
         'Pay': PayOrRequestMode.Pay,
         'Request': PayOrRequestMode.Request,
       }} onChange={setMode} value={mode} />
-      <CurrencyInput error={error} value={amount} onChange={setAmount} />
+      <CurrencyInput value={amount} onChange={setAmount} />
       <input type="email" placeholder={`Enter ${['recipient', 'payer'][mode]}’s email`} value={email}
-             onChange={e => setEmail(e.target.value)} />
-      <input type="text" placeholder="Add a transaction title" value={title} onChange={e => setTitle(e.target.value)} />
+             onChange={e => setEmail(e.target.value)}
+             required />
+      <input type="text" placeholder="Add a transaction title" value={title} onChange={e => setTitle(e.target.value)}
+             required />
       <CategorySelector className={classes.categorySelector} value={category} onChange={setCategory} />
       <Button primary className={classes.button}>
         {['Pay', 'Request'][mode]}

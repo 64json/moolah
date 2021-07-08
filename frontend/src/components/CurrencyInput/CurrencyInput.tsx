@@ -8,10 +8,9 @@ interface Props {
   className?: string;
   value: string;
   onChange: (value: string) => void;
-  error?: boolean;
 }
 
-export function CurrencyInput({ className, error, value, onChange }: Props) {
+export function CurrencyInput({ className, value, onChange }: Props) {
   const { me } = useContext(DataContext);
 
   const inputRef = useRef<HTMLDivElement>(null);
@@ -19,7 +18,7 @@ export function CurrencyInput({ className, error, value, onChange }: Props) {
   const currencySymbol = useMemo(() => me ? getCurrencySymbol(me.currency) : '', [me]);
 
   return (
-    <label className={c(classes.CurrencyInput, error && classes.error, className)}
+    <label className={c(classes.CurrencyInput, className)}
            onBlur={() => onChange((+value).toFixed(2) || '0.00')}
            onClick={() => {
              const div = inputRef.current;

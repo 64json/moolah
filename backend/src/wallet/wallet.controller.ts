@@ -217,6 +217,5 @@ export class WalletController {
     return { manualEntries };
   }
 
-  // TODO: give out free credits to ease the demo
-  // TODO: webhook to fulfill request to external user
+  // TODO: webhook to fulfill payment request to external user
 }

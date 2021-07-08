@@ -28,7 +28,6 @@ export function SignUpPage() {
     zip: '',
     cardStyle: 0,
   });
-  const [error, setError] = useState(false);
 
   const handleSubmit = useCallback(async () => {
     await axios.post(`${BASE_URL}/user`, {
@@ -44,7 +43,7 @@ export function SignUpPage() {
       <img src={sign_up_banner} className={classes.banner} />
       <form className={classes.content} onSubmit={e => {
         e.preventDefault();
-        handleSubmit().catch(() => setError(true));
+        handleSubmit().catch(console.error);
       }}>
         <div className={classes.primary}>
           Sign Up
@@ -52,7 +51,7 @@ export function SignUpPage() {
         <div className={classes.secondary}>
           Set up some account details.
         </div>
-        <ProfileInputGroup value={dto} onChange={setDto} error={error} />
+        <ProfileInputGroup value={dto} onChange={setDto} />
         <Button primary className={classes.button}>
           Let's Go!
         </Button>

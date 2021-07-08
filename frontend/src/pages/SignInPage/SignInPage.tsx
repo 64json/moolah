@@ -3,7 +3,6 @@ import classes from './SignInPage.module.scss';
 import sign_up_banner from '../../assets/sign_up_banner.png';
 import { Button } from '../../components/Button';
 import { DataContext } from '../../contexts/DataContext';
-import { c } from '../../utils';
 import { PageIndex } from '../../enums/PageIndex';
 import { UIContext } from '../../contexts/UIContext';
 import { Row } from '../../components/Row';
@@ -14,7 +13,6 @@ export function SignInPage() {
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState(false);
 
   const handleSubmit = useCallback(async () => {
     await signIn(email, password);
@@ -24,9 +22,9 @@ export function SignInPage() {
   return (
     <div className={classes.SignInPage}>
       <img src={sign_up_banner} className={classes.banner} />
-      <form className={c(classes.content, error && classes.error)} onSubmit={e => {
+      <form className={classes.content} onSubmit={e => {
         e.preventDefault();
-        handleSubmit().catch(() => setError(true));
+        handleSubmit().catch(console.error);
       }}>
         <div className={classes.primary}>
           Sign In

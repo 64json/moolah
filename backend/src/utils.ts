@@ -1,6 +1,7 @@
 import { SetMetadata } from '@nestjs/common';
 import * as https from 'https';
 import * as crypto from 'crypto';
+import { HttpException } from '@nestjs/common/exceptions/http.exception';
 
 export const IS_PUBLIC_KEY = 'isPublic';
 export const Public = () => SetMetadata(IS_PUBLIC_KEY, true);
@@ -70,9 +71,12 @@ async function httpRequest(options, body): Promise<any> {
           response.body += data;
         });
         res.on('end', () => {
-          response.body = response.body ? JSON.parse(response.body) : {};
+          const body = response.body ? JSON.parse(response.body) : {};
+          response.body = body;
           if (response.statusCode !== 200) {
-            return reject(response);
+            const status = response.statusCode ?? 500;
+            const message = body?.status?.error_code ?? 'Unknown error.';
+            return reject(new HttpException(message, status));
           }
           return resolve(response);
         });

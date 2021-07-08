@@ -3,7 +3,7 @@ import { Modal } from '../../components/Modal';
 import { Button } from '../../components/Button';
 import classes from './GoalModal.module.scss';
 import { CurrencyInput } from '../../components/CurrencyInput';
-import { BASE_URL, c } from '../../utils';
+import { BASE_URL } from '../../utils';
 import axios from 'axios';
 import { DataContext } from '../../contexts/DataContext';
 import { Goal } from '../../interfaces/Goal';
@@ -22,7 +22,6 @@ export function GoalModal({ onClose, goal, ...restProps }: Props) {
   const [emoji, setEmoji] = useState(goal.emoji || '💸');
   const [title, setTitle] = useState(goal.title || '');
   const [deadline, setDeadline] = useState(goal.deadline || '');
-  const [error, setError] = useState(false);
 
   const addGoal = useCallback(async () => {
     const dto = {
@@ -49,21 +48,24 @@ export function GoalModal({ onClose, goal, ...restProps }: Props) {
 
   return (
     <Modal title={goal._id ? 'Edit Goal' : 'New Goal'} onClose={onClose}
-           className={c(classes.GoalModal, error && classes.error)}
+           className={classes.GoalModal}
            onSubmit={e => {
              e.preventDefault();
-             addGoal().catch(() => setError(true));
+             addGoal().catch(console.error);
            }} {...restProps}>
       <div className={classes.label}>
         Goal Amount
       </div>
-      <CurrencyInput className={classes.currencyInput} error={error} value={amount} onChange={setAmount} />
+      <CurrencyInput className={classes.currencyInput} value={amount} onChange={setAmount} />
       <Row>
-        <input type="text" className={classes.emoji} value={emoji} onChange={e => setEmoji(e.target.value)} />
-        <input type="text" placeholder="Add a goal title" value={title} onChange={e => setTitle(e.target.value)} />
+        <input type="text" className={classes.emoji} value={emoji} onChange={e => setEmoji(e.target.value)}
+               required />
+        <input type="text" placeholder="Add a goal title" value={title} onChange={e => setTitle(e.target.value)}
+               required />
       </Row>
       <Row>
-        <DateInput placeholder="Goal Deadline" value={deadline} onChange={e => setDeadline(e.target.value)} />
+        <DateInput placeholder="Goal Deadline" value={deadline} onChange={e => setDeadline(e.target.value)}
+                   required />
       </Row>
       <Row className={classes.buttons}>
         {

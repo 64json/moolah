@@ -7,6 +7,14 @@ import { DataProvider } from './contexts/DataContext';
 import { UIProvider } from './contexts/UIContext';
 import { ReceivePayoutModal } from './modals/ReceivePayoutModal';
 import { TransitionGroup } from 'react-transition-group';
+import axios from 'axios';
+
+axios.interceptors.response.use(response => response, error => {
+  const messages: string[] | string | undefined = error.response?.data?.message;
+  const message = Array.isArray(messages) ? messages.join('\n') : messages;
+  alert(message ?? error);
+  throw error;
+});
 
 ReactDOM.render(
   <React.StrictMode>
@@ -29,5 +37,3 @@ ReactDOM.render(
   </React.StrictMode>,
   document.getElementById('root'),
 );
-
-// TODO: better error handling / display

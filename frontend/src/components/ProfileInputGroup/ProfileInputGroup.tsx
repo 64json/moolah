@@ -27,11 +27,10 @@ interface Props {
   className?: string;
   value: UserDto;
   onChange: (value: UserDto) => void;
-  error: boolean;
   modify?: boolean;
 }
 
-export function ProfileInputGroup({ className, value, onChange, error, modify }: Props) {
+export function ProfileInputGroup({ className, value, onChange, modify }: Props) {
   const {
     firstName,
     lastName,
@@ -49,20 +48,24 @@ export function ProfileInputGroup({ className, value, onChange, error, modify }:
   } = value;
 
   return (
-    <div className={c(classes.ProfileInputGroup, error && classes.error, className)}>
+    <div className={c(classes.ProfileInputGroup, className)}>
       <Row>
         <input type="text" placeholder="First Name" className={classes.input}
+               required
                value={firstName} onChange={e => onChange({ ...value, firstName: e.target.value })} />
         <input type="text" placeholder="Last Name" className={classes.input}
+               required
                value={lastName} onChange={e => onChange({ ...value, lastName: e.target.value })} />
       </Row>
       <Row>
         <DateInput placeholder="Date of Birth" className={classes.input}
+                   required
                    value={dob} onChange={e => onChange({ ...value, dob: e.target.value })} />
       </Row>
       <div className={classes.divider} />
       <Row>
         <input type="email" placeholder="Email" className={classes.input}
+               required
                value={email} onChange={e => onChange({ ...value, email: e.target.value })} />
       </Row>
       {
@@ -79,6 +82,7 @@ export function ProfileInputGroup({ className, value, onChange, error, modify }:
           </> :
           <Row>
             <input type="password" placeholder="Password" className={classes.input}
+                   required
                    value={password} onChange={e => onChange({ ...value, password: e.target.value })} />
           </Row>
       }
@@ -89,6 +93,7 @@ export function ProfileInputGroup({ className, value, onChange, error, modify }:
       </Row>
       <Row>
         <input type="text" placeholder="Address Line 1" className={classes.input}
+               required
                value={line1} onChange={e => onChange({ ...value, line1: e.target.value })} />
       </Row>
       <Row>
@@ -97,14 +102,17 @@ export function ProfileInputGroup({ className, value, onChange, error, modify }:
       </Row>
       <Row className={classes.row}>
         <input type="text" placeholder="City" className={classes.input}
+               pattern="^\w*$" required
                value={city} onChange={e => onChange({ ...value, city: e.target.value })} />
         {
           country === 'US' &&
           <input type="text" placeholder="State" className={classes.input}
+                 pattern="^\w{2}$" required
                  style={{ minWidth: 64, flex: 0 }}
                  value={state} onChange={e => onChange({ ...value, state: e.target.value })} />
         }
         <input type="text" placeholder="Zip" className={classes.input}
+               pattern="^\d*$" required
                style={{ minWidth: 76, flex: 0 }}
                value={zip} onChange={e => onChange({ ...value, zip: e.target.value })} />
       </Row>

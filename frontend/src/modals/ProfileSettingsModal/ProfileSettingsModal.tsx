@@ -17,7 +17,6 @@ export function ProfileSettingsModal({ onClose, ...restProps }: Props) {
   const { me, signOut } = useContext(DataContext);
 
   const [dto, setDto] = useState<UserDto>({ ...me!, password: '' });
-  const [error, setError] = useState(false);
 
   return (
     <Modal title="Profile Settings" onClose={onClose} className={classes.ProfileSettingsModal}
@@ -25,7 +24,7 @@ export function ProfileSettingsModal({ onClose, ...restProps }: Props) {
            {...restProps}>
       <div className={classes.picture}
            style={{ backgroundImage: `url(${profile_picture})` }} />
-      <ProfileInputGroup value={dto} onChange={setDto} error={error} modify />
+      <ProfileInputGroup value={dto} onChange={setDto} modify />
       <Button primary className={classes.button}>
         Save Changes
       </Button>

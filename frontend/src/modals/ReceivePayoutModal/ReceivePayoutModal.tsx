@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { Modal } from '../../components/Modal';
 import { Button } from '../../components/Button';
 import classes from './ReceivePayoutModal.module.scss';
-import { BASE_URL, c, formatCurrency } from '../../utils';
+import { BASE_URL, formatCurrency } from '../../utils';
 import axios from 'axios';
 import { Row } from '../../components/Row';
 import { CountryInput } from '../../components/CountryInput';
@@ -26,7 +26,6 @@ export function ReceivePayoutModal({ ...restProps }: Props) {
   const [city, setCity] = useState('');
   const [state, setState] = useState('');
   const [zip, setZip] = useState('');
-  const [error, setError] = useState(false);
 
   const onClose = useCallback(() => {
     setPayout(null);
@@ -68,10 +67,10 @@ export function ReceivePayoutModal({ ...restProps }: Props) {
 
   return (
     <Modal title="Receive Payment" onClose={onClose}
-           className={c(classes.ReceivePayoutModal, error && classes.error)}
+           className={classes.ReceivePayoutModal}
            onSubmit={e => {
              e.preventDefault();
-             handleSubmit().catch(() => setError(true));
+             handleSubmit().catch(console.error);
            }} {...restProps}>
       <div className={classes.label}>
         <b>{payer.firstName} {payer.lastName}</b> wants to pay you <b
@@ -80,17 +79,21 @@ export function ReceivePayoutModal({ ...restProps }: Props) {
       </div>
       <Row>
         <input type="text" placeholder="Bank Name" className={classes.input}
+               required
                value={bankName} onChange={e => setBankName(e.target.value)} />
       </Row>
       <Row>
         <input type="text" placeholder="Account Number" className={classes.input}
+               required
                value={accountNumber} onChange={e => setAccountNumber(e.target.value)} />
       </Row>
       <div className={classes.divider} />
       <Row>
         <input type="text" placeholder="First Name" className={classes.input}
+               required
                value={firstName} onChange={e => setFirstName(e.target.value)} />
         <input type="text" placeholder="Last Name" className={classes.input}
+               required
                value={lastName} onChange={e => setLastName(e.target.value)} />
       </Row>
       <Row>
@@ -102,6 +105,7 @@ export function ReceivePayoutModal({ ...restProps }: Props) {
       </Row>
       <Row>
         <input type="text" placeholder="Address Line 1" className={classes.input}
+               required
                value={line1} onChange={e => setLine1(e.target.value)} />
       </Row>
       <Row>
@@ -110,14 +114,17 @@ export function ReceivePayoutModal({ ...restProps }: Props) {
       </Row>
       <Row className={classes.row}>
         <input type="text" placeholder="City" className={classes.input}
+               pattern="^\w*$" required
                value={city} onChange={e => setCity(e.target.value)} />
         {
           payout.payer.country === 'US' &&
           <input type="text" placeholder="State" className={classes.input}
+                 pattern="^\w{2}$" required
                  style={{ minWidth: 64, flex: 0 }}
                  value={state} onChange={e => setState(e.target.value)} />
         }
         <input type="text" placeholder="Zip" className={classes.input}
+               pattern="^\d*$" required
                style={{ minWidth: 76, flex: 0 }}
                value={zip} onChange={e => setZip(e.target.value)} />
       </Row>

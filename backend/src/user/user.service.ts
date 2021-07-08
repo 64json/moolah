@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { ConflictException, Injectable } from '@nestjs/common';
 import { Model } from 'mongoose';
 import { User, UserDocument } from './user.schema';
 import { InjectModel } from '@nestjs/mongoose';
@@ -14,14 +14,20 @@ export class UserService {
   ) {
   }
 
-  async create(createUserDto: CreateUserDto): Promise<UserDocument> {
-    const rawPassword = createUserDto.password;
+  async create(dto: CreateUserDto): Promise<UserDocument> {
+    const rawPassword = dto.password;
     const hashedPassword = await bcrypt.hash(rawPassword, saltOrRounds);
     const createdUser = new this.userModel({
-      ...createUserDto,
+      ...dto,
       password: hashedPassword,
     });
-    await createdUser.save();
+    await createdUser.save()
+      .catch(e => {
+        if (e.code === 11000) {
+          throw new ConflictException(`${dto.email} is already a user.`);
+        }
+        throw e;
+      });
 
     const { walletId, walletContactId } = await Rapyd.createWallet(createdUser);
     createdUser.walletId = walletId;
