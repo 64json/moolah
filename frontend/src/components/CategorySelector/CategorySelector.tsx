@@ -20,6 +20,7 @@ export function CategorySelector({ className, value, onChange }: Props) {
               <FontAwesomeIcon icon={category.icon} style={{ color: category.color }} />
             </div>
             <div className={classes.text}>
+              {category.name}
             </div>
           </div>
         ))
