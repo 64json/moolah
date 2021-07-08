@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "./static/css/main.09c030e7.chunk.css",
-    "main.js": "./static/js/main.365dc159.chunk.js",
-    "main.js.map": "./static/js/main.365dc159.chunk.js.map",
+    "main.js": "./static/js/main.4afb4d98.chunk.js",
+    "main.js.map": "./static/js/main.4afb4d98.chunk.js.map",
     "runtime-main.js": "./static/js/runtime-main.3b001913.js",
     "runtime-main.js.map": "./static/js/runtime-main.3b001913.js.map",
     "static/css/2.32531bc9.chunk.css": "./static/css/2.32531bc9.chunk.css",
@@ -56,6 +56,7 @@
     "static/media/moo_default.66dcc105.png": "./static/media/moo_default.66dcc105.png",
     "static/media/moo_happy.c3d3de9e.png": "./static/media/moo_happy.c3d3de9e.png",
     "static/media/pie_chart.63940c48.png": "./static/media/pie_chart.63940c48.png",
+    "static/media/profile_picture.c97371cc.png": "./static/media/profile_picture.c97371cc.png",
     "static/media/sign_up_banner.c99b5723.png": "./static/media/sign_up_banner.c99b5723.png"
   },
   "entrypoints": [
@@ -63,6 +64,6 @@
     "static/css/2.32531bc9.chunk.css",
     "static/js/2.600db087.chunk.js",
     "static/css/main.09c030e7.chunk.css",
-    "static/js/main.365dc159.chunk.js"
+    "static/js/main.4afb4d98.chunk.js"
   ]
 }
