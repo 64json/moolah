@@ -1,7 +1,7 @@
 @import '../../constants';
 
 .Modal {
-  position: fixed;
+  position: absolute;
   z-index: 2;
   top: 0;
   left: 0;
@@ -24,7 +24,7 @@
 
   .header {
     @include shadow;
-    padding: 0 16px 0;
+    padding: $height-status 16px 0;
     display: flex;
     align-items: stretch;
 

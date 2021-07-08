@@ -53,3 +53,34 @@ select {
 b {
   font-weight: 700;
 }
+
+@media (min-width: 512px) {
+  body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    //background-color: $color-border;
+
+    &:after {
+      @include dropShadow;
+      content: '';
+      position: absolute;
+      z-index: 999;
+      width: 404px;
+      height: 840px;
+      background-image: url(./assets/iphone_frame.png);
+      background-size: contain;
+      background-repeat: no-repeat;
+      pointer-events: none;
+      border-radius: 46px;
+    }
+  }
+
+  #root {
+    z-index: 0;
+    width: 376px;
+    height: 812px;
+    position: relative;
+    background-color: white;
+  }
+}

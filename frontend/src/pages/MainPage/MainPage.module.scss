@@ -13,6 +13,7 @@
     overflow-y: auto;
 
     .header {
+      margin-top: $height-status;
       padding: 24px 24px 0;
       display: flex;
       align-items: center;
@@ -41,6 +42,7 @@
   .nav {
     @include shadow;
     display: flex;
+    padding-bottom: 16px;
 
     .tab {
       position: relative;
